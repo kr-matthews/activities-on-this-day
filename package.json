@@ -1,6 +1,7 @@
 {
   "name": "strava-on-this-day",
   "version": "0.1.0",
+  "homepage": "https://kr-matthews.github.io/strava-on-this-day",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -15,6 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -b gh-pages -d build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
