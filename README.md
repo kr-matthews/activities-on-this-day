@@ -1,8 +1,8 @@
 # Strava On-This-Day
 
-This ~is~ will be a single-page application to display your historical activities from Strava, specifically those which were recorded on this day in prior years.
+This ~is~ **will be** a single-page application to display your historical activities from Strava, specifically those which were recorded on this day in prior years.
 
-Access on GitHub Pages at [https://kr-matthews.github.io/strava-on-this-day](https://kr-matthews.github.io/strava-on-this-day).
+The app is not currently accessible anywhere, but hopefully will be on Netlify later.
 
 // todo: add screenshot, confirm all links
 
@@ -28,7 +28,7 @@ See [enhancements](https://github.com/kr-matthews/strava-on-this-day/issues?q=is
 
 ## Focus
 
-- Working with APIs.
+- Working with APIs and severless functions.
 - Handling tokens within a single-page application.
 
 // todo

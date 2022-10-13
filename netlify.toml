@@ -1,0 +1,8 @@
+[dev]
+  framework = "create-react-app"
+  functionsPort = 9000
+  targetPort = 3000
+[build]
+  command = "npm run build"
+  functions = "lambda"
+  publish = "build"
