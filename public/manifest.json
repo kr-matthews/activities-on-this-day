@@ -1,6 +1,6 @@
 {
-  "short_name": "Strava OTD",
-  "name": "Strava On-This-Day",
+  "short_name": "Activities OTD",
+  "name": "Activities On-This-Day",
   "icons": [
     {
       "src": "favicon.ico",

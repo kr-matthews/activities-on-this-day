@@ -1,8 +1,10 @@
-# Strava On-This-Day
+# Activities On-This-Day
 
 This ~is~ **will be** a single-page application working with a serverless function to display your historical activities from Strava, specifically those which were recorded on this day in prior years.
 
-The app is not currently accessible anywhere, but hopefully will be on Netlify later.
+The app should be accessible at [https://activities-on-this-day.netlify.app/](https://activities-on-this-day.netlify.app/).
+
+Note that this is not an official Strava app, and is not endorsed by Strava.
 
 // todo: add screenshot, links
 
@@ -14,7 +16,7 @@ The app is not currently accessible anywhere, but hopefully will be on Netlify l
 
 ### Potential Future
 
-See [enhancements](https://github.com/kr-matthews/strava-on-this-day/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) on GitHub.
+See [enhancements](https://github.com/kr-matthews/activities-on-this-day/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) on GitHub.
 
 - Automatic login via Strava, or basic walk-through to manually get required tokens from Strava, if necessary/feasible.
 - Simple UI displaying applicable activities, with little functionality besides panning and zooming the map(s).
@@ -35,6 +37,6 @@ See [enhancements](https://github.com/kr-matthews/strava-on-this-day/issues?q=is
 
 ## Flaws
 
-See the [issues](https://github.com/kr-matthews/strava-on-this-day/issues) on GitHub, in addition to the following:
+See the [issues](https://github.com/kr-matthews/activities-on-this-day/issues) on GitHub, in addition to the following:
 
 // todo
