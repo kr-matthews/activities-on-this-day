@@ -4,8 +4,6 @@ dotenv.config();
 export const handler = async (event, context) => {
   return {
     statusCode: 200,
-    body: JSON.stringify({
-      message: process.env.TEST_CLIENT_SECRET_TWO,
-    }),
+    body: JSON.stringify(process.env.TEST_CLIENT_SECRET_TWO),
   };
 };

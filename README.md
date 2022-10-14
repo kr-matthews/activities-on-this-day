@@ -1,10 +1,10 @@
 # Strava On-This-Day
 
-This ~is~ **will be** a single-page application to display your historical activities from Strava, specifically those which were recorded on this day in prior years.
+This ~is~ **will be** a single-page application working with a serverless function to display your historical activities from Strava, specifically those which were recorded on this day in prior years.
 
 The app is not currently accessible anywhere, but hopefully will be on Netlify later.
 
-// todo: add screenshot, confirm all links
+// todo: add screenshot, links
 
 ## Features
 

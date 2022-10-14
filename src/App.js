@@ -1,33 +1,25 @@
-import axios from "axios";
-
-import { useEffect, useState } from "react";
-
-const URL = `/.netlify/functions/test`;
+import { useApiData } from "./useApiData";
 
 export default function App() {
-  const [secret, setSecret] = useState("waiting...");
+  const apiData = useApiData();
 
-  useEffect(() => {
-    async function func() {
-      try {
-        const result = await axios.get(URL);
-        setSecret(result.data.message + "!");
-      } catch (e) {
-        console.error(e);
-        setSecret("fail");
-      }
-    }
-
-    func();
-  }, [URL]);
+  function myFetch() {
+    apiData.getDataFromUrl(process.env.REACT_APP_URL);
+  }
 
   return (
     <>
       <h1>Strava On-This-Day - WIP</h1>
-      <p>
-        The secret in the client is {process.env.REACT_APP_API_CLIENT_SECRET}!
-      </p>
-      <p>The secret in the server is {secret}</p>
+
+      {apiData.isLoading ? (
+        <p>Loading</p>
+      ) : apiData.data ? (
+        <p>The data is {apiData.data}</p>
+      ) : apiData.error ? (
+        <p>There was an error: {apiData.error.message}</p>
+      ) : (
+        <button onClick={myFetch}>Fetch data</button>
+      )}
     </>
   );
 }
