@@ -9,7 +9,7 @@ export default function App() {
 
   return (
     <>
-      <h1>Activities On-This-Day [WIP]</h1>
+      <h1>Activities On-This-Day [Testing]</h1>
 
       {apiData.isLoading ? (
         <p>Loading</p>
