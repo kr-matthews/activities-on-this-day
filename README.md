@@ -1,10 +1,12 @@
 # Activities On-This-Day
 
-This ~is~ **will be** a single-page application working with a serverless function to display your historical activities from Strava, specifically those which were recorded on this day in prior years.
+This ~is~ _will be_ a single-page application working with a serverless function to display your historical activities from Strava, specifically those which were recorded on this day in prior years.
 
 The app should be accessible at [https://activities-on-this-day.netlify.app/](https://activities-on-this-day.netlify.app/).
 
-Note that this is not an official Strava app, and is not endorsed by Strava.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e79fc32d-de94-409e-935d-7403775536bd/deploy-status)](https://app.netlify.com/sites/activities-on-this-day/deploys)
+
+**Note that this is NOT an official Strava app, and is NOT endorsed by Strava.**
 
 // todo: add screenshot, links
 
