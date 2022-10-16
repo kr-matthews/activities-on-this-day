@@ -9,6 +9,8 @@ export function useApiData() {
 
   async function getDataFromUrl(url) {
     setIsLoading(true);
+    setData(null);
+    setError(null);
     try {
       const result = await axios.get(url);
       console.info(result);
@@ -23,8 +25,15 @@ export function useApiData() {
     }
   }
 
+  function reset() {
+    setIsLoading(false);
+    setData(null);
+    setError(null);
+  }
+
   return {
     getDataFromUrl,
+    reset,
     isLoading,
     data,
     error,
