@@ -1,10 +1,10 @@
-import { useApiData } from "./useApiData";
+import { useApiData } from "../hooks/useApiData";
 
 import { useEffect } from "react";
-import { useSavedState } from "./useSavedState";
+import { useSavedState } from "../hooks/useSavedState";
 
-import buttonStravaConnect from "./button_strava_connect.svg";
-import logoPoweredByStrava from "./logo_powered_by_strava.svg";
+import buttonStravaConnect from "../assets/button_strava_connect.svg";
+import logoPoweredByStrava from "../assets/logo_powered_by_strava.svg";
 
 export default function App() {
   const params = new URLSearchParams(window.location.search);
@@ -91,9 +91,7 @@ export default function App() {
           {activityData.data[0].start_date_local}
         </p>
       )}
-      {activityData.error && (
-        <p>Activity Loading Error: {activityData.error.message}</p>
-      )}
+      {activityData.error && <p>Error: {activityData.error.message}</p>}
 
       <div>
         <img
