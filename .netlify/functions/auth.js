@@ -4,13 +4,13 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export const handler = async (event, context) => {
-  const form = new FormData();
-  form.append("client_id", process.env.REACT_APP_CLIENT_ID);
-  form.append("client_secret", process.env.CLIENT_SECRET);
-  form.append("code", event.queryStringParameters.code);
-  form.append("grant_type", "authorization_code");
-
   try {
+    const form = new FormData();
+    form.append("client_id", process.env.REACT_APP_CLIENT_ID);
+    form.append("client_secret", process.env.CLIENT_SECRET);
+    form.append("code", event.queryStringParameters.code);
+    form.append("grant_type", "authorization_code");
+
     const response = await axios.post(
       "https://www.strava.com/oauth/token",
       form,

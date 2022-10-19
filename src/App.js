@@ -73,19 +73,24 @@ export default function App() {
       >
         <img src={buttonStravaConnect} alt="Connect with Strava" />
       </a>
-      {authCode && <p>Your code is {authCode}.</p>}
+      {authCode && <p>Code successfully received.</p>}
       {error && <p>Error: {error}.</p>}
 
       <h2>Refresh token</h2>
       {authCode && <button onClick={fetchRefresh}>Fetch</button>}
-      {apiData.isLoading && <p>Loading...</p>}
-      {refreshToken && <p>Refresh token is {refreshToken}.</p>}
+      {apiData.isLoading && <p>Fetching Token...</p>}
+      {refreshToken && <p>Refresh token successfully received.</p>}
       {apiData.error && <p>Error: {apiData.error.message}</p>}
 
       <h2>Activities</h2>
       {refreshToken && <button onClick={fetchActivities}>Fetch</button>}
-      {activityData.isLoading && <p>Loading Activities</p>}
-      {activityData.data && <p>Activity count: {activityData.data.length}</p>}
+      {activityData.isLoading && <p>Loading Activities...</p>}
+      {activityData.data && (
+        <p>
+          Most recent activity: {activityData.data[0].name} at{" "}
+          {activityData.data[0].start_date_local}
+        </p>
+      )}
       {activityData.error && (
         <p>Activity Loading Error: {activityData.error.message}</p>
       )}

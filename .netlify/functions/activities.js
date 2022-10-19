@@ -5,6 +5,7 @@ dotenv.config();
 
 export const handler = async (event, context) => {
   try {
+    // first, get the (temporary) access token via the (fixed) refresh token
     const oauthForm = new FormData();
     oauthForm.append("client_id", process.env.REACT_APP_CLIENT_ID);
     oauthForm.append("client_secret", process.env.CLIENT_SECRET);
@@ -21,6 +22,8 @@ export const handler = async (event, context) => {
       }
     );
 
+    // next, get the activities via the access token
+
     const activitiesResponse = await axios.get(
       `https://www.strava.com/api/v3/athlete/activities`,
       {
@@ -28,7 +31,7 @@ export const handler = async (event, context) => {
       }
     );
 
-    console.debug("activity res", activitiesResponse); // ~
+    console.info("activity res", activitiesResponse);
 
     return {
       statusCode: 200,
