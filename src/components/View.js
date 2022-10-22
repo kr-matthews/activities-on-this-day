@@ -5,7 +5,7 @@ import Activities from "./Activities";
 import Loading from "./Loading";
 import Error from "./Error";
 
-import { useApiData } from "../hooks/useApiData";
+import { useFetchData } from "../hooks/useFetchData";
 import { useSavedState } from "../hooks/useSavedState";
 
 export default function View({ refreshToken }) {
@@ -20,10 +20,15 @@ export default function View({ refreshToken }) {
     data: accessTokenData,
     isLoading: isAccessTokenLoading,
     error: accessTokenError,
-    getDataFromUrl: getAccessToken,
-  } = useApiData();
-  // !! get activities hook
-  const activityDataApi = useApiData();
+    fetch: fetchAccessToken,
+  } = useFetchData();
+  const {
+    eachData: activitiesData,
+    eachIsLoading: activitiesIsLoading,
+    eachError: activitiesError,
+    fetch: fetchActivities,
+  } = useFetchData();
+  const haveFetchedActivities = activitiesData.length > 0;
 
   useEffect(() => {
     if (!refreshToken) {
@@ -53,21 +58,13 @@ export default function View({ refreshToken }) {
   });
 
   useEffect(() => {
-    // !! false <- are there activities already
-    if (accessToken && canUseAccessToken && !false) {
+    if (accessToken && canUseAccessToken && !haveFetchedActivities) {
       // !! fetch activities via access token, set them
+      //   activityData.fetch(
+      //     `/.netlify/functions/activities?refresh=${refreshToken}`
+      //   );
     }
   }, [accessToken, canUseAccessToken]);
-
-  useEffect(() => {
-    // todo: handle successful fetch of activities
-  });
-
-  // function oldFunction() {
-  //   activityData.getDataFromUrl(
-  //     `/.netlify/functions/activities?refresh=${refreshToken}`
-  //   );
-  // }
 
   // ! handle activities, activity loading and errors
   return (

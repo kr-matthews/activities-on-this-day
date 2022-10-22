@@ -4,26 +4,24 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Loading from "./Loading";
 import Error from "./Error";
 
-import { useApiData } from "../hooks/useApiData";
+import { useFetchData } from "../hooks/useFetchData";
 
 // ! handle 'error=access_denied' in url
 
 export default function Redirect({ setRefreshToken }) {
   const params = useSearchParams();
   const code = params[0].get("code");
-  const { data, isLoading, error, getDataFromUrl } = useApiData();
+  const { data, isLoading, error, fetch } = useFetchData();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (code) {
-      console.debug("getting data");
-      getDataFromUrl(`/.netlify/functions/auth?code=${code}`);
+      fetch([`/.netlify/functions/auth?code=${code}`]);
     }
-  }, [code, getDataFromUrl]);
+  }, [code, fetch]);
 
   useEffect(() => {
     if (data) {
-      console.debug("got data");
       setRefreshToken(data);
       navigate("/", { replace: true });
     }
