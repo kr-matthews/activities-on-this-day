@@ -15,6 +15,15 @@ export default function App() {
   return (
     <>
       <h1>Activities On-This-Day [WIP]</h1>
+      <div>
+        <button
+          onClick={() => {
+            setRefreshToken(null);
+          }}
+        >
+          Clear refresh token
+        </button>
+      </div>
 
       <Routes>
         <Route

@@ -6,7 +6,7 @@ import Error from "./Error";
 
 import { useFetchData } from "../hooks/useFetchData";
 
-// ! handle 'error=access_denied' in url
+// !! handle 'error=access_denied' in url
 
 export default function Redirect({ setRefreshToken }) {
   const params = useSearchParams();
@@ -16,12 +16,14 @@ export default function Redirect({ setRefreshToken }) {
 
   useEffect(() => {
     if (code) {
-      fetch([`/.netlify/functions/auth?code=${code}`]);
+      console.info("Fetching refresh token.");
+      fetch([`/.netlify/functions/get-refresh-token?code=${code}`]);
     }
   }, [code, fetch]);
 
   useEffect(() => {
     if (data) {
+      console.info("Received refresh token.");
       setRefreshToken(data);
       navigate("/", { replace: true });
     }

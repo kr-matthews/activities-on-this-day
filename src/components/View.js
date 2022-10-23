@@ -8,14 +8,20 @@ import Error from "./Error";
 import { useFetchData } from "../hooks/useFetchData";
 import { useSavedState } from "../hooks/useSavedState";
 
+const currentTime = () => new Date().getTime() / 1000;
+
 export default function View({ refreshToken }) {
   const navigate = useNavigate();
+
   const [accessToken, setAccessToken] = useSavedState("access", null);
   const [accessExpiration, setAccessExpiration] = useSavedState(
     "expiration",
     null
   );
-  const canUseAccessToken = !isExpiredOrExpiringSoon(accessExpiration);
+  const hasAccessToken = !!accessToken;
+  const canUseAccessToken =
+    hasAccessToken && !isExpiredOrExpiringSoon(accessExpiration);
+
   const {
     data: accessTokenData,
     isLoading: isAccessTokenLoading,
@@ -32,12 +38,14 @@ export default function View({ refreshToken }) {
 
   useEffect(() => {
     if (!refreshToken) {
+      console.error("No refresh token.");
       navigate("/authenticate");
     }
   });
 
   useEffect(() => {
     if (!canUseAccessToken) {
+      console.info("Access token expired, expiring too soon, or non-existent.");
       setAccessToken(null);
       setAccessExpiration(null);
     }
@@ -45,30 +53,45 @@ export default function View({ refreshToken }) {
 
   useEffect(() => {
     if (refreshToken && !accessToken) {
-      // !! fetch access token via refresh token, via getAccessToken
+      console.info("Fetching access token.");
+      fetchAccessToken([
+        `/.netlify/functions/get-access-token?refresh=${refreshToken}`,
+      ]);
     }
-  }, [refreshToken, accessToken]);
+  }, [refreshToken, accessToken, fetchAccessToken]);
 
   useEffect(() => {
     if (accessTokenData) {
-      setAccessToken(accessTokenData);
-      // !! also return expiration, and set that properly
-      setAccessExpiration(1);
+      console.info("Received access token.");
+      setAccessToken(accessTokenData.access_token);
+      setAccessExpiration(accessTokenData.expires_at);
     }
   });
 
   useEffect(() => {
     if (accessToken && canUseAccessToken && !haveFetchedActivities) {
-      // !! fetch activities via access token, set them
-      //   activityData.fetch(
-      //     `/.netlify/functions/activities?refresh=${refreshToken}`
+      console.info("Fetching activities.");
+      // !!! fetch activities PER YEAR
+      //   fetchActivities(
+      //     `/.netlify/functions/get-activities?access=${accessToken}`
       //   );
     }
-  }, [accessToken, canUseAccessToken]);
+  }, [accessToken, canUseAccessToken, haveFetchedActivities]);
 
-  // ! handle activities, activity loading and errors
+  // !! pass in activities, loading, and errors
   return (
     <>
+      <div>
+        <button
+          onClick={() => {
+            setAccessToken(null);
+            setAccessExpiration(null);
+            navigate("/authenticate");
+          }}
+        >
+          Clear access token
+        </button>
+      </div>
       <div>
         <button
           onClick={() => {
@@ -78,7 +101,7 @@ export default function View({ refreshToken }) {
           Restart
         </button>
       </div>
-      {isAccessTokenLoading && <Loading task="fetch activities" />}
+      {isAccessTokenLoading && <Loading task="fetch access token" />}
       <Activities
         month="January"
         day={0}
@@ -88,13 +111,14 @@ export default function View({ refreshToken }) {
         ]}
       />
       {accessTokenError && (
-        <Error task="fetch activities" message={accessTokenError.message} />
+        <Error task="fetch access token" message={accessTokenError.message} />
       )}
     </>
   );
 }
 
+// everything in seconds
 function isExpiredOrExpiringSoon(expiration) {
-  // !! check expiration
-  return false;
+  const tenMinutes = 10 * 60;
+  return expiration - tenMinutes < currentTime();
 }

@@ -2,6 +2,8 @@ import axios from "axios";
 
 import { useCallback, useState } from "react";
 
+// todo: use reducers for each state, to clean up `fetch`
+
 export function useFetchData() {
   const [isEachLoading, setIsEachLoading] = useState([]);
   const [eachData, setEachData] = useState([]);
@@ -17,18 +19,15 @@ export function useFetchData() {
         const fetchOne = async () => {
           try {
             const result = await axios.get(url);
-            // todo: use reducer for data
             const newData = [...eachData];
             newData[index] = result.data;
             setEachData(newData);
           } catch (e) {
             console.error(index, e);
-            // todo: use reducer for error
             const newError = [...eachError];
             newError[index] = e;
             setEachError(newError);
           } finally {
-            // todo: use reducer for isLoading
             const newIsLoading = [...isEachLoading];
             newIsLoading[index] = false;
             setIsEachLoading(newIsLoading);

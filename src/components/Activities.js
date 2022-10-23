@@ -1,3 +1,5 @@
+// !! refactor to take in the data smoothly
+
 export default function Activities({ month, day, activitiesPerYear = [] }) {
   // todo: check if 0 activities
   return (
