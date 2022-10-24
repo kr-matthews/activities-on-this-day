@@ -1,19 +1,43 @@
-// !! refactor to take in the data smoothly
-
-export default function Activities({ month, day, activitiesPerYear = [] }) {
-  // todo: check if 0 activities
+export default function Activities({
+  month,
+  day,
+  earliestYear,
+  activitiesData,
+  activitiesIsLoading,
+  activitiesError,
+}) {
+  // todo: check if 0 total activities
   return (
     <>
       <h1>
         Activities on {month} {day}
       </h1>
-      {activitiesPerYear.map(([year, activities]) => (
-        <ActivitiesOnOneDay key={year} year={year} activities={activities} />
-      ))}
+      <button
+        onClick={() => {
+          // ~
+          console.debug(activitiesData);
+          console.debug(activitiesError);
+          console.debug(activitiesIsLoading);
+        }}
+      >
+        Debug
+      </button>
+      {activitiesData.map(
+        (activities, index) =>
+          activities &&
+          activities.length > 0 && (
+            <ActivitiesOnOneDay
+              key={earliestYear + index}
+              year={earliestYear + index}
+              activities={activities}
+            />
+          )
+      )}
     </>
   );
 }
 
+// !! take in error and isLoading too
 function ActivitiesOnOneDay({ year, activities = [] }) {
   return (
     <>
@@ -31,7 +55,7 @@ function ActivitiesOnOneDay({ year, activities = [] }) {
 function Activity({ activity }) {
   return (
     <div>
-      {activity.name} at {activity.start_date_local}
+      {activity.start_date_local} -- <b>{activity.name}</b>
     </div>
   );
 }

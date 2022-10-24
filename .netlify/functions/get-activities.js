@@ -5,11 +5,15 @@ dotenv.config();
 
 export const handler = async (event, context) => {
   try {
-    // !!! pass in time boundary parameters
     const response = await axios.get(
       `https://www.strava.com/api/v3/athlete/activities`,
       {
-        params: { access_token: event.queryStringParameters.access },
+        params: {
+          access_token: event.queryStringParameters.access,
+          before: event.queryStringParameters.before,
+          after: event.queryStringParameters.after,
+          per_page: 50,
+        },
       }
     );
 

@@ -1,7 +1,7 @@
 import buttonStravaConnect from "../assets/button_strava_connect.svg";
 
 export default function Authentication() {
-  // ! do cleaner url creation: extract base url into const or env, use builder
+  // ! do cleaner url creation: extract base url into const or env, use builder (not just here)
   const authUrl = `https://www.strava.com/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${window.location.origin}/redirect&approval_prompt=force&scope=activity:read_all`;
 
   // NOTE: must follow Strava guidelines for button UI and url base

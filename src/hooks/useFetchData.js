@@ -19,18 +19,24 @@ export function useFetchData() {
         const fetchOne = async () => {
           try {
             const result = await axios.get(url);
-            const newData = [...eachData];
-            newData[index] = result.data;
-            setEachData(newData);
+            setEachData((oldData) => {
+              const newData = [...oldData];
+              newData[index] = result.data;
+              return newData;
+            });
           } catch (e) {
             console.error(index, e);
-            const newError = [...eachError];
-            newError[index] = e;
-            setEachError(newError);
+            setEachError((oldError) => {
+              const newError = [...oldError];
+              newError[index] = e;
+              return newError;
+            });
           } finally {
-            const newIsLoading = [...isEachLoading];
-            newIsLoading[index] = false;
-            setIsEachLoading(newIsLoading);
+            setIsEachLoading((oldIsLoading) => {
+              const newIsLoading = [...oldIsLoading];
+              newIsLoading[index] = false;
+              return newIsLoading;
+            });
           }
         };
         fetchOne();

@@ -5,10 +5,11 @@ import Activities from "./Activities";
 import Loading from "./Loading";
 import Error from "./Error";
 
-import { useFetchData } from "../hooks/useFetchData";
 import { useSavedState } from "../hooks/useSavedState";
+import { useFetchData } from "../hooks/useFetchData";
+import { useFetchActivities } from "../hooks/useFetchActivities";
 
-const currentTime = () => new Date().getTime() / 1000;
+const currentSeconds = () => new Date().getTime() / 1000;
 
 export default function View({ refreshToken }) {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ export default function View({ refreshToken }) {
   const canUseAccessToken =
     hasAccessToken && !isExpiredOrExpiringSoon(accessExpiration);
 
+  const [earliestYear, setEarliestYear] = useSavedState("year", 2013); // ~ use 2008
+
   const {
     data: accessTokenData,
     isLoading: isAccessTokenLoading,
@@ -33,7 +36,7 @@ export default function View({ refreshToken }) {
     eachIsLoading: activitiesIsLoading,
     eachError: activitiesError,
     fetch: fetchActivities,
-  } = useFetchData();
+  } = useFetchActivities(earliestYear, accessToken);
   const haveFetchedActivities = activitiesData.length > 0;
 
   useEffect(() => {
@@ -71,14 +74,11 @@ export default function View({ refreshToken }) {
   useEffect(() => {
     if (accessToken && canUseAccessToken && !haveFetchedActivities) {
       console.info("Fetching activities.");
-      // !!! fetch activities PER YEAR
-      //   fetchActivities(
-      //     `/.netlify/functions/get-activities?access=${accessToken}`
-      //   );
+      fetchActivities();
     }
-  }, [accessToken, canUseAccessToken, haveFetchedActivities]);
+  }, [accessToken, canUseAccessToken, haveFetchedActivities, fetchActivities]);
 
-  // !! pass in activities, loading, and errors
+  // !! filter activities data before passing in
   return (
     <>
       <div>
@@ -105,10 +105,10 @@ export default function View({ refreshToken }) {
       <Activities
         month="January"
         day={0}
-        activitiesPerYear={[
-          [2019, []],
-          [2021, []],
-        ]}
+        earliestYear={earliestYear}
+        activitiesData={activitiesData}
+        activitiesIsLoading={activitiesIsLoading}
+        activitiesError={activitiesError}
       />
       {accessTokenError && (
         <Error task="fetch access token" message={accessTokenError.message} />
@@ -120,5 +120,5 @@ export default function View({ refreshToken }) {
 // everything in seconds
 function isExpiredOrExpiringSoon(expiration) {
   const tenMinutes = 10 * 60;
-  return expiration - tenMinutes < currentTime();
+  return expiration - tenMinutes < currentSeconds();
 }
