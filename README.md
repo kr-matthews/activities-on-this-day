@@ -1,26 +1,26 @@
 # Activities On-This-Day
 
-This ~is~ _will be_ a single-page application working with a serverless function to display your historical activities from Strava, specifically those which were recorded on this day in prior years.
+This ~is~ _will be_ a single-page application working with serverless functions to display your historical activities from Strava, specifically those which were recorded on this day in history.
 
-The app should be accessible at [https://activities-on-this-day.netlify.app/](https://activities-on-this-day.netlify.app/).
+The app is accessible at [https://activities-on-this-day.netlify.app/](https://activities-on-this-day.netlify.app/).
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e79fc32d-de94-409e-935d-7403775536bd/deploy-status)](https://app.netlify.com/sites/activities-on-this-day/deploys)
 
 **Note that this is NOT an official Strava app, and is NOT endorsed by Strava.**
 
-// todo: add screenshot, links
+// todo: add screenshot
 
 ## Features
 
 ### Current
 
-// todo
+- Authenticate with Strava oauth.
+- Retain refresh token to stay logged in.
 
 ### Potential Future
 
 See [enhancements](https://github.com/kr-matthews/activities-on-this-day/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) on GitHub.
 
-- Automatic login via Strava, or basic walk-through to manually get required tokens from Strava, if necessary/feasible.
 - Simple UI displaying applicable activities, with little functionality besides panning and zooming the map(s).
 
 ## Original Intentions
@@ -32,13 +32,12 @@ See [enhancements](https://github.com/kr-matthews/activities-on-this-day/issues?
 
 ## Focus
 
-- Working with APIs and severless functions.
+- Working with APIs and (Netlify) serverless functions.
 - Handling tokens within a single-page application.
-
-// todo
+- Clean navigation using React Router.
 
 ## Flaws
 
 See the [issues](https://github.com/kr-matthews/activities-on-this-day/issues) on GitHub, in addition to the following:
 
-// todo
+// todo: readme flaws
