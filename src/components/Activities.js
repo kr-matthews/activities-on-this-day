@@ -14,7 +14,7 @@ export default function Activities({
       </h1>
       <button
         onClick={() => {
-          // ~
+          // ~ debug button
           console.debug(activitiesData);
           console.debug(activitiesError);
           console.debug(activitiesIsLoading);
@@ -55,7 +55,8 @@ function ActivitiesOnOneDay({ year, activities = [] }) {
 function Activity({ activity }) {
   return (
     <div>
-      {activity.start_date_local} -- <b>{activity.name}</b>
+      {activity.start_date_local} -- {Math.floor(activity.distance / 10) / 100}{" "}
+      -- <b>{activity.name}</b>
     </div>
   );
 }
