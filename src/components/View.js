@@ -44,7 +44,7 @@ export default function View({ refreshToken }) {
       console.error("No refresh token.");
       navigate("/authenticate");
     }
-  });
+  }, [refreshToken, navigate]);
 
   useEffect(() => {
     if (!canUseAccessToken) {
@@ -69,7 +69,7 @@ export default function View({ refreshToken }) {
       setAccessToken(accessTokenData.access_token);
       setAccessExpiration(accessTokenData.expires_at);
     }
-  });
+  }, [accessTokenData, setAccessExpiration, setAccessToken]);
 
   useEffect(() => {
     if (accessToken && canUseAccessToken && !haveFetchedActivities) {
