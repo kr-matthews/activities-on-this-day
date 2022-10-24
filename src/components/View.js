@@ -23,7 +23,7 @@ export default function View({ refreshToken }) {
   const canUseAccessToken =
     hasAccessToken && !isExpiredOrExpiringSoon(accessExpiration);
 
-  const [earliestYear, setEarliestYear] = useSavedState("year", 2013); // ~ use 2008
+  const [earliestYear] = useSavedState("year", 2013); // ~ use 2008 // ~ [..., setEarliestYear]
 
   const {
     data: accessTokenData,
