@@ -18,6 +18,7 @@ export function useFetchActivities(earliestYear, accessToken) {
   const urls = useMemo(() => {
     const now = new Date();
 
+    // !!! reverse the definition of urls
     return Array(lastYear - earliestYear + 1)
       .fill(0)
       .map((_, index) => {
@@ -59,6 +60,7 @@ export function useFetchActivities(earliestYear, accessToken) {
             distanceInKm: Math.floor(activity.distance / 10) / 100,
             movingTime: activity.moving_time,
             elapsedTime: activity.elapsed_time,
+            // !! just take the local time, not day
             startDateLocal: activity.start_date_local,
             polyline: activity.map.summary_polyline,
             isCommute: activity.commute,

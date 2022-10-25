@@ -3,8 +3,8 @@ export default function Activities({
   day,
   earliestYear,
   activitiesData,
-  activitiesIsLoading,
-  activitiesError,
+  // activitiesIsLoading,
+  // activitiesError,
 }) {
   // todo: check if 0 total activities
   return (
@@ -12,16 +12,6 @@ export default function Activities({
       <h1>
         Activities on {month} {day}
       </h1>
-      <button
-        onClick={() => {
-          // ~ debug button
-          console.debug(activitiesData);
-          console.debug(activitiesError);
-          console.debug(activitiesIsLoading);
-        }}
-      >
-        Debug
-      </button>
       {activitiesData.map(
         (activities, index) =>
           activities &&
@@ -36,6 +26,8 @@ export default function Activities({
     </>
   );
 }
+
+// !!! add flags for dev
 
 // !! take in error and isLoading too
 function ActivitiesOnOneDay({ year, activities = [] }) {

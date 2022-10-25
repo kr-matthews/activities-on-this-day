@@ -9,6 +9,9 @@ import { useSavedState } from "../hooks/useSavedState";
 import { useFetchData } from "../hooks/useFetchData";
 import { useFetchActivities } from "../hooks/useFetchActivities";
 
+// todo: clean up time utils, be consistent with s vs ms
+
+const fiveMinutes = 5 * 60 * 1000;
 const currentSeconds = () => new Date().getTime() / 1000;
 
 export default function View({ refreshToken }) {
@@ -37,7 +40,12 @@ export default function View({ refreshToken }) {
     eachError: activitiesError,
     fetch: fetchActivities,
   } = useFetchActivities(earliestYear, accessToken);
-  const haveFetchedActivities = activitiesData.length > 0;
+  const [lastFetchedActivities, setLastFetchedActivities] = useSavedState(
+    "fetched",
+    null
+  );
+  const hasFetchedWithinFiveMinutes =
+    new Date().getTime() - lastFetchedActivities <= fiveMinutes;
 
   useEffect(() => {
     if (!refreshToken) {
@@ -72,13 +80,19 @@ export default function View({ refreshToken }) {
   }, [accessTokenData, setAccessExpiration, setAccessToken]);
 
   useEffect(() => {
-    if (accessToken && canUseAccessToken && !haveFetchedActivities) {
+    if (accessToken && canUseAccessToken && !hasFetchedWithinFiveMinutes) {
       console.info("Fetching activities.");
       fetchActivities();
+      setLastFetchedActivities(new Date().getTime());
     }
-  }, [accessToken, canUseAccessToken, haveFetchedActivities, fetchActivities]);
+  }, [
+    accessToken,
+    canUseAccessToken,
+    hasFetchedWithinFiveMinutes,
+    fetchActivities,
+    setLastFetchedActivities,
+  ]);
 
-  // !! filter activities data before passing in
   return (
     <>
       <div>
@@ -110,6 +124,16 @@ export default function View({ refreshToken }) {
         activitiesIsLoading={activitiesIsLoading}
         activitiesError={activitiesError}
       />
+      {hasFetchedWithinFiveMinutes && activitiesData.length === 0 && (
+        <button
+          onClick={() => {
+            fetchActivities();
+            setLastFetchedActivities(new Date().getTime());
+          }}
+        >
+          Fetch Activities
+        </button>
+      )}
       {accessTokenError && (
         <Error task="fetch access token" message={accessTokenError.message} />
       )}
