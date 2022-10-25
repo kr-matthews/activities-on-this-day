@@ -80,7 +80,12 @@ export default function View({ refreshToken }) {
       setAccessExpiration(accessTokenData.expires_at);
       resetAccessTokenFetch();
     }
-  }, [accessTokenData, setAccessExpiration, setAccessToken]);
+  }, [
+    accessTokenData,
+    setAccessExpiration,
+    setAccessToken,
+    resetAccessTokenFetch,
+  ]);
 
   useEffect(() => {
     if (accessToken && canUseAccessToken && !hasFetchedWithinFiveMinutes) {

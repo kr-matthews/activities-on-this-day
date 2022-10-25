@@ -45,11 +45,11 @@ export function useFetchData() {
     [setIsEachLoading, setEachData, setEachError]
   );
 
-  function reset() {
+  const reset = useCallback(() => {
     setIsEachLoading([]);
     setEachData([]);
     setEachError([]);
-  }
+  }, [setIsEachLoading, setEachData, setEachError]);
 
   return {
     fetch,
