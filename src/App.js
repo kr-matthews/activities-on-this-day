@@ -1,18 +1,18 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import Authentication from "./Authentication";
-import Redirect from "./Redirect";
-import View from "./View";
+import Authentication from "./pages/Authentication";
+import Redirect from "./pages/Redirect";
+import View from "./pages/View";
 
-import { useSavedState } from "../hooks/useSavedState";
+import { useSavedState } from "./hooks/useSavedState";
 
-import logoPoweredByStrava from "../assets/logo_powered_by_strava.svg";
+import logoPoweredByStrava from "./assets/logo_powered_by_strava.svg";
 
 export default function App() {
   const [refreshToken, setRefreshToken] = useSavedState("refresh", null);
   const hasRefreshToken = !!refreshToken;
 
-  // todo add flags for dev
+  // todo add flags for dev? - show extra buttons for resetting access/refresh tokens, fetching activities again
 
   return (
     <>
@@ -28,6 +28,13 @@ export default function App() {
       </div>
 
       <Routes>
+        <Route path="authenticate" element={<Authentication />} />
+
+        <Route
+          path="redirect"
+          element={<Redirect setRefreshToken={setRefreshToken} />}
+        />
+
         <Route
           path="/"
           element={
@@ -37,13 +44,6 @@ export default function App() {
               <Navigate to="/authenticate" />
             )
           }
-        />
-
-        <Route path="authenticate" element={<Authentication />} />
-
-        <Route
-          path="redirect"
-          element={<Redirect setRefreshToken={setRefreshToken} />}
         />
       </Routes>
 
@@ -57,4 +57,4 @@ export default function App() {
     </>
   );
 }
-// todo: link to revoke access
+// todo: add common Links component

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Activities from "./Activities";
-import Loading from "./Loading";
-import Error from "./Error";
+import Activities from "../components/Activities";
+import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 import { useSavedState } from "../hooks/useSavedState";
 import { useFetchData } from "../hooks/useFetchData";
@@ -148,6 +148,7 @@ export default function View({ refreshToken }) {
     </>
   );
 }
+// todo: link to revoke access
 
 // everything in seconds
 function isExpiredOrExpiringSoon(expiration) {
