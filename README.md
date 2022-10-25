@@ -40,4 +40,5 @@ See [enhancements](https://github.com/kr-matthews/activities-on-this-day/issues?
 
 See the [issues](https://github.com/kr-matthews/activities-on-this-day/issues) on GitHub, in addition to the following:
 
-// todo: readme flaws
+- No tests at all
+  // todo: readme flaws

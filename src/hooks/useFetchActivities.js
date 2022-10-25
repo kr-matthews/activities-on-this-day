@@ -18,11 +18,10 @@ export function useFetchActivities(earliestYear, accessToken) {
   const urls = useMemo(() => {
     const now = new Date();
 
-    // !!! reverse the definition of urls
     return Array(lastYear - earliestYear + 1)
       .fill(0)
       .map((_, index) => {
-        const historicalYear = earliestYear + index;
+        const historicalYear = lastYear - index;
         let historicalDay = new Date(now);
         historicalDay.setFullYear(historicalYear);
         const historicalSeconds = Math.floor(historicalDay.getTime() / 1000);
@@ -57,6 +56,7 @@ export function useFetchActivities(earliestYear, accessToken) {
           .map((activity) => ({
             id: activity.id,
             name: activity.name,
+            type: activity.type,
             distanceInKm: Math.floor(activity.distance / 10) / 100,
             movingTime: activity.moving_time,
             elapsedTime: activity.elapsed_time,

@@ -1,7 +1,7 @@
 export default function Activities({
+  year,
   month,
   day,
-  earliestYear,
   activitiesData,
   // activitiesIsLoading,
   // activitiesError,
@@ -17,8 +17,8 @@ export default function Activities({
           activities &&
           activities.length > 0 && (
             <ActivitiesOnOneDay
-              key={earliestYear + index}
-              year={earliestYear + index}
+              key={year - index - 1}
+              year={year - index - 1}
               activities={activities}
             />
           )

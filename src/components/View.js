@@ -119,9 +119,9 @@ export default function View({ refreshToken }) {
       </div>
       {isAccessTokenLoading && <Loading task="fetch access token" />}
       <Activities
+        year={2022}
         month="January"
         day={0}
-        earliestYear={earliestYear}
         activitiesData={activitiesData}
         activitiesIsLoading={activitiesIsLoading}
         activitiesError={activitiesError}
