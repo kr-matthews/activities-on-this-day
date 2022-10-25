@@ -55,8 +55,8 @@ function ActivitiesOnOneDay({ year, activities = [] }) {
 function Activity({ activity }) {
   return (
     <div>
-      {activity.start_date_local} -- {Math.floor(activity.distance / 10) / 100}{" "}
-      -- <b>{activity.name}</b>
+      {activity.startDateLocal} -- {activity.distanceInKm}km --{" "}
+      <b>{activity.name}</b>
     </div>
   );
 }

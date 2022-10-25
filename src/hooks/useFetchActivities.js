@@ -7,7 +7,7 @@ import { useFetchData } from "./useFetchData";
 export function useFetchActivities(earliestYear, accessToken) {
   const {
     isEachLoading,
-    eachData,
+    eachData: unprocessedData,
     eachError,
     fetch: genericFetch,
     reset: genericReset,
@@ -37,12 +37,43 @@ export function useFetchActivities(earliestYear, accessToken) {
     genericFetch(urls);
   }, [genericFetch, urls]);
 
+  const processedData = useMemo(() => {
+    const now = new Date();
+    const month = now.getMonth();
+    const monthString = month < 9 ? `0${month + 1}` : `${month + 1}`;
+    const day = now.getDate();
+    const dayString = day < 9 ? `0${day}` : `${day}`;
+    const dateToMatch = `${monthString}-${dayString}`;
+
+    return unprocessedData.map(
+      (activities) =>
+        activities &&
+        activities
+          .filter(
+            (activity) =>
+              activity.start_date_local.substring(5, 10) === dateToMatch
+          )
+          .map((activity) => ({
+            id: activity.id,
+            name: activity.name,
+            distanceInKm: Math.floor(activity.distance / 10) / 100,
+            movingTime: activity.moving_time,
+            elapsedTime: activity.elapsed_time,
+            startDateLocal: activity.start_date_local,
+            polyline: activity.map.summary_polyline,
+            isCommute: activity.commute,
+            isPrivate: activity.private,
+            averageSpeed: activity.average_speed,
+          }))
+    );
+  }, [unprocessedData]);
+
   return {
     fetch,
     reset: genericReset,
 
     isEachLoading,
-    eachData,
+    eachData: processedData,
     eachError,
   };
 }
