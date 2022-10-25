@@ -26,7 +26,8 @@ export default function View({ refreshToken }) {
   const canUseAccessToken =
     hasAccessToken && !isExpiredOrExpiringSoon(accessExpiration);
 
-  const [earliestYear] = useSavedState("year", 2014); // ~ use 2008 // ~ [..., setEarliestYear]
+  // todo: ensure it stays between 2008 and last year (use reducer?)
+  const [earliestYear] = useSavedState("year", 2008); // ~ [..., setEarliestYear]
 
   const {
     data: accessTokenData,
@@ -37,7 +38,7 @@ export default function View({ refreshToken }) {
   } = useFetchData();
   const {
     eachData: activitiesData,
-    eachIsLoading: activitiesIsLoading,
+    isEachLoading: activitiesIsLoading,
     eachError: activitiesError,
     fetch: fetchActivities,
   } = useFetchActivities(earliestYear, accessToken);
