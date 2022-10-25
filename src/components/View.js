@@ -33,6 +33,7 @@ export default function View({ refreshToken }) {
     isLoading: isAccessTokenLoading,
     error: accessTokenError,
     fetch: fetchAccessToken,
+    reset: resetAccessTokenFetch,
   } = useFetchData();
   const {
     eachData: activitiesData,
@@ -76,6 +77,7 @@ export default function View({ refreshToken }) {
       console.info("Received access token.");
       setAccessToken(accessTokenData.access_token);
       setAccessExpiration(accessTokenData.expires_at);
+      resetAccessTokenFetch();
     }
   }, [accessTokenData, setAccessExpiration, setAccessToken]);
 
