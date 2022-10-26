@@ -1,15 +1,21 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Activities from "./Activities";
-import Loading from "./Loading";
-import Error from "./Error";
+import Activities from "../Activities";
+import Loading from "../Loading";
+import Error from "../Error";
 
-import { useSavedState } from "../hooks/useSavedState";
-import { useFetchData } from "../hooks/useFetchData";
-import { useFetchActivities } from "../hooks/useFetchActivities";
+import { useSavedState } from "../../hooks/useSavedState";
+import { useFetchData } from "../../hooks/useFetchData";
+import { useFetchActivities } from "../../hooks/useFetchActivities";
 
+// todo: clean up time utils (hook?), be consistent with s vs ms
+
+const fiveMinutes = 5 * 60 * 1000;
 const currentSeconds = () => new Date().getTime() / 1000;
+const currentYear = new Date().getFullYear();
+const currentMonth = new Date().toLocaleString("default", { month: "long" });
+const currentDay = new Date().getDate();
 
 export default function View({ refreshToken }) {
   const navigate = useNavigate();
@@ -23,21 +29,28 @@ export default function View({ refreshToken }) {
   const canUseAccessToken =
     hasAccessToken && !isExpiredOrExpiringSoon(accessExpiration);
 
-  const [earliestYear] = useSavedState("year", 2014); // ~ use 2008 // ~ [..., setEarliestYear]
+  // todo: allow setting earliest year; ensure it stays between 2008 and last year (use reducer?)
+  const [earliestYear] = useSavedState("year", 2008); // ~ [..., setEarliestYear]
 
   const {
     data: accessTokenData,
     isLoading: isAccessTokenLoading,
     error: accessTokenError,
     fetch: fetchAccessToken,
+    reset: resetAccessTokenFetch,
   } = useFetchData();
   const {
     eachData: activitiesData,
-    eachIsLoading: activitiesIsLoading,
+    isEachLoading: activitiesIsLoading,
     eachError: activitiesError,
     fetch: fetchActivities,
   } = useFetchActivities(earliestYear, accessToken);
-  const haveFetchedActivities = activitiesData.length > 0;
+  const [lastFetchedActivities, setLastFetchedActivities] = useSavedState(
+    "fetched",
+    null
+  );
+  const hasFetchedWithinFiveMinutes =
+    new Date().getTime() - lastFetchedActivities <= fiveMinutes;
 
   useEffect(() => {
     if (!refreshToken) {
@@ -68,25 +81,39 @@ export default function View({ refreshToken }) {
       console.info("Received access token.");
       setAccessToken(accessTokenData.access_token);
       setAccessExpiration(accessTokenData.expires_at);
+      resetAccessTokenFetch();
     }
-  }, [accessTokenData, setAccessExpiration, setAccessToken]);
+  }, [
+    accessTokenData,
+    setAccessExpiration,
+    setAccessToken,
+    resetAccessTokenFetch,
+  ]);
 
   useEffect(() => {
-    if (accessToken && canUseAccessToken && !haveFetchedActivities) {
+    if (accessToken && canUseAccessToken && !hasFetchedWithinFiveMinutes) {
       console.info("Fetching activities.");
       fetchActivities();
+      setLastFetchedActivities(new Date().getTime());
     }
-  }, [accessToken, canUseAccessToken, haveFetchedActivities, fetchActivities]);
+  }, [
+    accessToken,
+    canUseAccessToken,
+    hasFetchedWithinFiveMinutes,
+    fetchActivities,
+    setLastFetchedActivities,
+  ]);
 
-  // !! filter activities data before passing in
+  // !!! as part of dev flags, remove these buttons unless in dev mode
+
   return (
     <>
+      {/* // ~ 2 clear buttons */}
       <div>
         <button
           onClick={() => {
             setAccessToken(null);
             setAccessExpiration(null);
-            navigate("/authenticate");
           }}
         >
           Clear access token
@@ -101,21 +128,33 @@ export default function View({ refreshToken }) {
           Restart
         </button>
       </div>
+
       {isAccessTokenLoading && <Loading task="fetch access token" />}
       <Activities
-        month="January"
-        day={0}
-        earliestYear={earliestYear}
+        year={currentYear}
+        month={currentMonth}
+        day={currentDay}
         activitiesData={activitiesData}
         activitiesIsLoading={activitiesIsLoading}
         activitiesError={activitiesError}
       />
+      {hasFetchedWithinFiveMinutes && activitiesData.length === 0 && (
+        <button
+          onClick={() => {
+            fetchActivities();
+            setLastFetchedActivities(new Date().getTime());
+          }}
+        >
+          Fetch Activities
+        </button>
+      )}
       {accessTokenError && (
         <Error task="fetch access token" message={accessTokenError.message} />
       )}
     </>
   );
 }
+// !: add link to revoke access
 
 // everything in seconds
 function isExpiredOrExpiringSoon(expiration) {

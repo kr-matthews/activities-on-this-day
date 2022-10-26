@@ -1,62 +1,83 @@
+import Loading from "./Loading";
+import Error from "./Error";
+
 export default function Activities({
+  year,
   month,
   day,
-  earliestYear,
   activitiesData,
   activitiesIsLoading,
   activitiesError,
 }) {
-  // todo: check if 0 total activities
-  return (
-    <>
-      <h1>
-        Activities on {month} {day}
-      </h1>
-      <button
-        onClick={() => {
-          // ~ debug button
-          console.debug(activitiesData);
-          console.debug(activitiesError);
-          console.debug(activitiesIsLoading);
-        }}
-      >
-        Debug
-      </button>
-      {activitiesData.map(
-        (activities, index) =>
-          activities &&
-          activities.length > 0 && (
-            <ActivitiesOnOneDay
-              key={earliestYear + index}
-              year={earliestYear + index}
-              activities={activities}
-            />
-          )
-      )}
-    </>
-  );
-}
+  const areAllEmpty =
+    activitiesData.length > 0 &&
+    activitiesData.every((activities) => activities && activities.length === 0);
 
-// !! take in error and isLoading too
-function ActivitiesOnOneDay({ year, activities = [] }) {
   return (
     <>
-      <h2>{year}</h2>
-      {activities.map((activity) => (
-        <Activity key={activity.id} activity={activity} />
+      <h2>
+        Historical Activities from {month} {day}
+      </h2>
+
+      {areAllEmpty && (
+        <div>You don't have any activities on this day in history.</div>
+      )}
+      {activitiesData.map((activities, index) => (
+        <ActivitiesOnOneDay
+          key={year - index - 1}
+          year={year - index - 1}
+          activities={activities}
+          isLoading={activitiesIsLoading[index]}
+          error={activitiesError[index]}
+        />
       ))}
     </>
   );
 }
 
-// todo: link to original activity
+// todo: gracefully fade out if/when shouldShow goes to false
+// ! activity layout/UI -- including map!
+function ActivitiesOnOneDay({
+  year,
+  activities,
+  isLoading = false,
+  error = null,
+}) {
+  const shouldShow =
+    (activities && activities.length > 0) || isLoading || error;
+  return (
+    <>
+      {shouldShow && (
+        <>
+          <h2>{year}</h2>
+          {activities &&
+            activities.map((activity) => (
+              <Activity key={activity.id} activity={activity} />
+            ))}
+          {isLoading && <Loading task={`fetch ${year} activities`} />}
+          {error && (
+            <Error task={`fetch ${year} activities`} message={error.message} />
+          )}
+        </>
+      )}
+    </>
+  );
+}
+
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
-function Activity({ activity }) {
+function Activity({
+  activity: { id, type, name, distanceInKm, startDateLocal },
+}) {
+  const linkToActivity = `https://www.strava.com/activities/${id}`;
   return (
-    <div>
-      {activity.start_date_local} -- {Math.floor(activity.distance / 10) / 100}{" "}
-      -- <b>{activity.name}</b>
-    </div>
+    <>
+      <div>
+        {startDateLocal} -- {type} {distanceInKm}km -- <b>{name}</b>
+      </div>
+      <a href={linkToActivity} target="_blank" rel="noopener noreferrer">
+        View on Strava
+      </a>
+    </>
   );
 }

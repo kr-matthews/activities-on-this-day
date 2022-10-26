@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import Loading from "./Loading";
-import Error from "./Error";
+import Loading from "../Loading";
+import Error from "../Error";
 
-import { useFetchData } from "../hooks/useFetchData";
+import { useFetchData } from "../../hooks/useFetchData";
 
-// !! handle 'error=access_denied' in url
+// ! handle 'error=access_denied' in url
 
 export default function Redirect({ setRefreshToken }) {
   const params = useSearchParams();
@@ -29,6 +29,9 @@ export default function Redirect({ setRefreshToken }) {
     }
   }, [data, navigate, setRefreshToken]);
 
+  // !! add no code error case
+  // ! descriptive error message/UI, based on 2 possible errors
+  // todo: tidy up redirect UI (success case should be removed, it's just confusing)
   return (
     <>
       {isLoading && <Loading task="fetch persistent token" />}
@@ -40,7 +43,7 @@ export default function Redirect({ setRefreshToken }) {
             statusCode={error.statusCode}
             message={error.message}
           />
-          <button onClick={() => navigate("/authenticate")}>Restart</button>
+          <button onClick={() => navigate("/authenticate")}>Try again</button>
         </>
       )}
     </>
