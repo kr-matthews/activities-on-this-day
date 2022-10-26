@@ -1,3 +1,5 @@
+// ! clean up error UI
+
 export default function Error({ task, statusCode, message }) {
   return (
     <>

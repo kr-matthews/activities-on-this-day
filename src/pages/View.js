@@ -9,7 +9,7 @@ import { useSavedState } from "../hooks/useSavedState";
 import { useFetchData } from "../hooks/useFetchData";
 import { useFetchActivities } from "../hooks/useFetchActivities";
 
-// todo: clean up time utils, be consistent with s vs ms
+// todo: clean up time utils (hook?), be consistent with s vs ms
 
 const fiveMinutes = 5 * 60 * 1000;
 const currentSeconds = () => new Date().getTime() / 1000;
@@ -26,7 +26,7 @@ export default function View({ refreshToken }) {
   const canUseAccessToken =
     hasAccessToken && !isExpiredOrExpiringSoon(accessExpiration);
 
-  // todo: ensure it stays between 2008 and last year (use reducer?)
+  // todo: allow setting earliest year; ensure it stays between 2008 and last year (use reducer?)
   const [earliestYear] = useSavedState("year", 2008); // ~ [..., setEarliestYear]
 
   const {
@@ -101,14 +101,16 @@ export default function View({ refreshToken }) {
     setLastFetchedActivities,
   ]);
 
+  // !!! as part of dev flags, remove these buttons unless in dev mode
+
   return (
     <>
+      {/* // ~ 2 clear buttons */}
       <div>
         <button
           onClick={() => {
             setAccessToken(null);
             setAccessExpiration(null);
-            navigate("/authenticate");
           }}
         >
           Clear access token
@@ -123,7 +125,9 @@ export default function View({ refreshToken }) {
           Restart
         </button>
       </div>
+
       {isAccessTokenLoading && <Loading task="fetch access token" />}
+      {/* // !!! pass in year, month, day */}
       <Activities
         year={2022}
         month="January"
@@ -148,7 +152,7 @@ export default function View({ refreshToken }) {
     </>
   );
 }
-// todo: link to revoke access
+// !: add link to revoke access
 
 // everything in seconds
 function isExpiredOrExpiringSoon(expiration) {

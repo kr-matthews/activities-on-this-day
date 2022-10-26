@@ -15,9 +15,10 @@ export default function Activities({
 
   return (
     <>
-      <h1>
-        Historical activities on {month} {day}
-      </h1>
+      <h2>
+        Historical Activities from {month} {day}
+      </h2>
+
       {areAllEmpty && (
         <div>You don't have any activities on this day in history.</div>
       )}
@@ -35,6 +36,7 @@ export default function Activities({
 }
 
 // todo: gracefully fade out if/when shouldShow goes to false
+// ! activity layout/UI -- including map!
 function ActivitiesOnOneDay({
   year,
   activities,

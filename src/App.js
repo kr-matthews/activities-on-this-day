@@ -12,11 +12,12 @@ export default function App() {
   const [refreshToken, setRefreshToken] = useSavedState("refresh", null);
   const hasRefreshToken = !!refreshToken;
 
-  // todo add flags for dev? - show extra buttons for resetting access/refresh tokens, fetching activities again
+  // !!! add flags for dev? - show extra buttons for resetting access/refresh tokens, fetching activities again
 
   return (
     <>
       <h1>Activities On-This-Day [WIP]</h1>
+      {/* // ~ clear token button */}
       <div>
         <button
           onClick={() => {
@@ -57,4 +58,4 @@ export default function App() {
     </>
   );
 }
-// todo: add common Links component
+// !!!: add common Links component
