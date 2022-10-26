@@ -13,6 +13,9 @@ import { useFetchActivities } from "../hooks/useFetchActivities";
 
 const fiveMinutes = 5 * 60 * 1000;
 const currentSeconds = () => new Date().getTime() / 1000;
+const currentYear = new Date().getFullYear();
+const currentMonth = new Date().toLocaleString("default", { month: "long" });
+const currentDay = new Date().getDate();
 
 export default function View({ refreshToken }) {
   const navigate = useNavigate();
@@ -127,11 +130,10 @@ export default function View({ refreshToken }) {
       </div>
 
       {isAccessTokenLoading && <Loading task="fetch access token" />}
-      {/* // !!! pass in year, month, day */}
       <Activities
-        year={2022}
-        month="January"
-        day={0}
+        year={currentYear}
+        month={currentMonth}
+        day={currentDay}
         activitiesData={activitiesData}
         activitiesIsLoading={activitiesIsLoading}
         activitiesError={activitiesError}
