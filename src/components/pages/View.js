@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Activities from "../components/Activities";
-import Loading from "../components/Loading";
-import Error from "../components/Error";
+import Activities from "../Activities";
+import Loading from "../Loading";
+import Error from "../Error";
 
-import { useSavedState } from "../hooks/useSavedState";
-import { useFetchData } from "../hooks/useFetchData";
-import { useFetchActivities } from "../hooks/useFetchActivities";
+import { useSavedState } from "../../hooks/useSavedState";
+import { useFetchData } from "../../hooks/useFetchData";
+import { useFetchActivities } from "../../hooks/useFetchActivities";
 
 // todo: clean up time utils (hook?), be consistent with s vs ms
 

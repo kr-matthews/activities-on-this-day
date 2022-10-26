@@ -1,4 +1,4 @@
-import buttonStravaConnect from "../assets/button_strava_connect.svg";
+import buttonStravaConnect from "../../assets/button_strava_connect.svg";
 
 // !! add app description, including revoke access note
 

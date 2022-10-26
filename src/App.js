@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import Authentication from "./pages/Authentication";
-import Redirect from "./pages/Redirect";
-import View from "./pages/View";
+import Authentication from "./components/pages/Authentication";
+import Redirect from "./components/pages/Redirect";
+import View from "./components/pages/View";
 
 import { useSavedState } from "./hooks/useSavedState";
 

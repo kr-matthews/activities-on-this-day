@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import Loading from "../components/Loading";
-import Error from "../components/Error";
+import Loading from "../Loading";
+import Error from "../Error";
 
-import { useFetchData } from "../hooks/useFetchData";
+import { useFetchData } from "../../hooks/useFetchData";
 
 // ! handle 'error=access_denied' in url
 
