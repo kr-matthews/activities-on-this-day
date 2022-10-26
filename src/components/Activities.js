@@ -66,13 +66,14 @@ function ActivitiesOnOneDay({
 
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
-function Activity({ activity }) {
-  const linkToActivity = `https://www.strava.com/activities/${activity.id}`;
+function Activity({
+  activity: { id, type, name, distanceInKm, startDateLocal },
+}) {
+  const linkToActivity = `https://www.strava.com/activities/${id}`;
   return (
     <>
       <div>
-        {activity.startDateLocal} -- {activity.type} {activity.distanceInKm}km
-        -- <b>{activity.name}</b>
+        {startDateLocal} -- {type} {distanceInKm}km -- <b>{name}</b>
       </div>
       <a href={linkToActivity} target="_blank" rel="noopener noreferrer">
         View on Strava
