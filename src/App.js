@@ -12,21 +12,11 @@ export default function App() {
   const [refreshToken, setRefreshToken] = useSavedState("refresh", null);
   const hasRefreshToken = !!refreshToken;
 
-  // !!! add flags for dev? - show extra buttons for resetting access/refresh tokens, fetching activities again
+  const showDevOptions = process.env.REACT_APP_ENV === "LOCAL";
 
   return (
     <>
       <h1>Activities On-This-Day [WIP]</h1>
-      {/* // ~ clear token button */}
-      <div>
-        <button
-          onClick={() => {
-            setRefreshToken(null);
-          }}
-        >
-          Clear refresh token
-        </button>
-      </div>
 
       <Routes>
         <Route path="authenticate" element={<Authentication />} />
@@ -48,6 +38,18 @@ export default function App() {
         />
       </Routes>
 
+      {showDevOptions && (
+        <div>
+          <button
+            onClick={() => {
+              setRefreshToken(null);
+            }}
+          >
+            Clear refresh token
+          </button>
+        </div>
+      )}
+
       <div>
         <img
           src={logoPoweredByStrava}
@@ -58,4 +60,4 @@ export default function App() {
     </>
   );
 }
-// !!!: add common Links component
+// !!!: add common Links component; move 'powered by' there

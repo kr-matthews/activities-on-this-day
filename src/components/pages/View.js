@@ -30,7 +30,7 @@ export default function View({ refreshToken }) {
     hasAccessToken && !isExpiredOrExpiringSoon(accessExpiration);
 
   // todo: allow setting earliest year; ensure it stays between 2008 and last year (use reducer?)
-  const [earliestYear] = useSavedState("year", 2008); // ~ [..., setEarliestYear]
+  const [earliestYear] = useSavedState("year", 2008);
 
   const {
     data: accessTokenData,
@@ -104,41 +104,12 @@ export default function View({ refreshToken }) {
     setLastFetchedActivities,
   ]);
 
-  // !!! as part of dev flags, remove these buttons unless in dev mode
+  const showDevOptions = process.env.REACT_APP_ENV === "LOCAL";
 
   return (
     <>
-      {/* // ~ 2 clear buttons */}
-      <div>
-        <button
-          onClick={() => {
-            setAccessToken(null);
-            setAccessExpiration(null);
-          }}
-        >
-          Clear access token
-        </button>
-      </div>
-      <div>
-        <button
-          onClick={() => {
-            navigate("/authenticate");
-          }}
-        >
-          Restart
-        </button>
-      </div>
-
-      {isAccessTokenLoading && <Loading task="fetch access token" />}
-      <Activities
-        year={currentYear}
-        month={currentMonth}
-        day={currentDay}
-        activitiesData={activitiesData}
-        activitiesIsLoading={activitiesIsLoading}
-        activitiesError={activitiesError}
-      />
-      {hasFetchedWithinFiveMinutes && activitiesData.length === 0 && (
+      {((hasFetchedWithinFiveMinutes && activitiesData.length === 0) ||
+        showDevOptions) && (
         <button
           onClick={() => {
             fetchActivities();
@@ -148,8 +119,51 @@ export default function View({ refreshToken }) {
           Fetch Activities
         </button>
       )}
+
+      {isAccessTokenLoading && <Loading task="fetch access token" />}
+
+      <Activities
+        year={currentYear}
+        month={currentMonth}
+        day={currentDay}
+        activitiesData={activitiesData}
+        activitiesIsLoading={activitiesIsLoading}
+        activitiesError={activitiesError}
+      />
+
       {accessTokenError && (
         <Error task="fetch access token" message={accessTokenError.message} />
+      )}
+
+      {showDevOptions && (
+        <>
+          <div>
+            <button
+              onClick={() => {
+                navigate("/authenticate");
+              }}
+            >
+              Go to authentication step
+            </button>
+            <button
+              onClick={() => {
+                setAccessToken(null);
+                setAccessExpiration(null);
+              }}
+            >
+              Clear access token
+            </button>
+            <button
+              onClick={() => {
+                setAccessToken(null);
+                setAccessExpiration(null);
+                navigate("/authenticate");
+              }}
+            >
+              Both
+            </button>
+          </div>
+        </>
       )}
     </>
   );
