@@ -165,10 +165,19 @@ export default function View({ refreshToken }) {
           </div>
         </>
       )}
+
+      <p>
+        <a
+          href="https://www.strava.com/settings/apps"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Revoke access on Strava
+        </a>
+      </p>
     </>
   );
 }
-// !: add link to revoke access
 
 // everything in seconds
 function isExpiredOrExpiringSoon(expiration) {

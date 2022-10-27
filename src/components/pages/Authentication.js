@@ -10,7 +10,21 @@ export default function Authentication() {
   // see https://developers.strava.com/guidelines/#:~:text=1.1%20Connect%20with%20Strava%20buttons
   return (
     <>
-      <p>Description.</p>
+      <p style={{ maxWidth: 600 }}>
+        This is a simple app which displays your Strava activities that were
+        recorded on this day in history. In order to see your activities, you'll
+        need to provide permission for the app to access your Strava activities
+        via the button below. Once granted, you can revoke this access at any
+        time by going to your settings on Strava's website at{" "}
+        <a
+          href="https://www.strava.com/settings/apps"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://www.strava.com/settings/apps
+        </a>
+        . There will also be a link at the bottom of this page.
+      </p>
       <a href={authUrl}>
         <img src={buttonStravaConnect} alt="Connect with Strava" />
       </a>
