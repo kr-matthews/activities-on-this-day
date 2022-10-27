@@ -9,6 +9,8 @@ import { useSavedState } from "../../hooks/useSavedState";
 import { useFetchData } from "../../hooks/useFetchData";
 import { useFetchActivities } from "../../hooks/useFetchActivities";
 
+import strings from "../../strings";
+
 // todo: clean up time utils (hook?), be consistent with s vs ms
 
 const fiveMinutes = 5 * 60 * 1000;
@@ -116,7 +118,7 @@ export default function View({ refreshToken }) {
             setLastFetchedActivities(new Date().getTime());
           }}
         >
-          Fetch Activities
+          {strings.labels.fetchActivities}
         </button>
       )}
 
@@ -143,7 +145,7 @@ export default function View({ refreshToken }) {
                 navigate("/authenticate");
               }}
             >
-              Go to authentication step
+              {strings.dev.goToAuth}
             </button>
             <button
               onClick={() => {
@@ -151,7 +153,7 @@ export default function View({ refreshToken }) {
                 setAccessExpiration(null);
               }}
             >
-              Clear access token
+              {strings.dev.clearAccess}
             </button>
             <button
               onClick={() => {
@@ -160,7 +162,7 @@ export default function View({ refreshToken }) {
                 navigate("/authenticate");
               }}
             >
-              Both
+              {strings.dev.clearAndGo}
             </button>
           </div>
         </>
@@ -168,11 +170,11 @@ export default function View({ refreshToken }) {
 
       <p>
         <a
-          href="https://www.strava.com/settings/apps"
+          href={strings.links.revokeAccess}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Revoke access on Strava
+          {strings.labels.revokeAccess}
         </a>
       </p>
     </>

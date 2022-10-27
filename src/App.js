@@ -6,6 +6,8 @@ import View from "./components/pages/View";
 
 import { useSavedState } from "./hooks/useSavedState";
 
+import strings from "./strings";
+
 import logoPoweredByStrava from "./assets/logo_powered_by_strava.svg";
 
 export default function App() {
@@ -16,7 +18,7 @@ export default function App() {
 
   return (
     <>
-      <h1>Activities On-This-Day [WIP]</h1>
+      <h1>{strings.headings.appName}</h1>
 
       <Routes>
         <Route path="authenticate" element={<Authentication />} />
@@ -45,7 +47,7 @@ export default function App() {
               setRefreshToken(null);
             }}
           >
-            Clear refresh token
+            {strings.dev.clearRefresh}
           </button>
         </div>
       )}
@@ -60,4 +62,6 @@ export default function App() {
     </>
   );
 }
-// !!!: add common Links component; move 'powered by' there
+// !!!: add common Links component
+// !!! move 'powered by' to the links component
+// !!! stick links component to the bottom of the page (if visible)??
