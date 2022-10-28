@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Authentication from "./components/pages/Authentication";
 import Redirect from "./components/pages/Redirect";
 import View from "./components/pages/View";
+import Links from "./components/Links";
 
 import { useSavedState } from "./hooks/useSavedState";
 
@@ -52,16 +53,14 @@ export default function App() {
         </div>
       )}
 
-      <div>
+      <Links gitHubLink={strings.links.gitHubRepo}>
         <img
           src={logoPoweredByStrava}
           style={{ width: 200 }}
           alt="Powered by Strava"
         />
-      </div>
+      </Links>
     </>
   );
 }
-// !!!: add common Links component
-// !!! move 'powered by' to the links component
 // !!! stick links component to the bottom of the page (if visible)??
