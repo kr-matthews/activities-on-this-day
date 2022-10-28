@@ -39,6 +39,12 @@ export default function App() {
             )
           }
         />
+
+        <Route
+          path="*"
+          element={<Navigate to="/" />}
+          options={{ replace: true }}
+        />
       </Routes>
 
       {showDevOptions && (
