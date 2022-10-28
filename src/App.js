@@ -19,45 +19,47 @@ export default function App() {
 
   return (
     <>
-      <h1>{strings.headings.appName}</h1>
+      <div className="non-footer">
+        <h1>{strings.headings.appName}</h1>
 
-      <Routes>
-        <Route path="authenticate" element={<Authentication />} />
+        <Routes>
+          <Route path="authenticate" element={<Authentication />} />
 
-        <Route
-          path="redirect"
-          element={<Redirect setRefreshToken={setRefreshToken} />}
-        />
+          <Route
+            path="redirect"
+            element={<Redirect setRefreshToken={setRefreshToken} />}
+          />
 
-        <Route
-          path="/"
-          element={
-            hasRefreshToken ? (
-              <View refreshToken={refreshToken} />
-            ) : (
-              <Navigate to="/authenticate" />
-            )
-          }
-        />
+          <Route
+            path="/"
+            element={
+              hasRefreshToken ? (
+                <View refreshToken={refreshToken} />
+              ) : (
+                <Navigate to="/authenticate" />
+              )
+            }
+          />
 
-        <Route
-          path="*"
-          element={<Navigate to="/" />}
-          options={{ replace: true }}
-        />
-      </Routes>
+          <Route
+            path="*"
+            element={<Navigate to="/" />}
+            options={{ replace: true }}
+          />
+        </Routes>
 
-      {showDevOptions && (
-        <div>
-          <button
-            onClick={() => {
-              setRefreshToken(null);
-            }}
-          >
-            {strings.dev.clearRefresh}
-          </button>
-        </div>
-      )}
+        {showDevOptions && (
+          <div>
+            <button
+              onClick={() => {
+                setRefreshToken(null);
+              }}
+            >
+              {strings.dev.clearRefresh}
+            </button>
+          </div>
+        )}
+      </div>
 
       <Links gitHubLink={strings.links.gitHubRepo}>
         <img
@@ -69,4 +71,3 @@ export default function App() {
     </>
   );
 }
-// !!! stick links component to the bottom of the page (if visible)??
