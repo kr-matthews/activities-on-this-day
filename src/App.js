@@ -3,8 +3,11 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Authentication from "./components/pages/Authentication";
 import Redirect from "./components/pages/Redirect";
 import View from "./components/pages/View";
+import Links from "./components/Links";
 
 import { useSavedState } from "./hooks/useSavedState";
+
+import strings from "./strings";
 
 import logoPoweredByStrava from "./assets/logo_powered_by_strava.svg";
 
@@ -12,50 +15,59 @@ export default function App() {
   const [refreshToken, setRefreshToken] = useSavedState("refresh", null);
   const hasRefreshToken = !!refreshToken;
 
-  // !!! add flags for dev? - show extra buttons for resetting access/refresh tokens, fetching activities again
+  const showDevOptions = process.env.REACT_APP_ENV === "LOCAL";
 
   return (
     <>
-      <h1>Activities On-This-Day [WIP]</h1>
-      {/* // ~ clear token button */}
-      <div>
-        <button
-          onClick={() => {
-            setRefreshToken(null);
-          }}
-        >
-          Clear refresh token
-        </button>
+      <div className="non-footer">
+        <h1>{strings.headings.appName}</h1>
+
+        <Routes>
+          <Route path="authenticate" element={<Authentication />} />
+
+          <Route
+            path="redirect"
+            element={<Redirect setRefreshToken={setRefreshToken} />}
+          />
+
+          <Route
+            path="/"
+            element={
+              hasRefreshToken ? (
+                <View refreshToken={refreshToken} />
+              ) : (
+                <Navigate to="/authenticate" />
+              )
+            }
+          />
+
+          <Route
+            path="*"
+            element={<Navigate to="/" />}
+            options={{ replace: true }}
+          />
+        </Routes>
+
+        {showDevOptions && (
+          <div>
+            <button
+              onClick={() => {
+                setRefreshToken(null);
+              }}
+            >
+              {strings.dev.clearRefresh}
+            </button>
+          </div>
+        )}
       </div>
 
-      <Routes>
-        <Route path="authenticate" element={<Authentication />} />
-
-        <Route
-          path="redirect"
-          element={<Redirect setRefreshToken={setRefreshToken} />}
-        />
-
-        <Route
-          path="/"
-          element={
-            hasRefreshToken ? (
-              <View refreshToken={refreshToken} />
-            ) : (
-              <Navigate to="/authenticate" />
-            )
-          }
-        />
-      </Routes>
-
-      <div>
+      <Links gitHubLink={strings.links.gitHubRepo}>
         <img
           src={logoPoweredByStrava}
           style={{ width: 200 }}
           alt="Powered by Strava"
         />
-      </div>
+      </Links>
     </>
   );
 }
-// !!!: add common Links component

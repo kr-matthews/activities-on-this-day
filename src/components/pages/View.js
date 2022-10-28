@@ -9,7 +9,11 @@ import { useSavedState } from "../../hooks/useSavedState";
 import { useFetchData } from "../../hooks/useFetchData";
 import { useFetchActivities } from "../../hooks/useFetchActivities";
 
+import strings from "../../strings";
+
 // todo: clean up time utils (hook?), be consistent with s vs ms
+
+// !!! store activities so only need to fetch once per day, if possible
 
 const fiveMinutes = 5 * 60 * 1000;
 const currentSeconds = () => new Date().getTime() / 1000;
@@ -30,7 +34,7 @@ export default function View({ refreshToken }) {
     hasAccessToken && !isExpiredOrExpiringSoon(accessExpiration);
 
   // todo: allow setting earliest year; ensure it stays between 2008 and last year (use reducer?)
-  const [earliestYear] = useSavedState("year", 2008); // ~ [..., setEarliestYear]
+  const [earliestYear] = useSavedState("year", 2008);
 
   const {
     data: accessTokenData,
@@ -104,32 +108,10 @@ export default function View({ refreshToken }) {
     setLastFetchedActivities,
   ]);
 
-  // !!! as part of dev flags, remove these buttons unless in dev mode
+  const showDevOptions = process.env.REACT_APP_ENV === "LOCAL";
 
   return (
     <>
-      {/* // ~ 2 clear buttons */}
-      <div>
-        <button
-          onClick={() => {
-            setAccessToken(null);
-            setAccessExpiration(null);
-          }}
-        >
-          Clear access token
-        </button>
-      </div>
-      <div>
-        <button
-          onClick={() => {
-            navigate("/authenticate");
-          }}
-        >
-          Restart
-        </button>
-      </div>
-
-      {isAccessTokenLoading && <Loading task="fetch access token" />}
       <Activities
         year={currentYear}
         month={currentMonth}
@@ -138,23 +120,70 @@ export default function View({ refreshToken }) {
         activitiesIsLoading={activitiesIsLoading}
         activitiesError={activitiesError}
       />
-      {hasFetchedWithinFiveMinutes && activitiesData.length === 0 && (
-        <button
-          onClick={() => {
-            fetchActivities();
-            setLastFetchedActivities(new Date().getTime());
-          }}
-        >
-          Fetch Activities
-        </button>
+
+      {((hasFetchedWithinFiveMinutes && activitiesData.length === 0) ||
+        showDevOptions) && (
+        <div>
+          <button
+            onClick={() => {
+              fetchActivities();
+              setLastFetchedActivities(new Date().getTime());
+            }}
+          >
+            {strings.labels.fetchActivities}
+          </button>
+        </div>
       )}
+
+      {isAccessTokenLoading && <Loading task="fetch access token" />}
+
       {accessTokenError && (
         <Error task="fetch access token" message={accessTokenError.message} />
       )}
+
+      {showDevOptions && (
+        <>
+          <div>
+            <button
+              onClick={() => {
+                navigate("/authenticate");
+              }}
+            >
+              {strings.dev.goToAuth}
+            </button>
+            <button
+              onClick={() => {
+                setAccessToken(null);
+                setAccessExpiration(null);
+              }}
+            >
+              {strings.dev.clearAccess}
+            </button>
+            <button
+              onClick={() => {
+                setAccessToken(null);
+                setAccessExpiration(null);
+                navigate("/authenticate");
+              }}
+            >
+              {strings.dev.clearAndGo}
+            </button>
+          </div>
+        </>
+      )}
+
+      <p>
+        <a
+          href={strings.links.revokeAccess}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {strings.labels.revokeAccess}
+        </a>
+      </p>
     </>
   );
 }
-// !: add link to revoke access
 
 // everything in seconds
 function isExpiredOrExpiringSoon(expiration) {

@@ -1,6 +1,8 @@
 import Loading from "./Loading";
 import Error from "./Error";
 
+import strings from "../strings";
+
 export default function Activities({
   year,
   month,
@@ -13,15 +15,15 @@ export default function Activities({
     activitiesData.length > 0 &&
     activitiesData.every((activities) => activities && activities.length === 0);
 
+  // !!! string resource with placeholder? h2 here, and year below
   return (
     <>
       <h2>
         Historical Activities from {month} {day}
       </h2>
 
-      {areAllEmpty && (
-        <div>You don't have any activities on this day in history.</div>
-      )}
+      {areAllEmpty && <div>{strings.sentences.noActivities}</div>}
+
       {activitiesData.map((activities, index) => (
         <ActivitiesOnOneDay
           key={year - index - 1}
@@ -37,6 +39,7 @@ export default function Activities({
 
 // todo: gracefully fade out if/when shouldShow goes to false
 // ! activity layout/UI -- including map!
+// !! show day of the week
 function ActivitiesOnOneDay({
   year,
   activities,
@@ -49,7 +52,7 @@ function ActivitiesOnOneDay({
     <>
       {shouldShow && (
         <>
-          <h2>{year}</h2>
+          <h3>{year}</h3>
           {activities &&
             activities.map((activity) => (
               <Activity key={activity.id} activity={activity} />
@@ -76,7 +79,7 @@ function Activity({
         {startDateLocal} -- {type} {distanceInKm}km -- <b>{name}</b>
       </div>
       <a href={linkToActivity} target="_blank" rel="noopener noreferrer">
-        View on Strava
+        {strings.labels.viewOnStrava}
       </a>
     </>
   );

@@ -1,6 +1,6 @@
-import buttonStravaConnect from "../../assets/button_strava_connect.svg";
+import strings from "../../strings";
 
-// !! add app description, including revoke access note
+import buttonStravaConnect from "../../assets/button_strava_connect.svg";
 
 export default function Authentication() {
   // todo: do cleaner url creation: extract base url into const or env, use builder (not just here)
@@ -10,7 +10,7 @@ export default function Authentication() {
   // see https://developers.strava.com/guidelines/#:~:text=1.1%20Connect%20with%20Strava%20buttons
   return (
     <>
-      <p>Description.</p>
+      <p style={{ maxWidth: 600 }}>{strings.sentences.description}</p>
       <a href={authUrl}>
         <img src={buttonStravaConnect} alt="Connect with Strava" />
       </a>

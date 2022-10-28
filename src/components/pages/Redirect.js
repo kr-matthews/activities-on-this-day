@@ -7,6 +7,7 @@ import Error from "../Error";
 import { useFetchData } from "../../hooks/useFetchData";
 
 // ! handle 'error=access_denied' in url
+// ! can check whether they gave correct permissions?
 
 export default function Redirect({ setRefreshToken }) {
   const params = useSearchParams();
@@ -31,11 +32,10 @@ export default function Redirect({ setRefreshToken }) {
 
   // !! add no code error case
   // ! descriptive error message/UI, based on 2 possible errors
-  // todo: tidy up redirect UI (success case should be removed, it's just confusing)
+  // todo: tidy up redirect UI
   return (
     <>
       {isLoading && <Loading task="fetch persistent token" />}
-      {data && <div>Success! You should be redirected shortly.</div>}
       {error && (
         <>
           <Error
