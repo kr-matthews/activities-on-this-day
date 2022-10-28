@@ -13,6 +13,8 @@ import strings from "../../strings";
 
 // todo: clean up time utils (hook?), be consistent with s vs ms
 
+// !!! store activities so only need to fetch once per day, if possible
+
 const fiveMinutes = 5 * 60 * 1000;
 const currentSeconds = () => new Date().getTime() / 1000;
 const currentYear = new Date().getFullYear();
@@ -110,20 +112,6 @@ export default function View({ refreshToken }) {
 
   return (
     <>
-      {((hasFetchedWithinFiveMinutes && activitiesData.length === 0) ||
-        showDevOptions) && (
-        <button
-          onClick={() => {
-            fetchActivities();
-            setLastFetchedActivities(new Date().getTime());
-          }}
-        >
-          {strings.labels.fetchActivities}
-        </button>
-      )}
-
-      {isAccessTokenLoading && <Loading task="fetch access token" />}
-
       <Activities
         year={currentYear}
         month={currentMonth}
@@ -132,6 +120,22 @@ export default function View({ refreshToken }) {
         activitiesIsLoading={activitiesIsLoading}
         activitiesError={activitiesError}
       />
+
+      {((hasFetchedWithinFiveMinutes && activitiesData.length === 0) ||
+        showDevOptions) && (
+        <div>
+          <button
+            onClick={() => {
+              fetchActivities();
+              setLastFetchedActivities(new Date().getTime());
+            }}
+          >
+            {strings.labels.fetchActivities}
+          </button>
+        </div>
+      )}
+
+      {isAccessTokenLoading && <Loading task="fetch access token" />}
 
       {accessTokenError && (
         <Error task="fetch access token" message={accessTokenError.message} />
