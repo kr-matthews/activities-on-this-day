@@ -32,7 +32,7 @@ export default function View({ refreshToken }) {
   const {
     activities,
     activitiesAreLoading,
-    activitiesErrors,
+    errors,
     accessTokenIsLoading,
     accessTokenError,
     resetActivities,
@@ -47,8 +47,8 @@ export default function View({ refreshToken }) {
         month={currentMonth}
         day={currentDay}
         activities={activities}
-        activitiesAreLoading={activitiesAreLoading}
-        activitiesErrors={activitiesErrors}
+        areLoading={activitiesAreLoading}
+        errors={errors}
       />
 
       {accessTokenIsLoading && <Loading task="fetch access token" />}

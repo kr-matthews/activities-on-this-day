@@ -38,6 +38,7 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
 
   const [activities, setActivities] = useSavedState("activities", []);
   // note: saved as date string, not absolute ms, since local day is important
+  const [errors, setErrors] = useSavedState("errors", []);
   const [lastFetchedActivities, setLastFetchedActivities] = useSavedState(
     "fetched",
     null
@@ -63,12 +64,14 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
     if (!canUseAccessToken && !hasFetchedActivitiesToday) {
       console.info("Fetching access token.");
       setActivities([]);
+      setErrors([]);
       fetchAccessToken();
     }
   }, [
     canUseAccessToken,
     hasFetchedActivitiesToday,
     setActivities,
+    setErrors,
     fetchAccessToken,
   ]);
 
@@ -91,6 +94,7 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
   useEffect(() => {
     if (canUseAccessToken && !hasFetchedActivitiesToday) {
       setActivities([]);
+      setErrors([]);
       console.info("Fetching activities.");
       fetchActivities();
       setLastFetchedActivities(new Date().toDateString());
@@ -100,6 +104,7 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
     canUseAccessToken,
     hasFetchedActivitiesToday,
     setActivities,
+    setErrors,
     fetchActivities,
     setLastFetchedActivities,
   ]);
@@ -109,20 +114,22 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
     if (areAllActivitiesDoneLoading && receivedActivities.length > 0) {
       console.info("Received activities from Strava; saving them.");
       setActivities(receivedActivities);
+      setErrors(activitiesErrors);
       resetActivitiesFetch();
-      // !!! also save errors?
     }
   }, [
     areAllActivitiesDoneLoading,
     receivedActivities,
+    activitiesErrors,
     setActivities,
+    setErrors,
     resetActivitiesFetch,
   ]);
 
   //// functions ////
 
   function resetActivities() {
-    // this will trigger clearing and fetching activities (and access token first if necessary)
+    // this will trigger clearing and fetching activities/errors (and access token first if necessary)
     setLastFetchedActivities(null);
   }
 
@@ -136,7 +143,7 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
     // activities
     activities,
     activitiesAreLoading,
-    activitiesErrors,
+    errors,
 
     // clear
     resetActivities,

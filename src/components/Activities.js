@@ -8,8 +8,8 @@ export default function Activities({
   month,
   day,
   activities = [],
-  activitiesAreLoading,
-  activitiesErrors,
+  areLoading,
+  errors,
 }) {
   const areAllEmpty =
     activities.length > 0 &&
@@ -24,13 +24,13 @@ export default function Activities({
 
       {areAllEmpty && <div>{strings.sentences.noActivities}</div>}
 
-      {activities.map((activities, index) => (
+      {activities.map((activitiesEntry, index) => (
         <ActivitiesOnOneDay
           key={year - index - 1}
           year={year - index - 1}
-          activities={activities}
-          isLoading={activitiesAreLoading[index]}
-          error={activitiesErrors[index]}
+          activities={activitiesEntry}
+          isLoading={areLoading[index]}
+          error={errors[index]}
         />
       ))}
     </>
@@ -46,7 +46,6 @@ function ActivitiesOnOneDay({
   isLoading = false,
   error = null,
 }) {
-  // ! careful with errors
   const shouldShow =
     (activities && activities.length > 0) || isLoading || error;
   return (
