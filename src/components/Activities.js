@@ -7,15 +7,15 @@ export default function Activities({
   year,
   month,
   day,
-  activitiesData,
-  activitiesIsLoading,
-  activitiesError,
+  activities = [],
+  activitiesAreLoading,
+  activitiesErrors,
 }) {
   const areAllEmpty =
-    activitiesData.length > 0 &&
-    activitiesData.every((activities) => activities && activities.length === 0);
+    activities.length > 0 &&
+    activities.every((activities) => activities && activities.length === 0);
 
-  // !!! string resource with placeholder? h2 here, and year below
+  // todo: string resource with placeholder? h2 here, and year below
   return (
     <>
       <h2>
@@ -24,13 +24,13 @@ export default function Activities({
 
       {areAllEmpty && <div>{strings.sentences.noActivities}</div>}
 
-      {activitiesData.map((activities, index) => (
+      {activities.map((activities, index) => (
         <ActivitiesOnOneDay
           key={year - index - 1}
           year={year - index - 1}
           activities={activities}
-          isLoading={activitiesIsLoading[index]}
-          error={activitiesError[index]}
+          isLoading={activitiesAreLoading[index]}
+          error={activitiesErrors[index]}
         />
       ))}
     </>
@@ -46,6 +46,7 @@ function ActivitiesOnOneDay({
   isLoading = false,
   error = null,
 }) {
+  // ! careful with errors
   const shouldShow =
     (activities && activities.length > 0) || isLoading || error;
   return (

@@ -12,7 +12,7 @@ export const handler = async (event, context) => {
           access_token: event.queryStringParameters.access,
           before: event.queryStringParameters.before,
           after: event.queryStringParameters.after,
-          per_page: 50,
+          per_page: 100,
         },
       }
     );

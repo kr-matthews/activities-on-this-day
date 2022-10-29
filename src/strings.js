@@ -4,7 +4,7 @@ const strings = {
   },
 
   labels: {
-    fetchActivities: "Fetch Activities",
+    resetActivities: "Clear Activities",
     viewOnStrava: "View on Strava", // not allowed to change this
     revokeAccess: "Revoke access on Strava",
   },
