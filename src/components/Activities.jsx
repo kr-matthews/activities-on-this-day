@@ -1,3 +1,4 @@
+import Activity from "./Activity";
 import Loading from "./Loading";
 import Error from "./Error";
 
@@ -38,7 +39,6 @@ export default function Activities({
 }
 
 // todo: gracefully fade out if/when shouldShow goes to false
-// ! activity layout/UI -- including map!
 // !! show day of the week
 function ActivitiesOnOneDay({
   year,
@@ -63,24 +63,6 @@ function ActivitiesOnOneDay({
           )}
         </>
       )}
-    </>
-  );
-}
-
-// NOTE: must follow Strava guidelines for linking back to original data
-// see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
-function Activity({
-  activity: { id, type, name, distanceInKm, startDateLocal },
-}) {
-  const linkToActivity = `https://www.strava.com/activities/${id}`;
-  return (
-    <>
-      <div>
-        {startDateLocal} -- {type} {distanceInKm}km -- <b>{name}</b>
-      </div>
-      <a href={linkToActivity} target="_blank" rel="noopener noreferrer">
-        {strings.labels.viewOnStrava}
-      </a>
     </>
   );
 }
