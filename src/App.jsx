@@ -50,12 +50,11 @@ export default function App() {
 
         {showDevOptions && (
           <div>
-            <button
-              onClick={() => {
-                setRefreshToken(null);
-              }}
-            >
+            <button onClick={() => setRefreshToken(null)}>
               {strings.dev.clearRefresh}
+            </button>
+            <button onClick={() => localStorage.clear()}>
+              {strings.dev.clearAll}
             </button>
           </div>
         )}

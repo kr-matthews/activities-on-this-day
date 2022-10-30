@@ -4,7 +4,6 @@ const strings = {
   },
 
   labels: {
-    resetActivities: "Clear Activities",
     viewOnStrava: "View on Strava", // not allowed to change this
     revokeAccess: "Revoke access on Strava",
   },
@@ -24,9 +23,10 @@ const strings = {
 
   dev: {
     goToAuth: "Go to authentication step",
-    clearAccess: "Clear access token",
+    setToYesterday: "Set last fetched to yesterday",
+    clearActivities: "Clear Activities",
     clearRefresh: "Clear refresh token",
-    clearAndGo: "Both",
+    clearAll: "Clear all local storage",
   },
 };
 

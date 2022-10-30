@@ -109,10 +109,10 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
     setLastFetchedActivities,
   ]);
 
-  // save the activities when they're _all_ received
+  // save the activities (and errors) when they're _all_ received
   useEffect(() => {
     if (areAllActivitiesDoneLoading && receivedActivities.length > 0) {
-      console.info("Received activities from Strava; saving them.");
+      console.info("Received activities; saving them.");
       setActivities(receivedActivities);
       setErrors(activitiesErrors);
       resetActivitiesFetch();
@@ -128,9 +128,16 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
 
   //// functions ////
 
-  function resetActivities() {
+  function clearActivities() {
     // this will trigger clearing and fetching activities/errors (and access token first if necessary)
     setLastFetchedActivities(null);
+  }
+
+  function setLastFetchedToYesterday() {
+    // ! note: how to subtract 1 day - for date utils (there's probably a better way...)
+    setLastFetchedActivities(
+      new Date(new Date().getTime() - 86400000).toDateString()
+    );
   }
 
   //// return ////
@@ -141,12 +148,14 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
     accessTokenError,
 
     // activities
-    activities,
+    // the fetched activities/errors are valid if not [], else fallback to saved
+    activities: receivedActivities.length > 0 ? receivedActivities : activities,
     activitiesAreLoading,
-    errors,
+    errors: activitiesErrors.length > 0 ? activitiesErrors : errors,
 
-    // clear
-    resetActivities,
+    // debug
+    clearActivities,
+    setLastFetchedToYesterday,
   };
 }
 

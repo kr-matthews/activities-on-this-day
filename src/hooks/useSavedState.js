@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 /**
  * Essentially [useState], but it stores the state in local storage
@@ -19,10 +19,13 @@ export function useSavedState(key, initialValue) {
     }
   });
 
-  function setLocalValue(newValue) {
-    setValue(newValue);
-    localStorage.setItem(key, JSON.stringify(newValue));
-  }
+  const setLocalValue = useCallback(
+    (newValue) => {
+      setValue(newValue);
+      localStorage.setItem(key, JSON.stringify(newValue));
+    },
+    [key, setValue]
+  );
 
   return [value, setLocalValue];
 }

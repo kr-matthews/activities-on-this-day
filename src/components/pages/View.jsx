@@ -20,7 +20,7 @@ export default function View({ refreshToken }) {
   const navigate = useNavigate();
 
   // todo: allow setting earliest year; ensure it stays between 2008 and last year (use reducer?)
-  const [earliestYear] = useSavedState("year", 2008);
+  const [earliestYear, setEarliestYear] = useSavedState("year", 2008);
 
   useEffect(() => {
     if (!refreshToken) {
@@ -35,7 +35,8 @@ export default function View({ refreshToken }) {
     errors,
     accessTokenIsLoading,
     accessTokenError,
-    resetActivities,
+    clearActivities,
+    setLastFetchedToYesterday,
   } = useActivities(refreshToken, earliestYear);
 
   const showDevOptions = process.env.REACT_APP_ENV === "LOCAL";
@@ -63,8 +64,17 @@ export default function View({ refreshToken }) {
             <button onClick={() => navigate("/authenticate")}>
               {strings.dev.goToAuth}
             </button>
-            <button onClick={resetActivities}>
-              {strings.labels.resetActivities}
+            <button onClick={clearActivities}>
+              {strings.dev.clearActivities}
+            </button>
+            <button onClick={setLastFetchedToYesterday}>
+              {strings.dev.setToYesterday}
+            </button>
+            <button onClick={() => setEarliestYear(2020)}>
+              2020 -{">"} Earliest
+            </button>
+            <button onClick={() => setEarliestYear(2014)}>
+              2014 -{">"} Earliest
             </button>
           </div>
         </>
