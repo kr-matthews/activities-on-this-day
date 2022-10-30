@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Popup, Polyline } from "react-leaflet";
+import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import polyline from "@mapbox/polyline";
 
 import strings from "../strings";
@@ -47,8 +47,8 @@ export default function Activity({
 
   //// size & zoom ////
 
-  const deltaLat = (latMax - latMin) / 2;
-  const deltaLong = (longMax - longMin) / 2;
+  // const deltaLat = (latMax - latMin) / 2;
+  // const deltaLong = (longMax - longMin) / 2;
   // !!! calculate zoom based on above & mapWidth, mapHeight
   const zoom = 12; // ~
 
@@ -56,6 +56,7 @@ export default function Activity({
 
   // !!! look into path options on PolyLine
   // !!! display activity data before map properly
+  // !!! look into map layers/options
   return (
     <>
       <div>
