@@ -1,31 +1,80 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Popup, Polyline } from "react-leaflet";
+import polyline from "@mapbox/polyline";
 
 import strings from "../strings";
-
-import "./activity.css";
 
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
 export default function Activity({
-  activity: { id, type, name, distanceInKm, startDateLocal },
+  activity: {
+    id,
+    type,
+    name,
+    distanceInKm,
+    startDateLocal,
+    polyline: activityPolyline,
+  },
+  mapWidth = 300,
+  mapHeight = 300,
 }) {
+  //// link ////
+
   const linkToActivity = `https://www.strava.com/activities/${id}`;
+
+  //// position ////
+
+  const positions = polyline.decode(activityPolyline);
+
+  // latitude
+
+  const latMin = Math.min(
+    Math.min(...positions.map((position) => position[0]))
+  );
+  const latMax = Math.max(
+    Math.max(...positions.map((position) => position[0]))
+  );
+  const latitude = (latMax + latMin) / 2;
+
+  // longitude
+
+  const longMin = Math.min(
+    Math.min(...positions.map((position) => position[1]))
+  );
+  const longMax = Math.max(
+    Math.max(...positions.map((position) => position[1]))
+  );
+  const longitude = (longMax + longMin) / 2;
+
+  //// size & zoom ////
+
+  const deltaLat = (latMax - latMin) / 2;
+  const deltaLong = (longMax - longMin) / 2;
+  // !!! calculate zoom based on above & mapWidth, mapHeight
+  const zoom = 12; // ~
+
+  //// return ////
+
+  // !!! look into path options on PolyLine
+  // !!! display activity data before map properly
   return (
     <>
       <div>
         {startDateLocal} -- {type} {distanceInKm}km -- <b>{name}</b>
       </div>
-      <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+
+      <MapContainer
+        style={{ width: mapWidth, height: mapHeight }}
+        center={[latitude, longitude]}
+        zoom={zoom}
+        scrollWheelZoom
+      >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[51.505, -0.09]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+        <Polyline positions={positions} />
       </MapContainer>
+
       <a href={linkToActivity} target="_blank" rel="noopener noreferrer">
         {strings.labels.viewOnStrava}
       </a>
