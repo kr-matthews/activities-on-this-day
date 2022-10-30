@@ -39,7 +39,6 @@ export default function Activities({
 }
 
 // todo: gracefully fade out if/when shouldShow goes to false
-// !!! activity layout/UI -- including map!
 // !! show day of the week
 function ActivitiesOnOneDay({
   year,
