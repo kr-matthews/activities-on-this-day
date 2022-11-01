@@ -21,7 +21,9 @@ export default function Activity({
 
   const linkToActivity = `https://www.strava.com/activities/${id}`;
 
-  //// position ////
+  //// activity path & bounds ////
+
+  // path
 
   const positions = polyline.decode(activityPolyline);
 
@@ -33,7 +35,6 @@ export default function Activity({
   const latMax = Math.max(
     Math.max(...positions.map((position) => position[0]))
   );
-  const latitude = (latMax + latMin) / 2;
 
   // longitude
 
@@ -43,14 +44,13 @@ export default function Activity({
   const longMax = Math.max(
     Math.max(...positions.map((position) => position[1]))
   );
-  const longitude = (longMax + longMin) / 2;
 
-  //// size & zoom ////
+  // bounds
 
-  // const deltaLat = (latMax - latMin) / 2;
-  // const deltaLong = (longMax - longMin) / 2;
-  // !!! calculate zoom based on above & mapWidth, mapHeight
-  const zoom = 12; // ~
+  const bounds = [
+    [latMin, longMin],
+    [latMax, longMax],
+  ];
 
   //// return ////
 
@@ -65,8 +65,7 @@ export default function Activity({
 
       <MapContainer
         style={{ width: mapWidth, height: mapHeight }}
-        center={[latitude, longitude]}
-        zoom={zoom}
+        bounds={bounds}
         scrollWheelZoom
       >
         <TileLayer
