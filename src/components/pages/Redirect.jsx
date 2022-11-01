@@ -24,7 +24,7 @@ export default function Redirect({ setRefreshToken }) {
 
   useEffect(() => {
     if (data) {
-      console.info("Received refresh token.");
+      console.info("Received refresh token; saving it.");
       setRefreshToken(data);
       navigate("/", { replace: true });
     }
