@@ -1,5 +1,7 @@
 # Activities On-This-Day
 
+![Screenshot](public/android-chrome-192x192.png)
+
 This is a single-page application working with serverless functions to display your historical activities from Strava, specifically those which were recorded on this day in history.
 
 The app is accessible at [https://activities-on-this-day.netlify.app/](https://activities-on-this-day.netlify.app/).
@@ -8,21 +10,20 @@ The app is accessible at [https://activities-on-this-day.netlify.app/](https://a
 
 **Note that this is NOT an official Strava app, and is NOT endorsed by Strava.**
 
-// todo: add screenshot(s)
+// todo: add screenshot(s) once UI is done
 
 ## Features
 
 ### Current
 
 - Authenticate with Strava oauth.
-- Retain refresh token to stay logged in.
-- Display activities, partitioned by year.
+- Retain refresh token to stay logged in until access is explicitly revoked.
+- If not already done today, fetch an access token and then fetch activities from Strava.
+- Display activities with maps, partitioned by year.
 
 ### Potential Future
 
 See [enhancements](https://github.com/kr-matthews/activities-on-this-day/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) on GitHub.
-
-- Simple map per activity, with no much functionality besides panning and zooming.
 
 ## Original Intentions
 
@@ -34,6 +35,7 @@ See [enhancements](https://github.com/kr-matthews/activities-on-this-day/issues?
 ## Focus
 
 - Working with APIs and (Netlify) serverless functions.
+- Separation of concerns via hooks.
 - Optimizing API requests to stay within limits.
 - Handling tokens within a single-page application.
 - Clean navigation using React Router.
