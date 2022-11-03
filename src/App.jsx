@@ -41,7 +41,7 @@ export default function App() {
             }
           />
 
-          {/* // todo: add a 'sample' path with fake activities displayed */}
+          {/* // !!!: add a 'sample' path with fake activities displayed */}
 
           <Route
             path="*"

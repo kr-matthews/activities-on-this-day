@@ -62,7 +62,8 @@ export default function Activity({
 
   //// return ////
 
-  // !! display activity data before map properly - include icons for type
+  // !! animate marker along path to show direction?
+  // !!! display activity data above map properly - include icons for type
   return (
     <>
       <div>
@@ -76,7 +77,7 @@ export default function Activity({
             height: mapHeight,
             zIndex: 99,
           }}
-          // !! add button somewhere to re-center/zoom
+          // !!! add button somewhere to re-center/zoom
           bounds={bounds}
           scrollWheelZoom
         >

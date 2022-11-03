@@ -60,7 +60,7 @@ export function useFetchActivities(earliestYear, accessToken) {
             distanceInKm: Math.floor(activity.distance / 10) / 100,
             movingTime: activity.moving_time,
             elapsedTime: activity.elapsed_time,
-            // !! just take the local time, not day; rename startTimeLocal
+            // !!! just take the local time, not day; rename startTimeLocal
             startDateLocal: activity.start_date_local,
             polyline: activity.map.summary_polyline,
             isCommute: activity.commute,

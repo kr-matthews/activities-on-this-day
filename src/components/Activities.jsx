@@ -50,8 +50,9 @@ export default function Activities({
   );
 }
 
-// todo: gracefully fade out if/when shouldShow goes to false
-// !! show day of the week
+// !: gracefully fade out if/when shouldShow goes to false
+// !!! show day of the week
+// !!! make activities appear in a row
 function ActivitiesOnOneDay({
   year,
   activities,
