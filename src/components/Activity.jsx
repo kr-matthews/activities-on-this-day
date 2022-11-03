@@ -76,6 +76,7 @@ export default function Activity({
             height: mapHeight,
             zIndex: 99,
           }}
+          // !! add button somewhere to re-center/zoom
           bounds={bounds}
           scrollWheelZoom
         >

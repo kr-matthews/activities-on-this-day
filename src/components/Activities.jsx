@@ -67,17 +67,15 @@ function ActivitiesOnOneDay({
         <>
           <h3>{year}</h3>
           {activities &&
-            activities
-              .reverse()
-              .map((activity) => (
-                <Activity
-                  key={activity.id}
-                  activity={activity}
-                  lineColour={options.lineColour}
-                  lineWeight={options.lineWeight}
-                  tileLayerName={options.tileLayerName}
-                />
-              ))}
+            activities.map((activity) => (
+              <Activity
+                key={activity.id}
+                activity={activity}
+                lineColour={options.lineColour}
+                lineWeight={options.lineWeight}
+                tileLayerName={options.tileLayerName}
+              />
+            ))}
           {isLoading && <Loading task={`fetch ${year} activities`} />}
           {error && (
             <Error task={`fetch ${year} activities`} message={error.message} />

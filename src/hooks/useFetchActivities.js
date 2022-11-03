@@ -67,6 +67,7 @@ export function useFetchActivities(earliestYear, accessToken) {
             isPrivate: activity.private,
             averageSpeed: activity.average_speed,
           }))
+          .reverse()
     );
   }, [unprocessedData]);
 
