@@ -25,7 +25,7 @@ export default function Activity({
 
   const linkToActivity = `https://www.strava.com/activities/${id}`;
 
-  //// activity path & bounds ////
+  //// activity path & map bounds ////
 
   // path
 
@@ -69,27 +69,28 @@ export default function Activity({
         {startDateLocal} -- {type} {distanceInKm}km -- <b>{name}</b>
       </div>
 
-      <MapContainer
-        style={{
-          width: mapWidth,
-          height: mapHeight,
-          zIndex: 99,
-          // textAlign: "center", // !!! center map
-        }}
-        bounds={bounds}
-        scrollWheelZoom
-      >
-        <TileLayer
-          // key is required to force re-render when tile layer changes, since `url` is immutable
-          key={tileLayerName}
-          attribution={tileLayer.attribution}
-          url={tileLayer.url}
-        />
-        <Polyline
-          positions={positions}
-          pathOptions={{ color: lineColour, weight: lineWeight }}
-        />
-      </MapContainer>
+      <div style={{ width: mapWidth, margin: "auto", padding: 10 }}>
+        <MapContainer
+          style={{
+            width: mapWidth,
+            height: mapHeight,
+            zIndex: 99,
+          }}
+          bounds={bounds}
+          scrollWheelZoom
+        >
+          <TileLayer
+            // key is required to force re-render when tile layer changes, since `url` is immutable
+            key={tileLayerName}
+            attribution={tileLayer.attribution}
+            url={tileLayer.url}
+          />
+          <Polyline
+            positions={positions}
+            pathOptions={{ color: lineColour, weight: lineWeight }}
+          />
+        </MapContainer>
+      </div>
 
       <a href={linkToActivity} target="_blank" rel="noopener noreferrer">
         {strings.labels.viewOnStrava}
