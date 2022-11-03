@@ -10,7 +10,9 @@ export default function Authentication() {
   // see https://developers.strava.com/guidelines/#:~:text=1.1%20Connect%20with%20Strava%20buttons
   return (
     <>
-      <p style={{ maxWidth: 600 }}>{strings.sentences.description}</p>
+      <p style={{ maxWidth: 600, margin: "auto" }}>
+        {strings.sentences.description}
+      </p>
       <a href={authUrl}>
         <img src={buttonStravaConnect} alt="Connect with Strava" />
       </a>

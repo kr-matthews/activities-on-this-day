@@ -41,6 +41,8 @@ export default function App() {
             }
           />
 
+          {/* // todo: add a 'sample' path with fake activities displayed */}
+
           <Route
             path="*"
             element={<Navigate to="/" />}
@@ -54,6 +56,7 @@ export default function App() {
               {strings.dev.clearRefresh}
             </button>
             <button onClick={() => localStorage.clear()}>
+              {/* // !! redo this, make it available as part of revoke */}
               {strings.dev.clearAll}
             </button>
           </div>

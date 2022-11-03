@@ -1,11 +1,16 @@
 const strings = {
   headings: {
     appName: "Activities On-This-Day",
+    options: "Display Options",
   },
 
   labels: {
     viewOnStrava: "View on Strava", // not allowed to change this
     revokeAccess: "Revoke access on Strava",
+    tileLayer: "Map Type",
+    lineColour: "Path Colour",
+    lineWeight: "Path Width",
+    resetOptions: "Reset Options",
   },
 
   sentences: {
