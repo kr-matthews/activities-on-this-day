@@ -1,6 +1,9 @@
 import Activity from "./Activity";
+import Options from "./Options";
 import Loading from "./Loading";
 import Error from "./Error";
+
+import useOptions from "../hooks/useOptions";
 
 import strings from "../strings";
 
@@ -16,9 +19,17 @@ export default function Activities({
     activities.length > 0 &&
     activities.every((activities) => activities && activities.length === 0);
 
+  const { options, optionSetters, resetAll } = useOptions();
+
   // todo: string resource with placeholder? h2 here, and year below
   return (
     <>
+      <Options
+        options={options}
+        optionSetters={optionSetters}
+        resetAll={resetAll}
+      />
+
       <h2>
         Historical Activities from {month} {day}
       </h2>
@@ -32,6 +43,7 @@ export default function Activities({
           activities={activitiesEntry}
           isLoading={areLoading[index]}
           error={errors[index]}
+          options={options}
         />
       ))}
     </>
@@ -45,6 +57,7 @@ function ActivitiesOnOneDay({
   activities,
   isLoading = false,
   error = null,
+  options = {},
 }) {
   const shouldShow =
     (activities && activities.length > 0) || isLoading || error;
@@ -54,9 +67,17 @@ function ActivitiesOnOneDay({
         <>
           <h3>{year}</h3>
           {activities &&
-            activities.map((activity) => (
-              <Activity key={activity.id} activity={activity} />
-            ))}
+            activities
+              .reverse()
+              .map((activity) => (
+                <Activity
+                  key={activity.id}
+                  activity={activity}
+                  lineColour={options.lineColour}
+                  lineWeight={options.lineWeight}
+                  tileLayerName={options.tileLayerName}
+                />
+              ))}
           {isLoading && <Loading task={`fetch ${year} activities`} />}
           {error && (
             <Error task={`fetch ${year} activities`} message={error.message} />
