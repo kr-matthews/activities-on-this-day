@@ -6,9 +6,9 @@ import Loading from "../Loading";
 import Error from "../Error";
 
 import { useSavedState } from "../../hooks/useSavedState";
+import useActivities from "../../hooks/useActivities";
 
 import strings from "../../strings";
-import useActivities from "../../hooks/useActivities";
 
 // todo: clean up time utils (hook?), be consistent with s vs ms
 

@@ -11,11 +11,15 @@ const strings = {
     lineColour: "Path Colour",
     lineWeight: "Path Width",
     resetOptions: "Reset Options",
+    sample: "View Samples",
+    tryIt: "Try It Yourself",
   },
 
   sentences: {
     description:
       "This is a simple app which displays your Strava activities that were recorded on this day in history. In order to see your activities, you'll need to provide permission for the app to access your Strava activities via the button below. Once granted, you can revoke this access at any time by going to your settings on Strava's website, and a link will be provided at the button of the page.",
+    sample:
+      "Don't have Strava, or don't want to provide access? Check out what it would look like if you did.",
     noActivities: "You don't have any activities on this day in history.",
   },
 

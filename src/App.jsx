@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Authentication from "./components/pages/Authentication";
 import Redirect from "./components/pages/Redirect";
 import View from "./components/pages/View";
+import Sample from "./components/pages/Sample";
 import Links from "./components/Links";
 
 import { useSavedState } from "./hooks/useSavedState";
@@ -30,6 +31,8 @@ export default function App() {
             element={<Redirect setRefreshToken={setRefreshToken} />}
           />
 
+          <Route path="sample" element={<Sample />} />
+
           <Route
             path="/"
             element={
@@ -40,8 +43,6 @@ export default function App() {
               )
             }
           />
-
-          {/* // !!!: add a 'sample' path with fake activities displayed */}
 
           <Route
             path="*"
