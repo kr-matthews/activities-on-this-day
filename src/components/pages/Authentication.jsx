@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router";
 
-import strings from "../../strings";
-
+import strings from "../../data/strings";
 import buttonStravaConnect from "../../assets/button_strava_connect.svg";
 
 export default function Authentication() {

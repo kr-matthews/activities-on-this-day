@@ -7,9 +7,7 @@ import Sample from "./components/pages/Sample";
 import Links from "./components/Links";
 
 import { useSavedState } from "./hooks/useSavedState";
-
-import strings from "./strings";
-
+import strings from "./data/strings";
 import logoPoweredByStrava from "./assets/logo_powered_by_strava.svg";
 
 export default function App() {

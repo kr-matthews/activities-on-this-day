@@ -4,8 +4,7 @@ import Loading from "./Loading";
 import Error from "./Error";
 
 import useOptions from "../hooks/useOptions";
-
-import strings from "../strings";
+import strings from "../data/strings";
 
 export default function Activities({
   year,

@@ -1,5 +1,5 @@
-import tileLayers from "../components/tileLayers";
 import { useSavedState } from "./useSavedState";
+import tileLayers from "../data/tileLayers";
 
 export default function useOptions() {
   //// states ////

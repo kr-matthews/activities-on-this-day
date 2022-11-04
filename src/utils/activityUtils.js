@@ -1,5 +1,3 @@
-// !!! reorganize files
-
 const parseActivity = (activity) => ({
   id: activity.id,
   name: activity.name,
@@ -15,4 +13,4 @@ const parseActivity = (activity) => ({
   averageSpeed: activity.average_speed,
 });
 
-export default parseActivity;
+export { parseActivity };

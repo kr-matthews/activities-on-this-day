@@ -1,8 +1,7 @@
 import { useCallback, useMemo } from "react";
 
 import { useFetchData } from "./useFetchData";
-
-import parseActivity from "../parseActivity";
+import { parseActivity } from "../utils/activityUtils";
 
 // todo: make date override-able (but not obvious that you can)
 

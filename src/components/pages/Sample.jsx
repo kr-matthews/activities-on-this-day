@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 
 import Activities from "../Activities";
 
-import strings from "../../strings";
-import parseActivity from "../../parseActivity";
-import sampleActivities from "../../sampleActivities";
+import { parseActivity } from "../../utils/activityUtils";
+import strings from "../../data/strings";
+import sampleActivities from "../../data/sampleActivities";
 
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().toLocaleString("default", { month: "long" });

@@ -1,8 +1,8 @@
 import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import polyline from "@mapbox/polyline";
 
-import strings from "../strings";
-import tileLayers from "./tileLayers";
+import strings from "../data/strings";
+import tileLayers from "../data/tileLayers";
 
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data

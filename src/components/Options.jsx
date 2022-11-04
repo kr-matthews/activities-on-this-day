@@ -1,6 +1,5 @@
-import strings from "../strings";
-
-import tileLayers from "./tileLayers";
+import strings from "../data/strings";
+import tileLayers from "../data/tileLayers";
 
 export default function Options({
   options = {},
