@@ -49,8 +49,7 @@ export default function Activities({
   );
 }
 
-// !: gracefully fade out if/when shouldShow goes to false
-// !!! show day of the week
+// ! gracefully fade out if/when shouldShow goes to false
 // !!! make activities appear in a row
 function ActivitiesOnOneDay({
   year,
@@ -61,11 +60,18 @@ function ActivitiesOnOneDay({
 }) {
   const shouldShow =
     (activities && activities.length > 0) || isLoading || error;
+
+  const date = new Date();
+  date.setFullYear(year);
+  const dayOfWeek = date.toLocaleDateString("en-ca", { weekday: "long" });
+
   return (
     <>
       {shouldShow && (
         <>
-          <h3>{year}</h3>
+          <h3>
+            {year} ({dayOfWeek})
+          </h3>
           {activities &&
             activities.map((activity) => (
               <Activity
