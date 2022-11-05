@@ -3,7 +3,12 @@ import polyline from "@mapbox/polyline";
 
 import strings from "../data/strings";
 import tileLayers from "../data/tileLayers";
-import { formatMeters, formatSeconds } from "../utils/displayUtils";
+import {
+  formatSeconds,
+  formatMeters,
+  formatMpsAsPace,
+  formatMpsAsSpeed,
+} from "../utils/displayUtils";
 
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
@@ -70,6 +75,7 @@ export default function Activity({
   //// info ////
 
   // !!! get actual icons; per type, lock, photo, briefcase(?)
+  const displayPace = ["Run", "Trail Run", "Walk", "Hike"].includes(type);
   const activityIcon = `[${type}]`;
   const lockIcon = "[LOCK]";
   const photoIcon = "[P]";
@@ -85,12 +91,13 @@ export default function Activity({
         {isCommute && commuteIcon} at {startDateLocal.substring(11, 16)}
       </div>
 
-      {/* // !!! format speed (units unclear) */}
       {/* // !!! add icons for each; ruler, stopwatch, speedometer */}
       <div>
         {formatMeters(distance)} -- {formatSeconds(movingTime)} /{" "}
-        {formatSeconds(elapsedTime)} -- {averageSpeed}
-        units
+        {formatSeconds(elapsedTime)} --{" "}
+        {displayPace
+          ? formatMpsAsPace(averageSpeed)
+          : formatMpsAsSpeed(averageSpeed)}
       </div>
 
       <div style={{ width: mapWidth, margin: "auto", padding: 10 }}>
