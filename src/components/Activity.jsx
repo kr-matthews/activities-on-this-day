@@ -3,6 +3,7 @@ import polyline from "@mapbox/polyline";
 
 import strings from "../data/strings";
 import tileLayers from "../data/tileLayers";
+import { formatMeters, formatSeconds } from "../utils/displayUtils";
 
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
@@ -11,10 +12,10 @@ export default function Activity({
     id,
     name,
     type,
-    distanceInKm,
+    distance,
     movingTime,
     elapsedTime,
-    startDate,
+    startDateLocal,
     polyline: activityPolyline,
     isCommute,
     isPrivate,
@@ -81,19 +82,14 @@ export default function Activity({
     <div className="activity">
       <div>
         {activityIcon} <b>{name}</b> {isPrivate && lockIcon}{" "}
-        {isCommute && commuteIcon} at{" "}
-        {/* // !!! fix - time will be for user's timezone, not activity's time zone */}
-        {new Date(startDate).toLocaleString("en-ca", {
-          timeStyle: "short",
-          hour12: false,
-        })}
+        {isCommute && commuteIcon} at {startDateLocal.substring(11, 16)}
       </div>
 
-      {/* // !!! format moving/elapsed time */}
       {/* // !!! format speed (units unclear) */}
       {/* // !!! add icons for each; ruler, stopwatch, speedometer */}
       <div>
-        {distanceInKm}km -- {movingTime}s / {elapsedTime}s -- {averageSpeed}
+        {formatMeters(distance)} -- {formatSeconds(movingTime)} /{" "}
+        {formatSeconds(elapsedTime)} -- {averageSpeed}
         units
       </div>
 
