@@ -9,11 +9,17 @@ import tileLayers from "../data/tileLayers";
 export default function Activity({
   activity: {
     id,
-    type,
     name,
+    type,
     distanceInKm,
-    startDateLocal,
+    movingTime,
+    elapsedTime,
+    startDate,
     polyline: activityPolyline,
+    isCommute,
+    isPrivate,
+    averageSpeed,
+    photoCount,
   },
   lineColour = "#603cba",
   lineWeight = 3,
@@ -60,14 +66,35 @@ export default function Activity({
 
   const tileLayer = tileLayers[tileLayerName] || tileLayers.default;
 
+  //// info ////
+
+  // !!! get actual icons; per type, lock, photo, briefcase(?)
+  const activityIcon = `[${type}]`;
+  const lockIcon = "[LOCK]";
+  const photoIcon = "[P]";
+  const commuteIcon = "[C]";
+
   //// return ////
 
   // !! animate marker along path to show direction?
-  // !!! display activity data above map properly - include icons for type
   return (
-    <>
+    <div className="activity">
       <div>
-        {startDateLocal} -- {type} {distanceInKm}km -- <b>{name}</b>
+        {activityIcon} <b>{name}</b> {isPrivate && lockIcon}{" "}
+        {isCommute && commuteIcon} at{" "}
+        {/* // !!! fix - time will be for user's timezone, not activity's time zone */}
+        {new Date(startDate).toLocaleString("en-ca", {
+          timeStyle: "short",
+          hour12: false,
+        })}
+      </div>
+
+      {/* // !!! format moving/elapsed time */}
+      {/* // !!! format speed (units unclear) */}
+      {/* // !!! add icons for each; ruler, stopwatch, speedometer */}
+      <div>
+        {distanceInKm}km -- {movingTime}s / {elapsedTime}s -- {averageSpeed}
+        units
       </div>
 
       <div style={{ width: mapWidth, margin: "auto", padding: 10 }}>
@@ -95,8 +122,8 @@ export default function Activity({
       </div>
 
       <a href={linkToActivity} target="_blank" rel="noopener noreferrer">
-        {strings.labels.viewOnStrava}
+        {strings.labels.viewOnStrava} {photoCount > 0 && photoIcon}
       </a>
-    </>
+    </div>
   );
 }

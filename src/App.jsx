@@ -19,8 +19,6 @@ export default function App() {
   return (
     <>
       <div className="non-footer">
-        <h1>{strings.headings.appName}</h1>
-
         <Routes>
           <Route path="authenticate" element={<Authentication />} />
 

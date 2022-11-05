@@ -14,6 +14,8 @@ export default function Authentication() {
   // see https://developers.strava.com/guidelines/#:~:text=1.1%20Connect%20with%20Strava%20buttons
   return (
     <>
+      <h1>{strings.headings.appName}</h1>
+
       <p style={{ maxWidth: 600, margin: "auto" }}>
         {strings.sentences.description}
       </p>

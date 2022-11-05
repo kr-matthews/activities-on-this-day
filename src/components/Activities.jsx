@@ -29,9 +29,9 @@ export default function Activities({
         resetAll={resetAll}
       />
 
-      <h2>
+      <h1>
         Historical Activities from {month} {day}
-      </h2>
+      </h1>
 
       {areAllEmpty && <div>{strings.sentences.noActivities}</div>}
 
@@ -69,9 +69,9 @@ function ActivitiesOnOneDay({
     <>
       {shouldShow && (
         <>
-          <h3>
+          <h2>
             {year} ({dayOfWeek})
-          </h3>
+          </h2>
           {activities &&
             activities.map((activity) => (
               <Activity
