@@ -1,0 +1,16 @@
+.activities-row {
+  display: flex;
+  overflow-x: auto;
+}
+.activity {
+  min-width: 365px;
+  padding: 10px;
+}
+
+.activities-row .activity:first-child {
+  margin-left: auto;
+}
+
+.activities-row .activity:last-child {
+  margin-right: auto;
+}

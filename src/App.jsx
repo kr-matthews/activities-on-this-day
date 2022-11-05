@@ -10,6 +10,8 @@ import { useSavedState } from "./hooks/useSavedState";
 import strings from "./data/strings";
 import logoPoweredByStrava from "./assets/logo_powered_by_strava.svg";
 
+import "./components/activities.css";
+
 export default function App() {
   const [refreshToken, setRefreshToken] = useSavedState("refresh", null);
   const hasRefreshToken = !!refreshToken;

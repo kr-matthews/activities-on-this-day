@@ -50,7 +50,6 @@ export default function Activities({
 }
 
 // ! gracefully fade out if/when shouldShow goes to false
-// !!! make activities appear in a row
 function ActivitiesOnOneDay({
   year,
   activities,
@@ -72,16 +71,18 @@ function ActivitiesOnOneDay({
           <h2>
             {year} ({dayOfWeek})
           </h2>
-          {activities &&
-            activities.map((activity) => (
-              <Activity
-                key={activity.id}
-                activity={activity}
-                lineColour={options.lineColour}
-                lineWeight={options.lineWeight}
-                tileLayerName={options.tileLayerName}
-              />
-            ))}
+          <div className="activities-row">
+            {activities &&
+              activities.map((activity) => (
+                <Activity
+                  key={activity.id}
+                  activity={activity}
+                  lineColour={options.lineColour}
+                  lineWeight={options.lineWeight}
+                  tileLayerName={options.tileLayerName}
+                />
+              ))}
+          </div>
           {isLoading && <Loading task={`fetch ${year} activities`} />}
           {error && (
             <Error task={`fetch ${year} activities`} message={error.message} />
