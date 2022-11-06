@@ -1,0 +1,27 @@
+.options {
+  position: sticky;
+  top: 0px;
+  z-index: 100;
+  background: LightGrey;
+  display: flex;
+}
+
+.option {
+  padding: 5px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.options .option:first-child {
+  margin-left: auto;
+}
+
+.options .option:last-child {
+  margin-right: auto;
+}
+
+@media (max-width: 550px) {
+  .option-title {
+    display: none;
+  }
+}
