@@ -1,5 +1,10 @@
 //// duration ////
 
+/**
+ * Take raw seconds and convert to human-readable form in h,m,s.
+ * @param {Number} s Raw seconds.
+ * @returns {String} Formatted time like '1h 03m 46s' with h/m absent if 0.
+ */
 export const formatSeconds = (s) => {
   return `${hoursOf(s)}${minutesOf(s)}${secondsOf(s)}`;
 };
@@ -31,6 +36,11 @@ const hoursOf = (s) => {
 
 //// distance ////
 
+/**
+ * Take raw meters and convert to human-readable form in km.
+ * @param {Number} m Raw meters.
+ * @returns {String} Formatted distance like '3.40km' always with 2 decimals.
+ */
 export const formatMeters = (m) => {
   return `${kmOf(m)}.${decimalsOf(m)}km`;
 };
@@ -45,6 +55,11 @@ const kmOf = (m) => {
 
 //// speed / pace ////
 
+/**
+ * Take raw speed and convert to human-readable form in km/h.
+ * @param {Number} mps Raw meters per second.
+ * @returns {String} Formatted speed like '3.0km/h' always with 1 decimal.
+ */
 export const formatMpsAsSpeed = (mps) => {
   return `${formatKph(mps * (3600 / 1000))}km/h`;
 };
@@ -54,6 +69,11 @@ const formatKph = (kph) => {
   return `${before}.${(after || "0").substring(0, 1)}`;
 };
 
+/**
+ * Take raw speed and convert to human-readable form of pace in h,m,s /km.
+ * @param {Number} mps Raw meters per second.
+ * @returns {String} Formatted pace like '9m 08s /km'.
+ */
 export const formatMpsAsPace = (mps) => {
   return `${formatSeconds(Math.floor(1000 / mps))} /km`;
 };
