@@ -10,6 +10,18 @@ import {
   formatMpsAsSpeed,
 } from "../utils/displayUtils";
 
+import commuteIconUrl from "../assets/briefcase.svg";
+import lockIconUrl from "../assets/lock.svg";
+import cameraIconUrl from "../assets/camera.svg";
+import rideIconUrl from "../assets/bike.svg";
+import runIconUrl from "../assets/runner.svg";
+// import walkIconUrl from "../assets/walker.svg";
+import walkIconUrl from "../assets/footprints.svg";
+import hikeIconUrl from "../assets/hiker.svg";
+import rulerIconUrl from "../assets/ruler.svg";
+import timeIconUrl from "../assets/timer.svg";
+import speedIconUrl from "../assets/speedometer.svg";
+
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
 export default function Activity({
@@ -74,28 +86,57 @@ export default function Activity({
 
   //// info ////
 
-  // !!! get actual icons; per type, lock, photo, briefcase(?)
-  const displayPace = ["Run", "Trail Run", "Walk", "Hike"].includes(type);
-  const activityIcon = `[${type}]`;
-  const lockIcon = "[LOCK]";
-  const photoIcon = "[P]";
-  const commuteIcon = "[C]";
+  const shouldDisplayPace = ["Run", "Walk", "Hike"].includes(type);
+  const getActivityTypeIconUrl = (type) => {
+    switch (type) {
+      case "Run":
+        return runIconUrl;
+      case "Ride":
+        return rideIconUrl;
+      case "Walk":
+        return walkIconUrl;
+      case "Hike":
+        return hikeIconUrl;
+      default:
+        // !!! 'other' type icon
+        return "";
+    }
+  };
+
+  const activityIcon = (
+    <img className="icon" src={getActivityTypeIconUrl(type)} alt={`${type}`} />
+  );
+  const lockIcon = <img className="icon" src={lockIconUrl} alt="Private" />;
+  const commuteIcon = (
+    <img className="icon" src={commuteIconUrl} alt="Commute" />
+  );
+  const photoIcon = <img className="icon" src={cameraIconUrl} alt="Photos" />;
+
+  const distanceIcon = <img className="icon" src={rulerIconUrl} alt="Photos" />;
+  const timeIcon = <img className="icon" src={timeIconUrl} alt="Photos" />;
+  const speedIcon = <img className="icon" src={speedIconUrl} alt="Photos" />;
 
   //// return ////
 
   // !! animate marker along path to show direction?
   return (
     <div className="activity">
-      <div>
+      <div
+        style={
+          {
+            // !!! style activity data
+          }
+        }
+      >
         {activityIcon} <b>{name}</b> {isPrivate && lockIcon}{" "}
         {isCommute && commuteIcon} at {startDateLocal.substring(11, 16)}
       </div>
 
-      {/* // !!! add icons for each; ruler, stopwatch, speedometer */}
       <div>
-        {formatMeters(distance)} -- {formatSeconds(movingTime)} /{" "}
-        {formatSeconds(elapsedTime)} --{" "}
-        {displayPace
+        {distanceIcon}
+        {formatMeters(distance)} {timeIcon}
+        {formatSeconds(movingTime)} / {formatSeconds(elapsedTime)} {speedIcon}
+        {shouldDisplayPace
           ? formatMpsAsPace(averageSpeed)
           : formatMpsAsSpeed(averageSpeed)}
       </div>
@@ -105,9 +146,10 @@ export default function Activity({
           style={{
             width: mapWidth,
             height: mapHeight,
+            // just below the options header, which is set to 100
             zIndex: 99,
           }}
-          // !!! add button somewhere to re-center/zoom
+          // !! add button somewhere to re-center/zoom
           bounds={bounds}
           scrollWheelZoom
         >

@@ -96,7 +96,7 @@ const stravaApiDocumentationRide = {
   trainer: true,
   commute: false,
   manual: false,
-  private: false,
+  private: true,
   flagged: false,
   gear_id: "b12345678912343",
   from_accepted_tag: false,
