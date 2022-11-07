@@ -6,11 +6,8 @@ import Loading from "../Loading";
 import Error from "../Error";
 
 import { useSavedState } from "../../hooks/useSavedState";
-
-import strings from "../../strings";
 import useActivities from "../../hooks/useActivities";
-
-// todo: clean up time utils (hook?), be consistent with s vs ms
+import strings from "../../data/strings";
 
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().toLocaleString("default", { month: "long" });

@@ -3,13 +3,15 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Authentication from "./components/pages/Authentication";
 import Redirect from "./components/pages/Redirect";
 import View from "./components/pages/View";
+import Sample from "./components/pages/Sample";
 import Links from "./components/Links";
 
 import { useSavedState } from "./hooks/useSavedState";
-
-import strings from "./strings";
-
+import strings from "./data/strings";
 import logoPoweredByStrava from "./assets/logo_powered_by_strava.svg";
+
+import "./components/activities.css";
+import "./components/options.css";
 
 export default function App() {
   const [refreshToken, setRefreshToken] = useSavedState("refresh", null);
@@ -20,8 +22,6 @@ export default function App() {
   return (
     <>
       <div className="non-footer">
-        <h1>{strings.headings.appName}</h1>
-
         <Routes>
           <Route path="authenticate" element={<Authentication />} />
 
@@ -29,6 +29,8 @@ export default function App() {
             path="redirect"
             element={<Redirect setRefreshToken={setRefreshToken} />}
           />
+
+          <Route path="sample" element={<Sample />} />
 
           <Route
             path="/"
@@ -40,8 +42,6 @@ export default function App() {
               )
             }
           />
-
-          {/* // todo: add a 'sample' path with fake activities displayed */}
 
           <Route
             path="*"

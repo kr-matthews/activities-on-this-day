@@ -4,8 +4,7 @@ import Loading from "./Loading";
 import Error from "./Error";
 
 import useOptions from "../hooks/useOptions";
-
-import strings from "../strings";
+import strings from "../data/strings";
 
 export default function Activities({
   year,
@@ -30,9 +29,9 @@ export default function Activities({
         resetAll={resetAll}
       />
 
-      <h2>
+      <h1>
         Historical Activities from {month} {day}
-      </h2>
+      </h1>
 
       {areAllEmpty && <div>{strings.sentences.noActivities}</div>}
 
@@ -50,8 +49,7 @@ export default function Activities({
   );
 }
 
-// todo: gracefully fade out if/when shouldShow goes to false
-// !! show day of the week
+// ! gracefully fade out if/when shouldShow goes to false
 function ActivitiesOnOneDay({
   year,
   activities,
@@ -61,21 +59,30 @@ function ActivitiesOnOneDay({
 }) {
   const shouldShow =
     (activities && activities.length > 0) || isLoading || error;
+
+  const date = new Date();
+  date.setFullYear(year);
+  const dayOfWeek = date.toLocaleDateString("en-ca", { weekday: "long" });
+
   return (
     <>
       {shouldShow && (
         <>
-          <h3>{year}</h3>
-          {activities &&
-            activities.map((activity) => (
-              <Activity
-                key={activity.id}
-                activity={activity}
-                lineColour={options.lineColour}
-                lineWeight={options.lineWeight}
-                tileLayerName={options.tileLayerName}
-              />
-            ))}
+          <h2>
+            {year} ({dayOfWeek})
+          </h2>
+          <div className="activities-row">
+            {activities &&
+              activities.map((activity) => (
+                <Activity
+                  key={activity.id}
+                  activity={activity}
+                  lineColour={options.lineColour}
+                  lineWeight={options.lineWeight}
+                  tileLayerName={options.tileLayerName}
+                />
+              ))}
+          </div>
           {isLoading && <Loading task={`fetch ${year} activities`} />}
           {error && (
             <Error task={`fetch ${year} activities`} message={error.message} />

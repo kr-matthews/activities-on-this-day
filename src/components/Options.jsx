@@ -1,6 +1,5 @@
-import strings from "../strings";
-
-import tileLayers from "./tileLayers";
+import strings from "../data/strings";
+import tileLayers from "../data/tileLayers";
 
 export default function Options({
   options = {},
@@ -8,39 +7,50 @@ export default function Options({
   resetAll,
 }) {
   //// return ////
+
   return (
-    <div
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-        background: "AliceBlue",
-      }}
-    >
-      <b>{strings.headings.options}</b> - {strings.labels.tileLayer}:{" "}
-      <select
-        value={options.tileLayerName}
-        onChange={(e) => optionSetters.setTileAndColour(e.target.value)}
-      >
-        {Object.keys(tileLayers).map((tileLayerName) => (
-          <option key={tileLayerName} value={tileLayerName}>
-            {tileLayerName}
-          </option>
-        ))}
-      </select>{" "}
-      {strings.labels.lineColour}:{" "}
-      <input
-        type="color"
-        value={options.lineColour}
-        onChange={(e) => optionSetters.setLineColour(e.target.value)}
-      />{" "}
-      {strings.labels.lineWeight}:{" "}
-      <input
-        type="number"
-        value={options.lineWeight}
-        onChange={(e) => optionSetters.setLineWeight(Number(e.target.value))}
-      />{" "}
-      <button onClick={resetAll}>{strings.labels.resetOptions}</button>
+    <div className="options">
+      <div className="option option-title">
+        <b>{strings.headings.options}</b>
+      </div>
+
+      <div className="option">
+        {strings.labels.tileLayer}:{" "}
+        <select
+          value={options.tileLayerName}
+          onChange={(e) => optionSetters.setTileAndColour(e.target.value)}
+        >
+          {Object.keys(tileLayers).map((tileLayerName) => (
+            <option key={tileLayerName} value={tileLayerName}>
+              {tileLayerName}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="option">
+        {strings.labels.lineColour}:{" "}
+        <input
+          type="color"
+          style={{ width: 30, height: 20 }}
+          value={options.lineColour}
+          onChange={(e) => optionSetters.setLineColour(e.target.value)}
+        />
+      </div>
+
+      <div className="option">
+        {strings.labels.lineWeight}:{" "}
+        <input
+          type="number"
+          style={{ width: 30 }}
+          value={options.lineWeight}
+          onChange={(e) => optionSetters.setLineWeight(Number(e.target.value))}
+        />
+      </div>
+
+      <div className="option">
+        <button onClick={resetAll}>{strings.labels.resetOptions}</button>
+      </div>
     </div>
   );
 }

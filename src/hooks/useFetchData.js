@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { useCallback, useState } from "react";
 
-// todo: use reducers for each state, to clean up `fetch`
+// todo: use reducers for each state, to clean up `fetch` - or maybe don't bother
 
 export function useFetchData() {
   const [isEachLoading, setIsEachLoading] = useState([]);

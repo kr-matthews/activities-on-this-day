@@ -1,0 +1,37 @@
+.activities-row {
+  display: flex;
+  overflow-x: auto;
+}
+
+.activity {
+  padding: 10px;
+  margin-right: 10px;
+  display: flex;
+  min-width: 500px;
+  border: solid lightGrey;
+  background: lightGrey;
+  border-radius: 15px;
+}
+
+.activities-row .activity:first-child {
+  margin-left: auto;
+}
+
+.activities-row .activity:last-child {
+  margin-right: auto;
+}
+
+.icon {
+  max-width: 40px;
+  max-height: 20px;
+}
+
+.icon-row .icon {
+  margin-left: 15px;
+}
+
+.activity div table tbody tr td {
+  padding-top: 7px;
+  height: 25px;
+  vertical-align: middle;
+}

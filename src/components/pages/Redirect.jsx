@@ -31,8 +31,8 @@ export default function Redirect({ setRefreshToken }) {
   }, [data, navigate, setRefreshToken]);
 
   // !! add no code error case
-  // ! descriptive error message/UI, based on 2 possible errors
-  // todo: tidy up redirect UI
+  // !! descriptive error message/UI, based on 2 possible errors
+  // !: tidy up redirect UI
   return (
     <>
       {isLoading && <Loading task="fetch persistent token" />}
