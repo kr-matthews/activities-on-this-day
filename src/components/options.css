@@ -3,7 +3,7 @@
   top: 0px;
   /* just above the maps, which are set to 99 */
   z-index: 100;
-  background: LightGrey;
+  background: grey;
   display: flex;
 }
 

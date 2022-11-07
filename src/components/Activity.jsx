@@ -10,17 +10,18 @@ import {
   formatMpsAsSpeed,
 } from "../utils/displayUtils";
 
-import commuteIconUrl from "../assets/briefcase.svg";
-import lockIconUrl from "../assets/lock.svg";
-import cameraIconUrl from "../assets/camera.svg";
 import rideIconUrl from "../assets/bike.svg";
 import runIconUrl from "../assets/runner.svg";
 // import walkIconUrl from "../assets/walker.svg";
 import walkIconUrl from "../assets/footprints.svg";
 import hikeIconUrl from "../assets/hiker.svg";
+import lockIconUrl from "../assets/lock.svg";
+import commuteIconUrl from "../assets/briefcase.svg";
+import clockIconUrl from "../assets/clock.svg";
 import rulerIconUrl from "../assets/ruler.svg";
-import timeIconUrl from "../assets/timer.svg";
+import timerIconUrl from "../assets/timer.svg";
 import speedIconUrl from "../assets/speedometer.svg";
+import cameraIconUrl from "../assets/camera.svg";
 
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
@@ -86,7 +87,10 @@ export default function Activity({
 
   //// info ////
 
+  // !! add tooltips to all icons, or something like that
+
   const shouldDisplayPace = ["Run", "Walk", "Hike"].includes(type);
+
   const getActivityTypeIconUrl = (type) => {
     switch (type) {
       case "Run":
@@ -106,48 +110,39 @@ export default function Activity({
   const activityIcon = (
     <img className="icon" src={getActivityTypeIconUrl(type)} alt={`${type}`} />
   );
-  const lockIcon = <img className="icon" src={lockIconUrl} alt="Private" />;
+  const privateIcon = <img className="icon" src={lockIconUrl} alt="Private" />;
   const commuteIcon = (
     <img className="icon" src={commuteIconUrl} alt="Commute" />
   );
-  const photoIcon = <img className="icon" src={cameraIconUrl} alt="Photos" />;
 
-  const distanceIcon = <img className="icon" src={rulerIconUrl} alt="Photos" />;
-  const timeIcon = <img className="icon" src={timeIconUrl} alt="Photos" />;
-  const speedIcon = <img className="icon" src={speedIconUrl} alt="Photos" />;
+  const timeIcon = <img className="icon" src={clockIconUrl} alt="Time" />;
+  const distanceIcon = (
+    <img className="icon" src={rulerIconUrl} alt="Distance" />
+  );
+  const durationIcon = <img className="icon" src={timerIconUrl} alt="Time" />;
+  const speedIcon = (
+    <img
+      className="icon"
+      src={speedIconUrl}
+      alt={shouldDisplayPace ? "Pace" : "Speed"}
+    />
+  );
+
+  const photosIcon = <img className="icon" src={cameraIconUrl} alt="Photos" />;
 
   //// return ////
 
   // !! animate marker along path to show direction?
   return (
     <div className="activity">
-      <div
-        style={
-          {
-            // !!! style activity data
-          }
-        }
-      >
-        {activityIcon} <b>{name}</b> {isPrivate && lockIcon}{" "}
-        {isCommute && commuteIcon} at {startDateLocal.substring(11, 16)}
-      </div>
-
-      <div>
-        {distanceIcon}
-        {formatMeters(distance)} {timeIcon}
-        {formatSeconds(movingTime)} / {formatSeconds(elapsedTime)} {speedIcon}
-        {shouldDisplayPace
-          ? formatMpsAsPace(averageSpeed)
-          : formatMpsAsSpeed(averageSpeed)}
-      </div>
-
-      <div style={{ width: mapWidth, margin: "auto", padding: 10 }}>
+      <div style={{ width: mapWidth, margin: "auto", paddingRight: 10 }}>
         <MapContainer
           style={{
             width: mapWidth,
             height: mapHeight,
             // just below the options header, which is set to 100
             zIndex: 99,
+            border: "solid",
           }}
           // !! add button somewhere to re-center/zoom
           bounds={bounds}
@@ -166,9 +161,65 @@ export default function Activity({
         </MapContainer>
       </div>
 
-      <a href={linkToActivity} target="_blank" rel="noopener noreferrer">
-        {strings.labels.viewOnStrava} {photoCount > 0 && photoIcon}
-      </a>
+      <div
+        style={{ width: 190, justifyContent: "center", position: "relative" }}
+      >
+        <div style={{ padding: 5, marginBottom: 12 }}>
+          <b>{name}</b>
+        </div>
+
+        <div className="icon-row" style={{ margin: "auto", marginBottom: 5 }}>
+          {activityIcon}
+          {isPrivate && privateIcon}
+          {isCommute && commuteIcon}
+        </div>
+
+        <table style={{ maxWidth: 190, margin: "auto" }}>
+          <tbody>
+            <tr>
+              <td style={{ width: "35px" }}>{timeIcon}</td>
+              <td style={{ width: "100px" }}>
+                {startDateLocal.substring(11, 16)}
+              </td>
+            </tr>
+
+            <tr>
+              <td>{distanceIcon}</td>
+              <td>{formatMeters(distance)}</td>
+            </tr>
+
+            <tr>
+              <td>{durationIcon}</td>
+              <td>
+                <div>{formatSeconds(movingTime)}</div>
+                <div>{formatSeconds(elapsedTime)}</div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>{speedIcon}</td>
+              <td>
+                {shouldDisplayPace
+                  ? formatMpsAsPace(averageSpeed)
+                  : formatMpsAsSpeed(averageSpeed)}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: "25%",
+          }}
+        >
+          <div>{photoCount > 0 && photosIcon}</div>
+          <a href={linkToActivity} target="_blank" rel="noopener noreferrer">
+            {strings.labels.viewOnStrava}
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
