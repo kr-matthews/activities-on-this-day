@@ -11,7 +11,7 @@ const strings = {
     lineColour: "Path Colour",
     lineWeight: "Path Width",
     resetOptions: "Reset Options",
-    sample: "View Samples",
+    sample: "View Sample",
     tryIt: "Try It Yourself",
   },
 
@@ -20,7 +20,9 @@ const strings = {
       "This is a simple app which displays your Strava activities that were recorded on this day in history. In order to see your activities, you'll need to provide permission for the app to access your Strava activities via the button below. Once granted, you can revoke this access at any time by going to your settings on Strava's website, and a link will be provided at the button of the page.",
     sample:
       "Don't have Strava, or don't want to provide access? Check out what it would look like if you did.",
-    noActivities: "You don't have any activities on this day in history.",
+    sampleWarning: "Note: This is sample data, not your data.",
+    noActivities:
+      "You don't have any activities on this day in history. Check out the sample page to see what if would look like if you did.",
   },
 
   links: {

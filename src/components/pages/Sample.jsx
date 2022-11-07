@@ -16,12 +16,18 @@ export default function Sample() {
   const activities = sampleActivities.map((activities) =>
     activities.map(parseActivity)
   );
-
   const len = activities.length;
-
   const areLoading = Array(len).fill(false);
-
   const errors = Array(len).fill(null);
+
+  const warning = (
+    <p style={{ color: "red", backgroundColor: "yellow" }}>
+      {strings.sentences.sampleWarning}
+      <button onClick={() => navigate("/")} style={{ margin: 10 }}>
+        {strings.labels.tryIt}
+      </button>
+    </p>
+  );
 
   return (
     <>
@@ -32,13 +38,10 @@ export default function Sample() {
         activities={activities}
         areLoading={areLoading}
         errors={errors}
+        preTitle={warning}
       />
 
-      <div>
-        <button onClick={() => navigate("/")} style={{ margin: 10 }}>
-          {strings.labels.tryIt}
-        </button>
-      </div>
+      <div></div>
     </>
   );
 }

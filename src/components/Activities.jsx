@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router";
+
 import Activity from "./Activity";
 import Options from "./Options";
 import Loading from "./Loading";
@@ -13,7 +15,10 @@ export default function Activities({
   activities = [],
   areLoading,
   errors,
+  preTitle,
 }) {
+  const navigate = useNavigate();
+
   const areAllEmpty =
     activities.length > 0 &&
     activities.every((activities) => activities && activities.length === 0);
@@ -29,11 +34,20 @@ export default function Activities({
         resetAll={resetAll}
       />
 
+      {preTitle}
+
       <h1>
         Historical Activities from {month} {day}
       </h1>
 
-      {areAllEmpty && <div>{strings.sentences.noActivities}</div>}
+      {areAllEmpty && (
+        <p>
+          {strings.sentences.noActivities}
+          <button onClick={() => navigate("/sample")} style={{ margin: 10 }}>
+            {strings.labels.sample}
+          </button>
+        </p>
+      )}
 
       {activities.map((activitiesEntry, index) => (
         <ActivitiesOnOneDay
