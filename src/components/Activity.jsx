@@ -87,8 +87,6 @@ export default function Activity({
 
   //// info ////
 
-  // !! add tooltips to all icons, or something like that
-
   const shouldDisplayPace = ["Run", "Walk", "Hike"].includes(type);
 
   const getActivityTypeIconUrl = (type) => {
@@ -102,33 +100,67 @@ export default function Activity({
       case "Hike":
         return hikeIconUrl;
       default:
-        // !!! 'other' type icon
+        // !! 'other' type icon - but what?
         return "";
     }
   };
 
   const activityIcon = (
-    <img className="icon" src={getActivityTypeIconUrl(type)} alt={`${type}`} />
+    <img
+      className="icon"
+      title={`Activity Type: ${type}`}
+      src={getActivityTypeIconUrl(type)}
+      alt={`${type}`}
+    />
   );
-  const privateIcon = <img className="icon" src={lockIconUrl} alt="Private" />;
+  const privateIcon = (
+    <img
+      className="icon"
+      title={"This activity is private."}
+      src={lockIconUrl}
+      alt="Private"
+    />
+  );
   const commuteIcon = (
-    <img className="icon" src={commuteIconUrl} alt="Commute" />
+    <img
+      className="icon"
+      title={"This activity was a commute."}
+      src={commuteIconUrl}
+      alt="Commute"
+    />
   );
 
-  const timeIcon = <img className="icon" src={clockIconUrl} alt="Time" />;
-  const distanceIcon = (
-    <img className="icon" src={rulerIconUrl} alt="Distance" />
+  const timeIcon = (
+    <img className="icon" title={"Start Time"} src={clockIconUrl} alt="Time" />
   );
-  const durationIcon = <img className="icon" src={timerIconUrl} alt="Time" />;
+  const distanceIcon = (
+    <img
+      className="icon"
+      title={"Distance"}
+      src={rulerIconUrl}
+      alt="Distance"
+    />
+  );
+  const durationIcon = (
+    <img className="icon" title={"Duration"} src={timerIconUrl} alt="Time" />
+  );
   const speedIcon = (
     <img
       className="icon"
+      title={shouldDisplayPace ? "Pace" : "Speed"}
       src={speedIconUrl}
       alt={shouldDisplayPace ? "Pace" : "Speed"}
     />
   );
 
-  const photosIcon = <img className="icon" src={cameraIconUrl} alt="Photos" />;
+  const photosIcon = (
+    <img
+      className="icon"
+      title={"This activity has photos, see them on Strava."}
+      src={cameraIconUrl}
+      alt="Photos"
+    />
+  );
 
   //// return ////
 
