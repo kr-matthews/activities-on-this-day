@@ -41,12 +41,14 @@ export default function Activities({
       </h1>
 
       {areAllEmpty && (
-        <p>
+        <div className="rectangle">
           {strings.sentences.noActivities}
-          <button onClick={() => navigate("/sample")} style={{ margin: 10 }}>
-            {strings.labels.sample}
-          </button>
-        </p>
+          <div>
+            <button onClick={() => navigate("/sample")}>
+              {strings.labels.sample}
+            </button>
+          </div>
+        </div>
       )}
 
       {activities.map((activitiesEntry, index) => (

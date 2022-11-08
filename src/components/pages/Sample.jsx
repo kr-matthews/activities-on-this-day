@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import Activities from "../Activities";
+import Warning from "../Warning";
 
 import { parseActivity } from "../../utils/activityUtils";
 import strings from "../../data/strings";
@@ -21,12 +22,14 @@ export default function Sample() {
   const errors = Array(len).fill(null);
 
   const warning = (
-    <p style={{ color: "red", backgroundColor: "yellow" }}>
-      {strings.sentences.sampleWarning}
-      <button onClick={() => navigate("/")} style={{ margin: 10 }}>
-        {strings.labels.tryIt}
-      </button>
-    </p>
+    <Warning
+      label={strings.labels.note}
+      sentence={strings.sentences.sampleWarning}
+    >
+      <div>
+        <button onClick={() => navigate("/")}>{strings.labels.tryIt}</button>
+      </div>
+    </Warning>
   );
 
   return (

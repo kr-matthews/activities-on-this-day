@@ -23,7 +23,10 @@ export default function App() {
     <>
       <div className="non-footer">
         <Routes>
-          <Route path="authenticate" element={<Authentication />} />
+          <Route
+            path="authenticate"
+            element={<Authentication hasRefreshToken={!!refreshToken} />}
+          />
 
           <Route
             path="redirect"
@@ -56,7 +59,7 @@ export default function App() {
               {strings.dev.clearRefresh}
             </button>
             <button onClick={() => localStorage.clear()}>
-              {/* // !! redo this, make it available as part of revoke */}
+              {/* // !!! redo this, make it available as part of revoke */}
               {strings.dev.clearAll}
             </button>
           </div>
