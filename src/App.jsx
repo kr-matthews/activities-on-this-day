@@ -17,8 +17,6 @@ export default function App() {
   const [refreshToken, setRefreshToken] = useSavedState("refresh", null);
   const hasRefreshToken = !!refreshToken;
 
-  const showDevOptions = process.env.REACT_APP_ENV === "LOCAL";
-
   return (
     <>
       <div className="non-footer">
@@ -39,7 +37,10 @@ export default function App() {
             path="/"
             element={
               hasRefreshToken ? (
-                <View refreshToken={refreshToken} />
+                <View
+                  refreshToken={refreshToken}
+                  clearRefreshToken={() => setRefreshToken(null)}
+                />
               ) : (
                 <Navigate to="/authenticate" />
               )
@@ -52,18 +53,6 @@ export default function App() {
             options={{ replace: true }}
           />
         </Routes>
-
-        {showDevOptions && (
-          <div>
-            <button onClick={() => setRefreshToken(null)}>
-              {strings.dev.clearRefresh}
-            </button>
-            <button onClick={() => localStorage.clear()}>
-              {/* // !!! redo this, make it available as part of revoke */}
-              {strings.dev.clearAll}
-            </button>
-          </div>
-        )}
       </div>
 
       <Links gitHubLink={strings.links.gitHubRepo}>

@@ -6,7 +6,6 @@ const strings = {
 
   labels: {
     viewOnStrava: "View on Strava", // not allowed to change this
-    revokeAccess: "Revoke access on Strava",
     tileLayer: "Map Type",
     lineColour: "Path Colour",
     lineWeight: "Path Width",
@@ -29,6 +28,13 @@ const strings = {
       "You don't have any activities on this day in history. Check out the sample page to see what if would look like if you did.",
   },
 
+  fragments: {
+    revokeAccess1: "To clear permissions and data, first ",
+    revokeAccess2: "revoke access on Strava",
+    revokeAccess3: " then ",
+    revokeAccess4: "clear stored data.",
+  },
+
   links: {
     gitHubRepo: "https://github.com/kr-matthews/activities-on-this-day",
     revokeAccess: "https://www.strava.com/settings/apps",
@@ -37,11 +43,9 @@ const strings = {
   errors: {},
 
   dev: {
-    goToAuth: "Go to authentication step",
-    setToYesterday: "Set last fetched to yesterday",
+    goToAuth: "Visit /authentication",
+    setToYesterday: "yesterday -> Fetched",
     clearActivities: "Clear Activities",
-    clearRefresh: "Clear refresh token",
-    clearAll: "Clear all local storage",
   },
 };
 
