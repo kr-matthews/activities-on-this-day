@@ -43,7 +43,7 @@ export function useFetchActivities(earliestYear, accessToken) {
     const month = now.getMonth();
     const monthString = month < 9 ? `0${month + 1}` : `${month + 1}`;
     const day = now.getDate();
-    const dayString = day < 9 ? `0${day}` : `${day}`;
+    const dayString = day < 10 ? `0${day}` : `${day}`;
     const dateToMatch = `${monthString}-${dayString}`;
 
     return unprocessedData.map(
