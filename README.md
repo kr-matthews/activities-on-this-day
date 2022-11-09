@@ -1,5 +1,7 @@
 # Activities On-This-Day
 
+// !!! UI - update favicon
+
 ![Screenshot](public/android-chrome-192x192.png)
 
 This is a single-page application working with serverless functions to display your historical activities from Strava, specifically those which were recorded on this day in history.
@@ -10,7 +12,7 @@ The app is accessible at [https://activities-on-this-day.netlify.app/](https://a
 
 **Note that this is NOT an official Strava app, and is NOT endorsed by Strava.**
 
-// todo: add screenshot(s) once UI is done
+// todo: TIDY - add screenshot(s) once UI is done
 
 ## Features
 
@@ -45,5 +47,6 @@ See [enhancements](https://github.com/kr-matthews/activities-on-this-day/issues?
 See the [issues](https://github.com/kr-matthews/activities-on-this-day/issues) on GitHub, in addition to the following:
 
 - No tests at all.
+- Styling is inconsistent and messy - half in-line, half css files.
 - No thought to accessibility.
 - Only in english.

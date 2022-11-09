@@ -23,7 +23,7 @@ import timerIconUrl from "../assets/timer.svg";
 import speedIconUrl from "../assets/speedometer.svg";
 import cameraIconUrl from "../assets/camera.svg";
 
-// !! put info above/below when width < 550
+// !!! UI - put info above/below when width < 550
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
 export default function Activity({
@@ -101,7 +101,7 @@ export default function Activity({
       case "Hike":
         return hikeIconUrl;
       default:
-        // !! 'other' type icon - but what?
+        // !!! UI - 'other' type icon - but what?
         return "";
     }
   };
@@ -165,7 +165,7 @@ export default function Activity({
 
   //// return ////
 
-  // !! animate marker along path to show direction?
+  // todo: FANCY - animate marker along path to show direction?
   return (
     <div className="activity">
       <div style={{ width: mapWidth, margin: "auto", paddingRight: 10 }}>
@@ -177,7 +177,7 @@ export default function Activity({
             zIndex: 99,
             border: "solid",
           }}
-          // !! add button somewhere to re-center/zoom
+          // !!! UI - add button somewhere to re-center/zoom
           bounds={bounds}
           scrollWheelZoom
         >

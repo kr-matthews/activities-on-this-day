@@ -19,7 +19,7 @@ export default function View({
 }) {
   const navigate = useNavigate();
 
-  // ! allow setting earliest year; ensure it stays between 2008 and last year (use reducer?)
+  // !! FANCY - allow setting earliest year; ensure it stays between 2008 and last year (use reducer?)
   const [earliestYear, setEarliestYear] = useSavedState("year", 2008);
 
   useEffect(() => {
