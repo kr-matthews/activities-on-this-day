@@ -23,6 +23,7 @@ import timerIconUrl from "../assets/timer.svg";
 import speedIconUrl from "../assets/speedometer.svg";
 import cameraIconUrl from "../assets/camera.svg";
 
+// !! put info above/below when width < 550
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
 export default function Activity({

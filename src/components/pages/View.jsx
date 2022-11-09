@@ -13,10 +13,13 @@ const currentYear = new Date().getFullYear();
 const currentMonth = new Date().toLocaleString("default", { month: "long" });
 const currentDay = new Date().getDate();
 
-export default function View({ refreshToken }) {
+export default function View({
+  refreshToken,
+  clearRefreshToken = () => console.error("Can't clear refresh token."),
+}) {
   const navigate = useNavigate();
 
-  // todo: allow setting earliest year; ensure it stays between 2008 and last year (use reducer?)
+  // ! allow setting earliest year; ensure it stays between 2008 and last year (use reducer?)
   const [earliestYear, setEarliestYear] = useSavedState("year", 2008);
 
   useEffect(() => {
@@ -37,6 +40,10 @@ export default function View({ refreshToken }) {
   } = useActivities(refreshToken, earliestYear);
 
   const showDevOptions = process.env.REACT_APP_ENV === "LOCAL";
+  const clearData = () => {
+    localStorage.clear();
+    clearRefreshToken();
+  };
 
   return (
     <>
@@ -54,6 +61,19 @@ export default function View({ refreshToken }) {
       {accessTokenError && (
         <Error task="fetch access token" message={accessTokenError.message} />
       )}
+
+      <p>
+        {strings.fragments.revokeAccess1}
+        <a
+          href={strings.links.revokeAccess}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {strings.fragments.revokeAccess2}
+        </a>{" "}
+        {strings.fragments.revokeAccess3}
+        <button onClick={clearData}>{strings.fragments.revokeAccess4}</button>
+      </p>
 
       {showDevOptions && (
         <>
@@ -76,16 +96,6 @@ export default function View({ refreshToken }) {
           </div>
         </>
       )}
-
-      <p>
-        <a
-          href={strings.links.revokeAccess}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {strings.labels.revokeAccess}
-        </a>
-      </p>
     </>
   );
 }
