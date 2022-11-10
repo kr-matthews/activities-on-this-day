@@ -1,7 +1,5 @@
 # Activities On-This-Day
 
-// !!! UI - update favicon
-
 ![Screenshot](public/android-chrome-192x192.png)
 
 This is a single-page application working with serverless functions to display your historical activities from Strava, specifically those which were recorded on this day in history.
