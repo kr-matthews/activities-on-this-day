@@ -1,4 +1,4 @@
-// !! clean up error UI - check strava codes
+// !! ERROR - clean up error UI - check strava codes
 
 export default function Error({ task, statusCode, message }) {
   return (

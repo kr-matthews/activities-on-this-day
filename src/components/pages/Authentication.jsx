@@ -6,8 +6,8 @@ import strings from "../../data/strings";
 import buttonStravaConnect from "../../assets/button_strava_connect.svg";
 
 export default function Authentication({ hasRefreshToken }) {
-  // ! redirect to mobile app when on phone??
-  // todo: do cleaner url creation: extract base url into const or env, use builder (not just here)
+  // ! TIDY - redirect to mobile app when on phone??
+  // todo: TIDY - do cleaner url creation: extract base url into const or env, use builder (not just here)
   const authUrl = `https://www.strava.com/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${window.location.origin}/redirect&approval_prompt=force&scope=activity:read_all`;
 
   const navigate = useNavigate();

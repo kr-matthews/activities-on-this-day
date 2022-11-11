@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Polyline } from "react-leaflet";
+import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
 import polyline from "@mapbox/polyline";
 
 import strings from "../data/strings";
@@ -22,8 +22,23 @@ import rulerIconUrl from "../assets/ruler.svg";
 import timerIconUrl from "../assets/timer.svg";
 import speedIconUrl from "../assets/speedometer.svg";
 import cameraIconUrl from "../assets/camera.svg";
+import crosshairIconUrl from "../assets/crosshair.svg";
 
-// !! put info above/below when width < 550
+// not very re-usable...
+function ReCenter({ bounds }) {
+  const map = useMap();
+
+  return (
+    <div
+      className="recenter"
+      title="Re-center"
+      onClick={() => map.fitBounds(bounds)}
+    >
+      <img src={crosshairIconUrl} alt="center" />
+    </div>
+  );
+}
+
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
 export default function Activity({
@@ -101,7 +116,7 @@ export default function Activity({
       case "Hike":
         return hikeIconUrl;
       default:
-        // !! 'other' type icon - but what?
+        // !!! UI - 'other' type icon - a watch?
         return "";
     }
   };
@@ -165,10 +180,10 @@ export default function Activity({
 
   //// return ////
 
-  // !! animate marker along path to show direction?
+  // todo: FANCY - animate marker along path to show direction?
   return (
     <div className="activity">
-      <div style={{ width: mapWidth, margin: "auto", paddingRight: 10 }}>
+      <div style={{ width: mapWidth, margin: "auto", paddingRight: 5 }}>
         <MapContainer
           style={{
             width: mapWidth,
@@ -177,10 +192,10 @@ export default function Activity({
             zIndex: 99,
             border: "solid",
           }}
-          // !! add button somewhere to re-center/zoom
           bounds={bounds}
           scrollWheelZoom
         >
+          <ReCenter bounds={bounds} />
           <TileLayer
             // key is required to force re-render when tile layer changes, since `url` is immutable
             key={tileLayerName}
@@ -194,9 +209,7 @@ export default function Activity({
         </MapContainer>
       </div>
 
-      <div
-        style={{ width: 190, justifyContent: "center", position: "relative" }}
-      >
+      <div className="activity-data">
         <div style={{ padding: 5, marginBottom: 12 }}>
           <b>{name}</b>
         </div>
@@ -240,13 +253,7 @@ export default function Activity({
           </tbody>
         </table>
 
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: "25%",
-          }}
-        >
+        <div className="activity-link">
           <div>{photoCount > 0 && photosIcon}</div>
           <a href={linkToActivity} target="_blank" rel="noopener noreferrer">
             {strings.labels.viewOnStrava}

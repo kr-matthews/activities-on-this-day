@@ -25,7 +25,7 @@ export default function Activities({
 
   const { options, optionSetters, resetAll } = useOptions();
 
-  // todo: string resource with placeholder? h2 here, and year below
+  // todo: TIDY - string resource with placeholder? h2 here, and year below
   return (
     <>
       <Options
@@ -65,7 +65,7 @@ export default function Activities({
   );
 }
 
-// ! gracefully fade out if/when shouldShow goes to false
+// ! FANCY - gracefully fade out if/when shouldShow goes to false
 function ActivitiesOnOneDay({
   year,
   activities,

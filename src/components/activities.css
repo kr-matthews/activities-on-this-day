@@ -7,7 +7,6 @@
   padding: 10px;
   margin-right: 10px;
   display: flex;
-  min-width: 500px;
   border: solid lightGrey;
   background: lightGrey;
   border-radius: 15px;
@@ -24,14 +23,86 @@
 .icon {
   max-width: 40px;
   max-height: 20px;
+  cursor: help;
 }
 
 .icon-row .icon {
   margin-left: 15px;
 }
 
+.activity-data {
+  width: 190px;
+  justify-content: center;
+  position: relative;
+}
+
 .activity div table tbody tr td {
   padding-top: 7px;
   height: 25px;
   vertical-align: middle;
+}
+
+.activity-link {
+  position: absolute;
+  bottom: 0px;
+  left: 25%;
+}
+
+.recenter {
+  width: 30px;
+  height: 30px;
+  background: white;
+  z-index: 800;
+  position: relative;
+  top: 12px;
+  left: 255px;
+  cursor: pointer;
+  opacity: 0.5;
+  border: solid #ccc 1px;
+  border-radius: 2px;
+}
+
+.recenter:hover {
+  opacity: 1;
+}
+
+.leaflet-control-zoom {
+  opacity: 0.5;
+}
+
+.leaflet-control-zoom:hover {
+  opacity: 1;
+}
+
+@media (max-width: 490px) {
+  .activity {
+    display: block;
+  }
+
+  .activity-data {
+    width: 300px;
+    justify-content: center;
+    position: relative;
+  }
+
+  .activity div table tbody tr td {
+    padding-top: 2px;
+    height: 10px;
+  }
+
+  .activity-link {
+    position: relative;
+    padding-top: 5px;
+    left: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .recenter {
+    opacity: 1;
+  }
+
+  .leaflet-control-zoom {
+    opacity: 1;
+  }
 }

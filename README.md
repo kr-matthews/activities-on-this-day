@@ -10,7 +10,7 @@ The app is accessible at [https://activities-on-this-day.netlify.app/](https://a
 
 **Note that this is NOT an official Strava app, and is NOT endorsed by Strava.**
 
-// todo: add screenshot(s) once UI is done
+// todo: TIDY - add screenshot(s) once UI is done
 
 ## Features
 
@@ -45,5 +45,6 @@ See [enhancements](https://github.com/kr-matthews/activities-on-this-day/issues?
 See the [issues](https://github.com/kr-matthews/activities-on-this-day/issues) on GitHub, in addition to the following:
 
 - No tests at all.
+- Styling is inconsistent and messy - half in-line, half css files.
 - No thought to accessibility.
 - Only in english.
