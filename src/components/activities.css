@@ -7,7 +7,6 @@
   padding: 10px;
   margin-right: 10px;
   display: flex;
-  min-width: 500px;
   border: solid lightGrey;
   background: lightGrey;
   border-radius: 15px;
@@ -30,8 +29,43 @@
   margin-left: 15px;
 }
 
+.activity-data {
+  width: 190px;
+  justify-content: center;
+  position: relative;
+}
+
 .activity div table tbody tr td {
   padding-top: 7px;
   height: 25px;
   vertical-align: middle;
+}
+
+.activity-link {
+  position: absolute;
+  bottom: 0px;
+  left: 25%;
+}
+
+@media (max-width: 490px) {
+  .activity {
+    display: block;
+  }
+
+  .activity-data {
+    width: 300px;
+    justify-content: center;
+    position: relative;
+  }
+
+  .activity div table tbody tr td {
+    padding-top: 2px;
+    height: 10px;
+  }
+
+  .activity-link {
+    position: relative;
+    padding-top: 5px;
+    left: 0;
+  }
 }
