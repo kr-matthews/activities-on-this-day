@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Polyline } from "react-leaflet";
+import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
 import polyline from "@mapbox/polyline";
 
 import strings from "../data/strings";
@@ -22,6 +22,22 @@ import rulerIconUrl from "../assets/ruler.svg";
 import timerIconUrl from "../assets/timer.svg";
 import speedIconUrl from "../assets/speedometer.svg";
 import cameraIconUrl from "../assets/camera.svg";
+import crosshairIconUrl from "../assets/crosshair.svg";
+
+// not very re-usable...
+function ReCenter({ bounds }) {
+  const map = useMap();
+
+  return (
+    <div
+      className="recenter"
+      title="Re-center"
+      onClick={() => map.fitBounds(bounds)}
+    >
+      <img src={crosshairIconUrl} alt="center" />
+    </div>
+  );
+}
 
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
@@ -100,7 +116,7 @@ export default function Activity({
       case "Hike":
         return hikeIconUrl;
       default:
-        // !!! UI - 'other' type icon - but what?
+        // !!! UI - 'other' type icon - a watch?
         return "";
     }
   };
@@ -176,10 +192,10 @@ export default function Activity({
             zIndex: 99,
             border: "solid",
           }}
-          // !!! UI - add button somewhere to re-center/zoom
           bounds={bounds}
           scrollWheelZoom
         >
+          <ReCenter bounds={bounds} />
           <TileLayer
             // key is required to force re-render when tile layer changes, since `url` is immutable
             key={tileLayerName}
