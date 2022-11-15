@@ -4,7 +4,7 @@ const sanDiegoRun = {
     id: 0, // omit
     resource_state: 1,
   },
-  name: "Visiting San Diego",
+  name: "Last Morning in San Diego",
   distance: 7977,
   moving_time: 2201,
   elapsed_time: 2645,
@@ -56,13 +56,71 @@ const sanDiegoRun = {
   has_kudoed: false,
 };
 
+const uclaSantaMonicaRun = {
+  resource_state: 2,
+  athlete: {
+    id: 0, // omit
+    resource_state: 1,
+  },
+  name: "Return Home",
+  distance: 10733.2,
+  moving_time: 2849,
+  elapsed_time: 3569,
+  total_elevation_gain: 11.4,
+  type: "Run",
+  sport_type: "Run",
+  workout_type: null,
+  id: 0, // omit
+  start_date: "2017-11-14T23:12:47Z",
+  start_date_local: "2017-11-14T15:12:47Z",
+  timezone: "(GMT-08:00) America/Los_Angeles",
+  utc_offset: -28800,
+  location_city: null,
+  location_state: null,
+  location_country: "United States",
+  achievement_count: 3,
+  kudos_count: 4,
+  comment_count: 0,
+  athlete_count: 1,
+  photo_count: 1,
+  map: {
+    id: "a1275772452",
+    summary_polyline:
+      "kb}nErg|qUhIuAbQd@xB`Ci@lNhRn@|ChDjEgCzCd@JgBfBv@jT}KfCnC`F{Dzg@n`Aj}@qt@bIpOrHyD`VvsBnLfg@la@ch@r`@yZyF}PfFmC~CyFjFaA^cBkEgDiJzGbDhH",
+    resource_state: 2,
+  },
+  trainer: false,
+  commute: true,
+  manual: false,
+  private: false,
+  visibility: "everyone",
+  flagged: false,
+  gear_id: "g2554325",
+  start_latlng: [34.069027, -118.442333],
+  end_latlng: [34.01612, -118.457417],
+  average_speed: 3.767,
+  max_speed: 6.4,
+  has_heartrate: false,
+  heartrate_opt_out: false,
+  display_hide_heartrate_option: false,
+  elev_high: 130,
+  elev_low: 41.7,
+  upload_id: 0, // omit
+  upload_id_str: "0", // omit
+  external_id: "0", // omit
+  from_accepted_tag: false,
+  pr_count: 0,
+  total_photo_count: 1,
+  has_kudoed: false,
+};
+
 const stravaApiDocumentationRide = {
   resource_state: 2,
   athlete: {
     id: 167560,
     resource_state: 1,
   },
-  name: "Afternoon Ride",
+  name: "Back in Oakland",
   distance: 23676.5,
   moving_time: 6430,
   elapsed_time: 6600,
@@ -117,75 +175,14 @@ const stravaApiDocumentationRide = {
   suffer_score: 162,
 };
 
-const stravaApiDocumentationModification = {
-  resource_state: 2,
-  athlete: {
-    id: 167560,
-    resource_state: 1,
-  },
-  name: "London Marathon!",
-  distance: 42650,
-  moving_time: 14400,
-  elapsed_time: 14400,
-  total_elevation_gain: 39,
-  type: "Run",
-  sport_type: "Run",
-  workout_type: null,
-  id: 154504250376824,
-  external_id: "garmin_push_12345678987654321",
-  upload_id: 1234567819,
-  start_date: "2018-04-30T20:35:51Z",
-  start_date_local: "2018-04-30T12:35:51Z",
-  timezone: "(GMT-08:00) America/Los_Angeles",
-  utc_offset: -25200,
-  start_latlng: null,
-  end_latlng: null,
-  location_city: null,
-  location_state: null,
-  location_country: "United States",
-  achievement_count: 0,
-  kudos_count: 4,
-  comment_count: 0,
-  athlete_count: 1,
-  photo_count: 0,
-  map: {
-    id: "a12345689",
-    summary_polyline:
-      "ki{eFvqfiVsBmA`Feh@qg@iX`B}JeCcCqGjIq~@kf@cM{KeHeX`@_GdGkSeBiXtB}YuEkPwFyDeAzAe@pC~DfGc@bIOsGmCcEiD~@oBuEkFhBcBmDiEfAVuDiAuD}NnDaNiIlCyDD_CtJKv@wGhD]YyEzBo@g@uKxGmHpCGtEtI~AuLrHkAcAaIvEgH_EaDR_FpBuBg@sNxHqEtHgLoTpIiCzKNr[sB|Es\\`JyObYeMbGsMnPsAfDxAnD}DBu@bCx@{BbEEyAoD`AmChNoQzMoGhOwX|[yIzBeFKg[zAkIdU_LiHxK}HzEh@vM_BtBg@xGzDbCcF~GhArHaIfByAhLsDiJuC?_HbHd@nL_Cz@ZnEkDDy@hHwJLiCbIrNrIvN_EfAjDWlEnEiAfBxDlFkBfBtEfDaAzBvDKdFx@|@XgJmDsHhAgD`GfElEzOwBnYdBxXgGlSc@bGdHpW|HdJztBnhAgFxc@HnCvBdA",
-    resource_state: 2,
-  },
-  trainer: true,
-  commute: false,
-  manual: false,
-  private: false,
-  flagged: false,
-  gear_id: "b12345678912343",
-  from_accepted_tag: false,
-  average_speed: 4.385,
-  max_speed: 8.8,
-  average_cadence: 69.8,
-  average_watts: 200,
-  weighted_average_watts: 214,
-  kilojoules: 1080,
-  device_watts: true,
-  has_heartrate: true,
-  average_heartrate: 152.4,
-  max_heartrate: 183,
-  max_watts: 403,
-  pr_count: 0,
-  total_photo_count: 1,
-  has_kudoed: false,
-  suffer_score: 162,
-};
-
 /**
  * mix of my own activities and data taken from strava developers API documentation examples, with minor modifications
  * note that the data may be internally inconsistent
  */
 const sampleUnparsedActivityResponses = [
-  [stravaApiDocumentationRide],
+  [uclaSantaMonicaRun],
   [],
-  [sanDiegoRun, stravaApiDocumentationModification],
+  [sanDiegoRun, stravaApiDocumentationRide],
 ];
 
 export default sampleUnparsedActivityResponses;
