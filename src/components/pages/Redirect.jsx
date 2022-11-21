@@ -5,6 +5,7 @@ import Loading from "../Loading";
 import Error from "../Error";
 
 import { useFetchData } from "../../hooks/useFetchData";
+import strings from "../../data/strings";
 
 export default function Redirect({ setRefreshToken }) {
   const navigate = useNavigate();
@@ -37,25 +38,20 @@ export default function Redirect({ setRefreshToken }) {
     }
   }, [data, hasCorrectScope, navigate, setRefreshToken]);
 
-  // !!! UI - tidy up redirect UI - check strava codes
   return (
     <>
       {hasPermissionDenied && (
-        <Error task="provide permission" message="permission denied" />
+        <Error customMessage={strings.errors.permissionDenied} />
       )}
 
       {!hasPermissionDenied && !hasCorrectScope && (
-        <Error
-          task="provide permission"
-          message="insufficient permissions provided"
-        />
+        <Error customMessage={strings.errors.insufficientPermission} />
       )}
 
       {isLoading && <Loading task="fetch persistent token" />}
 
       {fetchError && (
         <Error
-          task="fetch persistent token"
           statusCode={fetchError.statusCode}
           message={fetchError.message}
         />

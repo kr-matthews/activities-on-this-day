@@ -40,7 +40,25 @@ const strings = {
     revokeAccess: "https://www.strava.com/settings/apps",
   },
 
-  errors: {},
+  errors: {
+    strava401: "Unauthorized.",
+    unauthorized:
+      "The app's permission to access your Strava seems to have been revoked. Clear stored data - see bottom of this page - then re-try providing permission.",
+    strava403: "Forbidden; you cannot access.",
+    forbidden:
+      "The app has permission to access your Strava, but this request failed for some reason. Try again tomorrow. If this persists, create an issue on GitHub - link at bottom of this page.",
+    strava404:
+      "Not found; the requested asset does not exist, or you are not authorized to see it.",
+    strava429: "Too Many Requests; you have exceeded rate limits.",
+    genericExplanation:
+      "Something went wrong. Try again tomorrow. If this persists, create an issue on GitHub - link at bottom of this page.",
+    rateLimitExplanation:
+      "Try again in 15 minutes - may not work until tomorrow.",
+    permissionDenied:
+      "You didn't hit 'authorize' on the Strava permissions page. Try again.",
+    insufficientPermission:
+      "You didn't provide permission to view private activities. Try again.",
+  },
 
   dev: {
     goToAuth: "Visit /authentication",
