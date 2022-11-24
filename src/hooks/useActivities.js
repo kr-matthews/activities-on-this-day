@@ -37,8 +37,8 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
   //// activities ////
 
   const [activities, setActivities] = useSavedState("activities", []);
-  // note: saved as date string, not absolute ms, since local day is important
   const [errors, setErrors] = useSavedState("errors", []);
+  // note: saved as date string, not absolute ms, since local day is important
   const [lastFetchedActivities, setLastFetchedActivities] = useSavedState(
     "fetched",
     null

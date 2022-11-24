@@ -70,7 +70,7 @@ const strings = {
     strava500:
       "Strava is having issues, please check https://status.strava.com.",
     stravaIssues:
-      "The problem appears to be on Strava's end - try again later.",
+      "The problem appears to be on Strava's end - try again tomorrow.",
   },
 
   dev: {

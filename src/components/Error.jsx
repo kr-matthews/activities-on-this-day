@@ -69,7 +69,13 @@ export default function Error({ statusCode, customMessage, message }) {
       }}
     >
       <div
-        style={{ flex: 1, textAlign: "left", paddingLeft: 5, paddingRight: 15 }}
+        style={{
+          flex: 1,
+          textAlign: "left",
+          paddingLeft: 5,
+          paddingRight: 15,
+          minWidth: 50,
+        }}
       >
         <img src={warning} alt="Warning" />
       </div>
