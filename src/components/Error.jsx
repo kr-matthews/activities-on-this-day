@@ -19,6 +19,10 @@ export default function Error({ statusCode, customMessage, message }) {
   let stravaError = "";
   let explanation = "";
   switch (statusCode) {
+    case 400:
+      stravaError = strings.errors.strava400;
+      explanation = strings.errors.badCode;
+
     case 401:
       stravaError = strings.errors.strava401;
       explanation = strings.errors.unauthorized;
@@ -38,6 +42,10 @@ export default function Error({ statusCode, customMessage, message }) {
       stravaError = strings.errors.strava429;
       explanation = strings.errors.rateLimitExplanation;
       break;
+
+    case 500:
+      stravaError = strings.errors.strava500;
+      explanation = strings.errors.stravaIssues;
 
     default:
       break;

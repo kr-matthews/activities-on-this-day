@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Loading from "../Loading";
 import Error from "../Error";
+import RevokeAndClear from "../RevokeAndClear";
 
 import { useFetchData } from "../../hooks/useFetchData";
 import strings from "../../data/strings";
@@ -52,13 +53,20 @@ export default function Redirect({ setRefreshToken }) {
 
       {fetchError && (
         <Error
-          statusCode={fetchError.statusCode}
+          statusCode={fetchError.statusCode || fetchError.response?.status}
           message={fetchError.message}
         />
       )}
 
-      {(hasPermissionDenied || !hasCorrectScope || fetchError) && (
+      {(hasPermissionDenied || !hasCorrectScope) && (
         <button onClick={() => navigate("/authenticate")}>Try again</button>
+      )}
+
+      {fetchError && (
+        <RevokeAndClear
+          clearRefreshToken={() => setRefreshToken(null)}
+          to="/"
+        />
       )}
     </>
   );
