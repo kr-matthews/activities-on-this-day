@@ -101,7 +101,12 @@ function ActivitiesOnOneDay({
           </div>
           {isLoading && <Loading task={`fetch ${year} activities`} />}
           {error && (
-            <Error task={`fetch ${year} activities`} message={error.message} />
+            <Error
+              statusCode={
+                error.statusCode || error.response?.status || error.status
+              }
+              message={error.message}
+            />
           )}
         </>
       )}

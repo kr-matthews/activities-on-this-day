@@ -32,7 +32,7 @@ const strings = {
     revokeAccess1: "To clear permissions and data, first ",
     revokeAccess2: "revoke access on Strava",
     revokeAccess3: " then ",
-    revokeAccess4: "clear stored data.",
+    revokeAccess4: "clear stored data",
   },
 
   links: {
@@ -40,7 +40,38 @@ const strings = {
     revokeAccess: "https://www.strava.com/settings/apps",
   },
 
-  errors: {},
+  errors: {
+    permissionDenied:
+      "You didn't click 'authorize' on the Strava permissions page. Try again.",
+    insufficientPermission:
+      "You didn't provide permission to view private activities. Try again.",
+
+    strava400: "Bad request.",
+    badCode:
+      "The code from your authorization may have expired, try starting again.",
+
+    strava401: "Unauthorized.",
+    unauthorized:
+      "The app's permission to access your Strava seems to have been revoked, possibly due to expiration. Clear stored data - see below - then try again.",
+
+    strava403: "Forbidden; you cannot access.",
+    forbidden:
+      "The app has permission to access your Strava, but this request failed for some reason. Try again tomorrow. If this persists, create an issue on GitHub - link at bottom of this page.",
+
+    strava404:
+      "Not found; the requested asset does not exist, or you are not authorized to see it.",
+    genericExplanation:
+      "Something went wrong. Try again tomorrow. If this persists, create an issue on GitHub - link at bottom of this page.",
+
+    strava429: "Too Many Requests; you have exceeded rate limits.",
+    rateLimitExplanation:
+      "Try again in 15 minutes - may not work until tomorrow.",
+
+    strava500:
+      "Strava is having issues, please check https://status.strava.com.",
+    stravaIssues:
+      "The problem appears to be on Strava's end - try again tomorrow.",
+  },
 
   dev: {
     goToAuth: "Visit /authentication",

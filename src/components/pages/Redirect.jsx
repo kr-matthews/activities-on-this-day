@@ -3,48 +3,74 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Loading from "../Loading";
 import Error from "../Error";
+import RevokeAndClear from "../RevokeAndClear";
 
 import { useFetchData } from "../../hooks/useFetchData";
-
-// !! ERROR - handle 'error=access_denied' in url
-// !! ERROR - can check whether they gave correct permissions?
+import strings from "../../data/strings";
 
 export default function Redirect({ setRefreshToken }) {
-  const params = useSearchParams();
-  const code = params[0].get("code");
-  const { data, isLoading, error, fetch } = useFetchData();
   const navigate = useNavigate();
+  const params = useSearchParams();
+
+  const code = params[0].get("code");
+
+  const scope = params[0].get("scope");
+  // good: read,activity:read_all --- bad: read
+  const hasCorrectScope = scope && scope.includes("read_all");
+
+  const error = params[0].get("error");
+  // bad: access_denied
+  const hasPermissionDenied = error && error.includes("denied");
+
+  const { data, isLoading, error: fetchError, fetch } = useFetchData();
 
   useEffect(() => {
-    if (code) {
+    if (code && hasCorrectScope) {
       console.info("Fetching refresh token.");
       fetch([`/.netlify/functions/get-refresh-token?code=${code}`]);
     }
-  }, [code, fetch]);
+  }, [code, hasCorrectScope, fetch]);
 
   useEffect(() => {
-    if (data) {
+    if (data && hasCorrectScope) {
       console.info("Received refresh token; saving it.");
       setRefreshToken(data);
       navigate("/", { replace: true });
     }
-  }, [data, navigate, setRefreshToken]);
+  }, [data, hasCorrectScope, navigate, setRefreshToken]);
 
-  // !! ERROR - add no code error case
-  // !! ERROR - descriptive error message/UI, based on 2 possible errors
-  // !! UI - tidy up redirect UI
   return (
     <>
+      {hasPermissionDenied && (
+        <Error customMessage={strings.errors.permissionDenied} />
+      )}
+
+      {!hasPermissionDenied && !hasCorrectScope && (
+        <Error customMessage={strings.errors.insufficientPermission} />
+      )}
+
       {isLoading && <Loading task="fetch persistent token" />}
-      {error && (
-        <>
-          <Error
-            task="fetch persistent token"
-            statusCode={error.statusCode}
-            message={error.message}
-          />
-          <button onClick={() => navigate("/authenticate")}>Try again</button>
-        </>
+
+      {fetchError && (
+        <Error
+          statusCode={
+            fetchError.statusCode ||
+            fetchError.response?.status ||
+            fetchError.status
+          }
+          message={fetchError.message}
+        />
+      )}
+
+      {(hasPermissionDenied || !hasCorrectScope) && (
+        <button onClick={() => navigate("/authenticate")}>Try again</button>
+      )}
+
+      {fetchError && (
+        <RevokeAndClear
+          clearRefreshToken={() => setRefreshToken(null)}
+          to="/"
+        />
       )}
     </>
   );

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Activities from "../Activities";
 import Loading from "../Loading";
 import Error from "../Error";
+import RevokeAndClear from "../RevokeAndClear";
 
 import { useSavedState } from "../../hooks/useSavedState";
 import useActivities from "../../hooks/useActivities";
@@ -13,10 +14,7 @@ const currentYear = new Date().getFullYear();
 const currentMonth = new Date().toLocaleString("default", { month: "long" });
 const currentDay = new Date().getDate();
 
-export default function View({
-  refreshToken,
-  clearRefreshToken = () => console.error("Can't clear refresh token."),
-}) {
+export default function View({ refreshToken, clearRefreshToken }) {
   const navigate = useNavigate();
 
   // !! FANCY - allow setting earliest year; ensure it stays between 2008 and last year (use reducer?)
@@ -40,10 +38,6 @@ export default function View({
   } = useActivities(refreshToken, earliestYear);
 
   const showDevOptions = process.env.REACT_APP_ENV === "LOCAL";
-  const clearData = () => {
-    localStorage.clear();
-    clearRefreshToken();
-  };
 
   return (
     <>
@@ -59,21 +53,17 @@ export default function View({
       {accessTokenIsLoading && <Loading task="fetch access token" />}
 
       {accessTokenError && (
-        <Error task="fetch access token" message={accessTokenError.message} />
+        <Error
+          statusCode={
+            accessTokenError.statusCode ||
+            accessTokenError.response?.status ||
+            accessTokenError.status
+          }
+          message={accessTokenError.message}
+        />
       )}
 
-      <p>
-        {strings.fragments.revokeAccess1}
-        <a
-          href={strings.links.revokeAccess}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {strings.fragments.revokeAccess2}
-        </a>{" "}
-        {strings.fragments.revokeAccess3}
-        <button onClick={clearData}>{strings.fragments.revokeAccess4}</button>
-      </p>
+      <RevokeAndClear clearRefreshToken={clearRefreshToken} />
 
       {showDevOptions && (
         <>
