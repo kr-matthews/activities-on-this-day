@@ -52,8 +52,16 @@ export default function View({ refreshToken, clearRefreshToken }) {
 
       {accessTokenIsLoading && <Loading task="fetch access token" />}
 
-      {/* // !!! fix this error */}
-      {accessTokenError && <Error message={accessTokenError.message} />}
+      {accessTokenError && (
+        <Error
+          statusCode={
+            accessTokenError.statusCode ||
+            accessTokenError.response?.status ||
+            accessTokenError.status
+          }
+          message={accessTokenError.message}
+        />
+      )}
 
       <RevokeAndClear clearRefreshToken={clearRefreshToken} />
 

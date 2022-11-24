@@ -54,7 +54,9 @@ export default function Redirect({ setRefreshToken }) {
       {fetchError && (
         <Error
           statusCode={
-            fetchError.statusCode || fetchError.response?.status || error.status
+            fetchError.statusCode ||
+            fetchError.response?.status ||
+            fetchError.status
           }
           message={fetchError.message}
         />
