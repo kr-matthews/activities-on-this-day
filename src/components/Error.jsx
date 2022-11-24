@@ -22,6 +22,7 @@ export default function Error({ statusCode, customMessage, message }) {
     case 400:
       stravaError = strings.errors.strava400;
       explanation = strings.errors.badCode;
+      break;
 
     case 401:
       stravaError = strings.errors.strava401;
@@ -46,6 +47,7 @@ export default function Error({ statusCode, customMessage, message }) {
     case 500:
       stravaError = strings.errors.strava500;
       explanation = strings.errors.stravaIssues;
+      break;
 
     default:
       break;
