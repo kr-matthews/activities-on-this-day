@@ -1,5 +1,10 @@
-// !! LOADING - clean up Loading UI - maybe smooth transitions at the same time?
+import "./loading.css";
 
 export default function Loading({ task }) {
-  return <div>Trying to {task}...</div>;
+  const title = "Trying to " + task + "...";
+  return (
+    <div className="loading-container">
+      <div className="loading-spinner" title={title}></div>
+    </div>
+  );
 }
