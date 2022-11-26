@@ -23,8 +23,9 @@ export default function Sample() {
   const [areLoading, setAreLoading] = useState(Array(len).fill(true));
   const errors = Array(len).fill(null);
 
+  // simulate loading activities, even though they're immediately accessible
   useEffect(() => {
-    areLoading.forEach((_, i) => {
+    for (let i = 0; i < len; i++) {
       setTimeout(() => {
         setAreLoading((arr) => {
           const newArr = arr.slice();
@@ -36,9 +37,10 @@ export default function Sample() {
           newAct[i] = allActivities[i];
           return newAct;
         });
+        // random response time per year, between .5 and 2.5 seconds
       }, 500 + Math.random() * 2000);
-    });
-  }, []);
+    }
+  }, [len, allActivities]);
 
   const warning = (
     <Warning
