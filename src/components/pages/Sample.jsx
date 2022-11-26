@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Activities from "../Activities";
@@ -14,12 +15,30 @@ const currentDay = new Date().getDate();
 export default function Sample() {
   const navigate = useNavigate();
 
-  const activities = sampleActivities.map((activities) =>
+  const allActivities = sampleActivities.map((activities) =>
     activities.map(parseActivity)
   );
+  const [activities, setActivities] = useState(allActivities.map(() => []));
   const len = activities.length;
-  const areLoading = Array(len).fill(false);
+  const [areLoading, setAreLoading] = useState(Array(len).fill(true));
   const errors = Array(len).fill(null);
+
+  useEffect(() => {
+    areLoading.forEach((_, i) => {
+      setTimeout(() => {
+        setAreLoading((arr) => {
+          const newArr = arr.slice();
+          newArr[i] = false;
+          return newArr;
+        });
+        setActivities((act) => {
+          const newAct = act.slice();
+          newAct[i] = allActivities[i];
+          return newAct;
+        });
+      }, 500 + Math.random() * 2000);
+    });
+  }, []);
 
   const warning = (
     <Warning
