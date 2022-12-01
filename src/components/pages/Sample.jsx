@@ -18,7 +18,7 @@ export default function Sample() {
   const allActivities = sampleActivities.map((activities) =>
     activities.map(parseActivity)
   );
-  const [activities, setActivities] = useState(allActivities.map(() => []));
+  const [activities, setActivities] = useState(allActivities.map(() => null));
   const len = activities.length;
   const [areLoading, setAreLoading] = useState(Array(len).fill(true));
   const errors = Array(len).fill(null);
