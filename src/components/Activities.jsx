@@ -65,7 +65,6 @@ export default function Activities({
   );
 }
 
-// ! FANCY - gracefully fade out if/when shouldShow goes to false
 function ActivitiesOnOneDay({
   year,
   activities,
@@ -80,36 +79,56 @@ function ActivitiesOnOneDay({
   date.setFullYear(year);
   const dayOfWeek = date.toLocaleDateString("en-ca", { weekday: "long" });
 
+  // awkward hard-coded heights since can't transition between auto heights
+  // doesn't work when zoomed out significantly
+  // todo: find a better solution to height transitions
+  const totalHeight = 400;
+  const titleAndErrorHeight = 245;
+  const titleAndLoadingHeight = 107;
+  const zeroHeight = 0;
+  const height = shouldShow
+    ? isLoading
+      ? titleAndLoadingHeight
+      : error
+      ? titleAndErrorHeight
+      : totalHeight
+    : zeroHeight;
+
   return (
-    <>
-      {shouldShow && (
-        <>
-          <h2>
-            {year} ({dayOfWeek})
-          </h2>
-          <div className="activities-row">
-            {activities &&
-              activities.map((activity) => (
-                <Activity
-                  key={activity.id}
-                  activity={activity}
-                  lineColour={options.lineColour}
-                  lineWeight={options.lineWeight}
-                  tileLayerName={options.tileLayerName}
-                />
-              ))}
-          </div>
-          {isLoading && <Loading task={`fetch ${year} activities`} />}
-          {error && (
-            <Error
-              statusCode={
-                error.statusCode || error.response?.status || error.status
-              }
-              message={error.message}
+    <div
+      className="height-transition"
+      style={{
+        overflow: "hidden",
+        height,
+      }}
+    >
+      <h2>
+        {year} ({dayOfWeek})
+      </h2>
+
+      {isLoading && <Loading task={`fetch ${year} activities`} />}
+
+      <div className="activities-row">
+        {activities &&
+          activities.map((activity) => (
+            <Activity
+              key={activity.id}
+              activity={activity}
+              lineColour={options.lineColour}
+              lineWeight={options.lineWeight}
+              tileLayerName={options.tileLayerName}
             />
-          )}
-        </>
+          ))}
+      </div>
+
+      {error && (
+        <Error
+          statusCode={
+            error.statusCode || error.response?.status || error.status
+          }
+          message={error.message}
+        />
       )}
-    </>
+    </div>
   );
 }
