@@ -72,8 +72,11 @@ function ActivitiesOnOneDay({
   error = null,
   options = {},
 }) {
-  const shouldShow =
-    (activities && activities.length > 0) || isLoading || error;
+  const shouldShow = !!(
+    (activities && activities.length > 0) ||
+    isLoading ||
+    error
+  );
 
   const date = new Date();
   date.setFullYear(year);
@@ -82,9 +85,10 @@ function ActivitiesOnOneDay({
   // awkward hard-coded heights since can't transition between auto heights
   // doesn't work when zoomed out significantly
   // todo: find a better solution to height transitions
-  const totalHeight = 400;
-  const titleAndErrorHeight = 245;
-  const titleAndLoadingHeight = 107;
+  // note height is larger on mobile
+  const totalHeight = 650;
+  const titleAndErrorHeight = 250;
+  const titleAndLoadingHeight = 110;
   const zeroHeight = 0;
   const height = shouldShow
     ? isLoading
@@ -99,7 +103,7 @@ function ActivitiesOnOneDay({
       className="height-transition"
       style={{
         overflow: "hidden",
-        height,
+        maxHeight: height,
       }}
     >
       <h2>
@@ -107,6 +111,8 @@ function ActivitiesOnOneDay({
       </h2>
 
       {isLoading && <Loading task={`fetch ${year} activities`} />}
+
+      {shouldShow || <div style={{ minHeight: 40 }}></div>}
 
       <div className="activities-row">
         {activities &&
