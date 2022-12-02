@@ -49,22 +49,31 @@
   left: 25%;
 }
 
-.recenter {
+.map-option {
   width: 30px;
   height: 30px;
   background: white;
   z-index: 800;
   position: relative;
-  top: 12px;
+  top: 10px;
   left: 255px;
   cursor: pointer;
   opacity: 0.5;
-  border: solid #ccc 1px;
-  border-radius: 2px;
+  border: solid #ccc;
 }
 
-.recenter:hover {
+.map-option:hover {
   opacity: 1;
+}
+
+.option-top {
+  border-width: 2px 2px 0.5px 2px;
+  border-radius: 2px 2px 0 0;
+}
+
+.option-bottom {
+  border-width: 0.5px 2px 2px;
+  border-radius: 0 0 2px 2px;
 }
 
 .leaflet-control-zoom {
@@ -99,7 +108,7 @@
 }
 
 @media (max-width: 900px) {
-  .recenter {
+  .map-option {
     opacity: 1;
   }
 

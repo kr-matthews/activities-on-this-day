@@ -23,18 +23,28 @@ import timerIconUrl from "../assets/timer.svg";
 import speedIconUrl from "../assets/speedometer.svg";
 import cameraIconUrl from "../assets/camera.svg";
 import crosshairIconUrl from "../assets/crosshair.svg";
+import cornersIconUrl from "../assets/corners.svg";
 
 // not very re-usable...
-function ReCenter({ bounds }) {
+function MoreMapOptions({ bounds }) {
   const map = useMap();
 
   return (
-    <div
-      className="recenter"
-      title="Re-center"
-      onClick={() => map.fitBounds(bounds)}
-    >
-      <img src={crosshairIconUrl} alt="center" />
+    <div>
+      <div
+        className="map-option option-top"
+        title="Maximize"
+        onClick={() => {}}
+      >
+        <img src={cornersIconUrl} alt="center" />
+      </div>
+      <div
+        className="map-option option-bottom"
+        title="Re-center"
+        onClick={() => map.fitBounds(bounds)}
+      >
+        <img src={crosshairIconUrl} alt="center" />
+      </div>
     </div>
   );
 }
@@ -195,7 +205,7 @@ export default function Activity({
           bounds={bounds}
           scrollWheelZoom
         >
-          <ReCenter bounds={bounds} />
+          <MoreMapOptions bounds={bounds} />
           <TileLayer
             // key is required to force re-render when tile layer changes, since `url` is immutable
             key={tileLayerName}
