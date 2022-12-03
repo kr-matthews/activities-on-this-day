@@ -49,41 +49,6 @@
   left: 25%;
 }
 
-.map-option {
-  width: 30px;
-  height: 30px;
-  background: white;
-  z-index: 800;
-  position: relative;
-  top: 10px;
-  left: 255px;
-  cursor: pointer;
-  opacity: 0.5;
-  border: solid #ccc;
-}
-
-.map-option:hover {
-  opacity: 1;
-}
-
-.option-top {
-  border-width: 2px 2px 0.5px 2px;
-  border-radius: 2px 2px 0 0;
-}
-
-.option-bottom {
-  border-width: 0.5px 2px 2px;
-  border-radius: 0 0 2px 2px;
-}
-
-.leaflet-control-zoom {
-  opacity: 0.5;
-}
-
-.leaflet-control-zoom:hover {
-  opacity: 1;
-}
-
 @media (max-width: 490px) {
   .activity {
     display: block;
@@ -104,16 +69,6 @@
     position: relative;
     padding-top: 5px;
     left: 0;
-  }
-}
-
-@media (max-width: 900px) {
-  .map-option {
-    opacity: 1;
-  }
-
-  .leaflet-control-zoom {
-    opacity: 1;
   }
 }
 

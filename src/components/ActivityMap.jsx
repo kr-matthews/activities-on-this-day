@@ -6,6 +6,8 @@ import tileLayers from "../data/tileLayers";
 import crosshairIconUrl from "../assets/crosshair.svg";
 import cornersIconUrl from "../assets/corners.svg";
 
+import "./activityMap.css";
+
 export default function ActivityMap({
   activityPolyline,
   lineColour = "#603cba",
@@ -98,21 +100,36 @@ export default function ActivityMap({
 function MoreMapOptions({ bounds, toggleModal, isMaximized }) {
   const map = useMap();
 
+  // mimic the existing zoom controls, applying analogous classes
   return (
-    <div>
-      <div
-        className="map-option option-bottom"
-        title={isMaximized ? "Minimize" : "Maximize"}
-        onClick={toggleModal}
-      >
-        <img src={cornersIconUrl} alt="center" />
-      </div>
-      <div
-        className="map-option option-bottom"
-        title="Re-center"
-        onClick={() => map.fitBounds(bounds)}
-      >
-        <img src={crosshairIconUrl} alt="center" />
+    <div className="leaflet-control-container">
+      <div className="leaflet-top leaflet-right">
+        <div className="leaflet-control-zoom leaflet-bar leaflet-control">
+          <a
+            className="leaflet-control-zoom-in"
+            title={isMaximized ? "Minimize" : "Maximize"}
+            role="button"
+            aria-label={isMaximized ? "Minimize" : "Maximize"}
+            aria-disabled="false"
+            onClick={toggleModal}
+          >
+            <span area-hidden="true">
+              <img src={cornersIconUrl} alt="size" />
+            </span>
+          </a>
+          <a
+            className="leaflet-control-zoom-out"
+            title="Re-center"
+            role="button"
+            aria-label="Re-center"
+            aria-disabled="false"
+            onClick={() => map.fitBounds(bounds)}
+          >
+            <span area-hidden="true">
+              <img src={crosshairIconUrl} alt="center" />
+            </span>
+          </a>
+        </div>
       </div>
     </div>
   );
