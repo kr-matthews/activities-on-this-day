@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import "./mapModal.css";
 
-export default function MapModal({ closeModal }) {
+export default function MapModal({ closeModal, children }) {
   // disable scrolling
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -22,7 +22,7 @@ export default function MapModal({ closeModal }) {
 
   return (
     <>
-      <section className="modal">Map here</section>
+      <section className="modal">{children}</section>
 
       <div className="overlay" onClick={closeModal} />
     </>
