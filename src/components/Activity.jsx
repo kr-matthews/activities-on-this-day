@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
 import polyline from "@mapbox/polyline";
+
+import MapModal from "./MapModal";
 
 import strings from "../data/strings";
 import tileLayers from "../data/tileLayers";
@@ -24,30 +27,6 @@ import speedIconUrl from "../assets/speedometer.svg";
 import cameraIconUrl from "../assets/camera.svg";
 import crosshairIconUrl from "../assets/crosshair.svg";
 import cornersIconUrl from "../assets/corners.svg";
-
-// not very re-usable...
-function MoreMapOptions({ bounds }) {
-  const map = useMap();
-
-  return (
-    <div>
-      <div
-        className="map-option option-top"
-        title="Maximize"
-        onClick={() => {}}
-      >
-        <img src={cornersIconUrl} alt="center" />
-      </div>
-      <div
-        className="map-option option-bottom"
-        title="Re-center"
-        onClick={() => map.fitBounds(bounds)}
-      >
-        <img src={crosshairIconUrl} alt="center" />
-      </div>
-    </div>
-  );
-}
 
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
@@ -188,11 +167,16 @@ export default function Activity({
     />
   );
 
+  //// full-screen ////
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   //// return ////
 
   // todo: FANCY - animate marker along path to show direction?
   return (
     <div className="activity">
+      {isModalOpen && <MapModal closeModal={() => setIsModalOpen(false)} />}
       <div style={{ width: mapWidth, margin: "auto", paddingRight: 5 }}>
         <MapContainer
           style={{
@@ -205,7 +189,10 @@ export default function Activity({
           bounds={bounds}
           scrollWheelZoom
         >
-          <MoreMapOptions bounds={bounds} />
+          <MoreMapOptions
+            bounds={bounds}
+            openModal={() => setIsModalOpen(true)}
+          />
           <TileLayer
             // key is required to force re-render when tile layer changes, since `url` is immutable
             key={tileLayerName}
@@ -269,6 +256,30 @@ export default function Activity({
             {strings.labels.viewOnStrava}
           </a>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// not very re-usable...
+function MoreMapOptions({ bounds, openModal }) {
+  const map = useMap();
+
+  return (
+    <div>
+      <div
+        className="map-option option-top"
+        title="Maximize"
+        onClick={openModal}
+      >
+        <img src={cornersIconUrl} alt="center" />
+      </div>
+      <div
+        className="map-option option-bottom"
+        title="Re-center"
+        onClick={() => map.fitBounds(bounds)}
+      >
+        <img src={crosshairIconUrl} alt="center" />
       </div>
     </div>
   );
