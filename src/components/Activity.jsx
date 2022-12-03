@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
 import polyline from "@mapbox/polyline";
 
@@ -170,13 +170,14 @@ export default function Activity({
   //// full-screen ////
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = useCallback(() => setIsModalOpen(false), [setIsModalOpen]);
 
   //// return ////
 
   // todo: FANCY - animate marker along path to show direction?
   return (
     <div className="activity">
-      {isModalOpen && <MapModal closeModal={() => setIsModalOpen(false)} />}
+      {isModalOpen && <MapModal closeModal={closeModal} />}
       <div style={{ width: mapWidth, margin: "auto", paddingRight: 5 }}>
         <MapContainer
           style={{

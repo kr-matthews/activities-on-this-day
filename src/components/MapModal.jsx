@@ -18,7 +18,7 @@ export default function MapModal({ closeModal }) {
     };
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
-  }, []);
+  }, [closeModal]);
 
   return (
     <>
