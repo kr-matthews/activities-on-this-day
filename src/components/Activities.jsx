@@ -8,6 +8,8 @@ import Error from "./Error";
 import useOptions from "../hooks/useOptions";
 import strings from "../data/strings";
 
+import "./activities.css";
+
 export default function Activities({
   year,
   month,

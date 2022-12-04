@@ -1,8 +1,9 @@
-import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
-import polyline from "@mapbox/polyline";
+import { useState, useCallback } from "react";
+
+import ActivityMap from "./ActivityMap";
+import MapModal from "./MapModal";
 
 import strings from "../data/strings";
-import tileLayers from "../data/tileLayers";
 import {
   formatSeconds,
   formatMeters,
@@ -22,22 +23,6 @@ import rulerIconUrl from "../assets/ruler.svg";
 import timerIconUrl from "../assets/timer.svg";
 import speedIconUrl from "../assets/speedometer.svg";
 import cameraIconUrl from "../assets/camera.svg";
-import crosshairIconUrl from "../assets/crosshair.svg";
-
-// not very re-usable...
-function ReCenter({ bounds }) {
-  const map = useMap();
-
-  return (
-    <div
-      className="recenter"
-      title="Re-center"
-      onClick={() => map.fitBounds(bounds)}
-    >
-      <img src={crosshairIconUrl} alt="center" />
-    </div>
-  );
-}
 
 // NOTE: must follow Strava guidelines for linking back to original data
 // see https://developers.strava.com/guidelines/#:~:text=3.%20Mandatory%20Linking%20to%20Strava%20Data
@@ -50,7 +35,7 @@ export default function Activity({
     movingTime,
     elapsedTime,
     startDateLocal,
-    polyline: activityPolyline,
+    polyline,
     isCommute,
     isPrivate,
     averageSpeed,
@@ -65,41 +50,6 @@ export default function Activity({
   //// link ////
 
   const linkToActivity = `https://www.strava.com/activities/${id}`;
-
-  //// activity path & map bounds ////
-
-  // path
-
-  const positions = polyline.decode(activityPolyline);
-
-  // latitude
-
-  const latMin = Math.min(
-    Math.min(...positions.map((position) => position[0]))
-  );
-  const latMax = Math.max(
-    Math.max(...positions.map((position) => position[0]))
-  );
-
-  // longitude
-
-  const longMin = Math.min(
-    Math.min(...positions.map((position) => position[1]))
-  );
-  const longMax = Math.max(
-    Math.max(...positions.map((position) => position[1]))
-  );
-
-  // bounds
-
-  const bounds = [
-    [latMin, longMin],
-    [latMax, longMax],
-  ];
-
-  //// tile layer ////
-
-  const tileLayer = tileLayers[tileLayerName] || tileLayers.default;
 
   //// info ////
 
@@ -178,36 +128,39 @@ export default function Activity({
     />
   );
 
+  //// full-screen ////
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = useCallback(() => setIsModalOpen(false), [setIsModalOpen]);
+  const openModal = useCallback(() => setIsModalOpen(true), [setIsModalOpen]);
+
   //// return ////
 
-  // todo: FANCY - animate marker along path to show direction?
   return (
     <div className="activity">
-      <div style={{ width: mapWidth, margin: "auto", paddingRight: 5 }}>
-        <MapContainer
-          style={{
-            width: mapWidth,
-            height: mapHeight,
-            // just below the options header, which is set to 100
-            zIndex: 99,
-            border: "solid",
-          }}
-          bounds={bounds}
-          scrollWheelZoom
-        >
-          <ReCenter bounds={bounds} />
-          <TileLayer
-            // key is required to force re-render when tile layer changes, since `url` is immutable
-            key={tileLayerName}
-            attribution={tileLayer.attribution}
-            url={tileLayer.url}
+      {isModalOpen && (
+        <MapModal closeModal={closeModal}>
+          <ActivityMap
+            activityPolyline={polyline}
+            lineColour={lineColour}
+            lineWeight={lineWeight}
+            tileLayerName={tileLayerName}
+            mapWidth="85vw"
+            mapHeight="85vh"
+            isMaximized
+            toggleModal={closeModal}
           />
-          <Polyline
-            positions={positions}
-            pathOptions={{ color: lineColour, weight: lineWeight }}
-          />
-        </MapContainer>
-      </div>
+        </MapModal>
+      )}
+      <ActivityMap
+        activityPolyline={polyline}
+        lineColour={lineColour}
+        lineWeight={lineWeight}
+        tileLayerName={tileLayerName}
+        mapWidth={mapWidth}
+        mapHeight={mapHeight}
+        toggleModal={openModal}
+      />
 
       <div className="activity-data">
         <div style={{ padding: 5, marginBottom: 12 }}>

@@ -1,0 +1,23 @@
+.modal {
+  width: 90vw;
+  height: 90vh;
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  background-color: lightgrey;
+  border-radius: 15px;
+  z-index: 102;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.67);
+  backdrop-filter: blur(2px);
+  z-index: 101;
+}

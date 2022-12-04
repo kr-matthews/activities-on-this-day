@@ -1,0 +1,23 @@
+.leaflet-control {
+  opacity: 0.4;
+}
+
+.leaflet-control:hover {
+  opacity: 1;
+}
+
+.leaflet-control a span img {
+  margin: 1px 2px 0 0;
+}
+
+/* not sure why re-center and re-size aren't getting pointer from leaflet */
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  cursor: pointer;
+}
+
+@media (max-width: 851px) {
+  .leaflet-control {
+    opacity: 0.75;
+  }
+}
