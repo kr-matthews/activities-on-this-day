@@ -61,9 +61,9 @@ export default function ActivityMap({
       style={{
         width: mapWidth,
         margin: "auto",
-        // don't ask...
-        paddingRight: isMaximized ? 3 : 5,
-        paddingTop: isMaximized ? "2vh" : 0,
+        // don't ask... todo: fix awkwardly coded positioning
+        paddingRight: isMaximized ? "0.5vw" : 5,
+        paddingTop: isMaximized ? "1.75vh" : 0,
       }}
     >
       <MapContainer
@@ -100,11 +100,13 @@ export default function ActivityMap({
 function MoreMapOptions({ bounds, toggleModal, isMaximized }) {
   const map = useMap();
 
-  // mimic the existing zoom controls, applying analogous classes
+  // mimic the existing zoom controls, applying analogous elements & classes
+  // react doesn't like the anchors, but the styling won't apply otherwise, hence disable eslint
   return (
     <div className="leaflet-control-container">
       <div className="leaflet-top leaflet-right">
         <div className="leaflet-control-zoom leaflet-bar leaflet-control">
+          {/* eslint-disable-next-line */}
           <a
             className="leaflet-control-zoom-in"
             title={isMaximized ? "Minimize" : "Maximize"}
@@ -117,6 +119,7 @@ function MoreMapOptions({ bounds, toggleModal, isMaximized }) {
               <img src={cornersIconUrl} alt="size" />
             </span>
           </a>
+          {/* eslint-disable-next-line */}
           <a
             className="leaflet-control-zoom-out"
             title="Re-center"
