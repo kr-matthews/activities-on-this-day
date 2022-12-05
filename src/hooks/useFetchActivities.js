@@ -14,15 +14,19 @@ export function useFetchActivities(earliestYear, accessToken) {
     reset: genericReset,
   } = useFetchData();
 
-  const lastYear = new Date().getFullYear() - 1;
+  const latestYear = new Date().getFullYear() - 1;
 
+  // !!! don't let it be earlier than 2008
   const urls = useMemo(() => {
+    // !!! catch null year elsewhere
+    if (!earliestYear) return [];
+
     const now = new Date();
 
-    return Array(lastYear - earliestYear + 1)
+    return Array(latestYear - earliestYear + 1)
       .fill(0)
       .map((_, index) => {
-        const historicalYear = lastYear - index;
+        const historicalYear = latestYear - index;
         let historicalDay = new Date(now);
         historicalDay.setFullYear(historicalYear);
         const historicalSeconds = Math.floor(historicalDay.getTime() / 1000);
@@ -32,7 +36,7 @@ export function useFetchActivities(earliestYear, accessToken) {
 
         return `/.netlify/functions/get-activities?before=${forward48Hours}&after=${back48Hours}&access=${accessToken}`;
       });
-  }, [earliestYear, lastYear, accessToken]);
+  }, [earliestYear, latestYear, accessToken]);
 
   const fetch = useCallback(() => {
     genericFetch(urls);
