@@ -16,35 +16,19 @@ export function useEarliestYear(accessToken) {
     error: genericError,
   } = useFetchData();
 
-  // !!! ref for below
-
-  // const now = new Date();
-
-  // return Array(latestYear - earliestYear + 1)
-  //   .fill(0)
-  //   .map((_, index) => {
-  //     const historicalYear = latestYear - index;
-  //     let historicalDay = new Date(now);
-  //     historicalDay.setFullYear(historicalYear);
-  //     const historicalSeconds = Math.floor(historicalDay.getTime() / 1000);
-  //     const fortyEightHours = 48 * 60 * 60;
-  //     const back48Hours = historicalSeconds - fortyEightHours;
-  //     const forward48Hours = historicalSeconds + fortyEightHours;
-  //   });
-
   //// Effects ////
 
   // test year incremented; check it
   useEffect(() => {
     function url(year) {
+      const yearEnd = new Date(year + 1, 0, 1);
+      const yearEndInSeconds = Math.floor(yearEnd.getTime() / 1000);
       const fortyEightHours = 48 * 60 * 60;
-      const yearEnd = year + 1001 * fortyEightHours; // !!! wrong
-      const forward48Hours = yearEnd + fortyEightHours;
+      const forward48Hours = yearEndInSeconds + fortyEightHours;
       return `/.netlify/functions/get-activities?before=${forward48Hours}&access=${accessToken}`;
     }
 
     if (accessToken && isLoading) {
-      console.debug("generic fetching year", testYear); // ~
       genericFetch([url(testYear)]);
     }
   }, [testYear, accessToken, isLoading, genericFetch]);
@@ -64,7 +48,6 @@ export function useEarliestYear(accessToken) {
   // test year has no data; increment it (unless at the end)
   useEffect(() => {
     if (genericData && genericData.length === 0 && !data) {
-      console.debug("no data year", testYear); // ~
       const latestYear = new Date().getFullYear() - 1;
       if (testYear === latestYear) {
         console.info("Found no activities, using year", latestYear);
@@ -73,6 +56,7 @@ export function useEarliestYear(accessToken) {
         setError(null);
         genericReset();
       } else {
+        genericReset();
         setTestYear((x) => x + 1);
       }
     }
@@ -81,7 +65,6 @@ export function useEarliestYear(accessToken) {
   // error
   useEffect(() => {
     if (genericError) {
-      console.debug("error year"); // ~
       setIsLoading(false);
       setError(genericError);
     }
@@ -90,7 +73,6 @@ export function useEarliestYear(accessToken) {
   //// functions ////
 
   const fetch = useCallback(() => {
-    console.debug("fetching year"); // ~
     // reset
     setIsLoading(true);
     setData(null);
@@ -102,7 +84,6 @@ export function useEarliestYear(accessToken) {
   }, [genericReset]);
 
   const reset = useCallback(() => {
-    console.debug("resetting year"); // ~
     setIsLoading(false);
     setData(null);
     setError(null);
