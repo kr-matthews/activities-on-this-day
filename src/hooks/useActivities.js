@@ -174,7 +174,6 @@ export default function useActivities(refreshToken) {
     accessTokenIsLoading,
     accessTokenError,
 
-    // !!! use these outside
     // earliest year
     yearIsLoading,
     yearError,

@@ -29,9 +29,12 @@ export default function View({ refreshToken, clearRefreshToken }) {
     errors,
     accessTokenIsLoading,
     accessTokenError,
+    yearIsLoading,
+    yearError,
     clearActivities,
     setLastFetchedToYesterday,
   } = useActivities(refreshToken);
+  const error = accessTokenError || yearError;
 
   const showDevOptions = process.env.REACT_APP_ENV === "LOCAL";
 
@@ -47,15 +50,14 @@ export default function View({ refreshToken, clearRefreshToken }) {
       />
 
       {accessTokenIsLoading && <Loading task="fetch access token" />}
+      {yearIsLoading && <Loading task="query year of earliest activity" />}
 
-      {accessTokenError && (
+      {error && (
         <Error
           statusCode={
-            accessTokenError.statusCode ||
-            accessTokenError.response?.status ||
-            accessTokenError.status
+            error.statusCode || error.response?.status || error.status
           }
-          message={accessTokenError.message}
+          message={error.message}
         />
       )}
 
