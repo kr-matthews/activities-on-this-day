@@ -5,7 +5,10 @@ import { parseActivity } from "../utils/activityUtils";
 
 // ! FANCY - make date override-able (but not obvious that you can)
 
-export function useFetchActivities(earliestYear, accessToken) {
+export function useFetchActivities(firstYear, accessToken) {
+  // strava started in 2008 (could have activities before then in theory,
+  // but this would be too expensive - limited API requests per day)
+  const earliestYear = Math.max(2008, firstYear || 2008);
   const {
     isEachLoading,
     eachData: unprocessedData,
@@ -16,11 +19,7 @@ export function useFetchActivities(earliestYear, accessToken) {
 
   const latestYear = new Date().getFullYear() - 1;
 
-  // !!! don't let it be earlier than 2008
   const urls = useMemo(() => {
-    // !!! catch null year elsewhere
-    if (!earliestYear) return [];
-
     const now = new Date();
 
     return Array(latestYear - earliestYear + 1)
