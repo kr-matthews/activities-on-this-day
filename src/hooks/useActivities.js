@@ -2,9 +2,10 @@ import { useCallback, useEffect } from "react";
 
 import { useSavedState } from "./useSavedState";
 import { useFetchData } from "./useFetchData";
+import { useEarliestYear } from "./useEarliestYear";
 import { useFetchActivities } from "./useFetchActivities";
 
-export default function useActivities(refreshToken, earliestYear = 2008) {
+export default function useActivities(refreshToken) {
   //// access token ////
 
   const [accessToken, setAccessToken] = useSavedState("access", null);
@@ -33,6 +34,16 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
       );
     }
   }, [refreshToken, fetch]);
+
+  //// earliest year ////
+
+  const [earliestYear, setEarliestYear] = useSavedState("earliest", null);
+  const {
+    data: yearData,
+    isLoading: yearIsLoading,
+    error: yearError,
+    fetch: yearFetch,
+  } = useEarliestYear(accessToken);
 
   //// activities ////
 
@@ -90,9 +101,24 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
     resetAccessTokenFetch,
   ]);
 
-  // fetch activities if we haven't already today and there's an access token available
+  // if earliest year hasn't ever been figured out, find it
   useEffect(() => {
-    if (canUseAccessToken && !hasFetchedActivitiesToday) {
+    if (canUseAccessToken && !earliestYear) {
+      console.info("Querying first-ever activity.");
+      yearFetch();
+    }
+  }, [canUseAccessToken, earliestYear, yearFetch]);
+
+  // figured out earliest year
+  useEffect(() => {
+    if (yearData) {
+      setEarliestYear(yearData);
+    }
+  }, [yearData, setEarliestYear]);
+
+  // fetch activities if we haven't already today (and there's an access token available and we know how far back to go)
+  useEffect(() => {
+    if (canUseAccessToken && !hasFetchedActivitiesToday && earliestYear) {
       setActivities([]);
       setErrors([]);
       console.info("Fetching activities.");
@@ -102,6 +128,7 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
   }, [
     accessToken,
     canUseAccessToken,
+    earliestYear,
     hasFetchedActivitiesToday,
     setActivities,
     setErrors,
@@ -146,6 +173,10 @@ export default function useActivities(refreshToken, earliestYear = 2008) {
     // access token
     accessTokenIsLoading,
     accessTokenError,
+
+    // earliest year
+    yearIsLoading,
+    yearError,
 
     // activities
     // the fetched activities/errors are valid if not [], else fallback to saved

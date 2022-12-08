@@ -6,7 +6,6 @@ import Loading from "../Loading";
 import Error from "../Error";
 import RevokeAndClear from "../RevokeAndClear";
 
-import { useSavedState } from "../../hooks/useSavedState";
 import useActivities from "../../hooks/useActivities";
 import strings from "../../data/strings";
 
@@ -16,9 +15,6 @@ const currentDay = new Date().getDate();
 
 export default function View({ refreshToken, clearRefreshToken }) {
   const navigate = useNavigate();
-
-  // !! FANCY - allow setting earliest year; ensure it stays between 2008 and last year (use reducer?)
-  const [earliestYear, setEarliestYear] = useSavedState("year", 2008);
 
   useEffect(() => {
     if (!refreshToken) {
@@ -33,9 +29,12 @@ export default function View({ refreshToken, clearRefreshToken }) {
     errors,
     accessTokenIsLoading,
     accessTokenError,
+    yearIsLoading,
+    yearError,
     clearActivities,
     setLastFetchedToYesterday,
-  } = useActivities(refreshToken, earliestYear);
+  } = useActivities(refreshToken);
+  const error = accessTokenError || yearError;
 
   const showDevOptions = process.env.REACT_APP_ENV === "LOCAL";
 
@@ -51,15 +50,14 @@ export default function View({ refreshToken, clearRefreshToken }) {
       />
 
       {accessTokenIsLoading && <Loading task="fetch access token" />}
+      {yearIsLoading && <Loading task="query year of earliest activity" />}
 
-      {accessTokenError && (
+      {error && (
         <Error
           statusCode={
-            accessTokenError.statusCode ||
-            accessTokenError.response?.status ||
-            accessTokenError.status
+            error.statusCode || error.response?.status || error.status
           }
-          message={accessTokenError.message}
+          message={error.message}
         />
       )}
 
@@ -76,12 +74,6 @@ export default function View({ refreshToken, clearRefreshToken }) {
             </button>
             <button onClick={setLastFetchedToYesterday}>
               {strings.dev.setToYesterday}
-            </button>
-            <button onClick={() => setEarliestYear(2020)}>
-              2020 -{">"} Earliest
-            </button>
-            <button onClick={() => setEarliestYear(2014)}>
-              2014 -{">"} Earliest
             </button>
           </div>
         </>
