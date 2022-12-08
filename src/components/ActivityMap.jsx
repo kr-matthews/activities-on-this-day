@@ -1,4 +1,11 @@
-import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
+import { useEffect, useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Polyline,
+  useMap,
+  Circle,
+} from "react-leaflet";
 import polyline from "@mapbox/polyline";
 
 import tileLayers from "../data/tileLayers";
@@ -53,6 +60,35 @@ export default function ActivityMap({
 
   const tileLayer = tileLayers[tileLayerName] || tileLayers.default;
 
+  //// animation ////
+
+  // !!! extract as hook?
+  const [positionsIndex, setPositionsIndex] = useState(null);
+  let interval = null;
+  function stopAnimation() {
+    if (interval) clearInterval(interval);
+    setPositionsIndex(null);
+  }
+  function startAnimation() {
+    stopAnimation();
+    setPositionsIndex(0);
+    interval = setInterval(
+      () =>
+        setPositionsIndex((oldIndex) => {
+          if (oldIndex + 1 === positions.length) {
+            stopAnimation();
+            return null;
+          }
+          return oldIndex + 1;
+        }),
+      5000 / positions.length
+    );
+  }
+
+  useEffect(() => {
+    setTimeout(startAnimation, 2000);
+  }, []);
+
   //// return ////
 
   // todo: FANCY - animate marker along path to show direction?
@@ -92,6 +128,13 @@ export default function ActivityMap({
           positions={positions}
           pathOptions={{ color: lineColour, weight: lineWeight }}
         />
+        {positionsIndex !== null && (
+          <Circle
+            center={positions[positionsIndex]}
+            radius={50}
+            pathOptions={{ color: lineColour, weight: lineWeight }}
+          />
+        )}
       </MapContainer>
     </div>
   );
