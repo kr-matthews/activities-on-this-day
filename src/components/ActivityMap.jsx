@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -8,6 +8,7 @@ import {
 } from "react-leaflet";
 import polyline from "@mapbox/polyline";
 
+import usePathAnimation from "../hooks/usePathAnimation";
 import tileLayers from "../data/tileLayers";
 
 import crosshairIconUrl from "../assets/crosshair.svg";
@@ -24,6 +25,7 @@ export default function ActivityMap({
   mapHeight = 300,
   toggleModal,
   isMaximized,
+  data,
 }) {
   //// activity path & map bounds ////
 
@@ -62,36 +64,22 @@ export default function ActivityMap({
 
   //// animation ////
 
-  // !!! extract as hook?
-  const [positionsIndex, setPositionsIndex] = useState(null);
-  let interval = null;
-  function stopAnimation() {
-    if (interval) clearInterval(interval);
-    setPositionsIndex(null);
-  }
-  function startAnimation() {
-    stopAnimation();
-    setPositionsIndex(0);
-    interval = setInterval(
-      () =>
-        setPositionsIndex((oldIndex) => {
-          if (oldIndex + 1 === positions.length) {
-            stopAnimation();
-            return null;
-          }
-          return oldIndex + 1;
-        }),
-      5000 / positions.length
-    );
-  }
-
+  const pathAnimation = usePathAnimation(positions, data);
+  // !!! remove; use pathAnimation via buttons
+  // const [x, sx] = useState(0);
   useEffect(() => {
-    setTimeout(startAnimation, 2000);
+    setTimeout(pathAnimation.start, 1000);
+    // setTimeout(() => sx(1), 3000);
+    // setTimeout(() => sx(2), 5000);
+    // setTimeout(() => sx(3), 5100);
   }, []);
+  // useEffect(() => {
+  // if (x === 1) pathAnimation.pause();
+  // if (x === 2) pathAnimation.resume();
+  // }, [x, pathAnimation]);
 
   //// return ////
 
-  // todo: FANCY - animate marker along path to show direction?
   return (
     <div
       style={{
@@ -128,10 +116,10 @@ export default function ActivityMap({
           positions={positions}
           pathOptions={{ color: lineColour, weight: lineWeight }}
         />
-        {positionsIndex !== null && (
+        {pathAnimation.position !== null && (
           <Circle
-            center={positions[positionsIndex]}
-            radius={50}
+            center={pathAnimation.position}
+            radius={60}
             pathOptions={{ color: lineColour, weight: lineWeight }}
           />
         )}

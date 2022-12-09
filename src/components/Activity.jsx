@@ -149,6 +149,7 @@ export default function Activity({
             mapHeight="85vh"
             isMaximized
             toggleModal={closeModal}
+            data={{ distance, movingTime, averageSpeed }}
           />
         </MapModal>
       )}
@@ -160,6 +161,7 @@ export default function Activity({
         mapWidth={mapWidth}
         mapHeight={mapHeight}
         toggleModal={openModal}
+        data={{ distance, movingTime, averageSpeed }}
       />
 
       <div className="activity-data">
