@@ -65,20 +65,28 @@ export default function ActivityMap({
   //// animation ////
 
   const pathAnimation = usePathAnimation(positions, data);
+
   // !!! remove; use pathAnimation via buttons
-  // const [x, sx] = useState(0);
   useEffect(() => {
-    setTimeout(pathAnimation.start, 1000);
-    // setTimeout(() => sx(1), 3000);
-    // setTimeout(() => sx(2), 5000);
-    // setTimeout(() => sx(3), 5100);
-  }, []);
-  // useEffect(() => {
-  // if (x === 1) pathAnimation.pause();
-  // if (x === 2) pathAnimation.resume();
-  // }, [x, pathAnimation]);
+    setTimeout(() => {
+      ((f, x) => {
+        f(x);
+        // hack to avoid lint complaining about plugging in true to start
+      })(pathAnimation.start, true);
+    }, 1000);
+    setTimeout(pathAnimation.pause, 3000);
+    setTimeout(pathAnimation.resume, 5000);
+    setTimeout(pathAnimation.stopLooping, 10000);
+  }, [
+    pathAnimation.start,
+    pathAnimation.pause,
+    pathAnimation.resume,
+    pathAnimation.stopLooping,
+  ]);
 
   //// return ////
+
+  // !!! infinite rerenders
 
   return (
     <div
@@ -115,10 +123,13 @@ export default function ActivityMap({
         <Polyline
           positions={positions}
           pathOptions={{ color: lineColour, weight: lineWeight }}
+          onClick={() => console.debug("test")}
         />
         {pathAnimation.position !== null && (
+          // !!! extract as component
           <Circle
             center={pathAnimation.position}
+            // !!! radius dependent on distance, or default map width?
             radius={60}
             pathOptions={{ color: lineColour, weight: lineWeight }}
           />
