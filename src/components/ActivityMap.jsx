@@ -68,8 +68,6 @@ export default function ActivityMap({
 
   //// return ////
 
-  // !!! infinite rerenders
-
   return (
     <div
       style={{
