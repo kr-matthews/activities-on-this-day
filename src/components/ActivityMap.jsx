@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -13,6 +12,7 @@ import tileLayers from "../data/tileLayers";
 
 import crosshairIconUrl from "../assets/crosshair.svg";
 import cornersIconUrl from "../assets/corners.svg";
+// !!! add new icons (5 of them)
 
 import "./activityMap.css";
 
@@ -66,24 +66,6 @@ export default function ActivityMap({
 
   const pathAnimation = usePathAnimation(positions, data);
 
-  // !!! remove; use pathAnimation via buttons
-  useEffect(() => {
-    setTimeout(() => {
-      ((f, x) => {
-        f(x);
-        // hack to avoid lint complaining about plugging in true to start
-      })(pathAnimation.start, true);
-    }, 1000);
-    setTimeout(pathAnimation.pause, 3000);
-    setTimeout(pathAnimation.resume, 5000);
-    setTimeout(pathAnimation.stopLooping, 10000);
-  }, [
-    pathAnimation.start,
-    pathAnimation.pause,
-    pathAnimation.resume,
-    pathAnimation.stopLooping,
-  ]);
-
   //// return ////
 
   // !!! infinite rerenders
@@ -109,10 +91,11 @@ export default function ActivityMap({
         bounds={bounds}
         scrollWheelZoom
       >
-        <MoreMapOptions
+        <MoreMapControls
           bounds={bounds}
           toggleModal={toggleModal}
           isMaximized={isMaximized}
+          pathAnimation={pathAnimation}
         />
         <TileLayer
           // key is required to force re-render when tile layer changes, since `url` is immutable
@@ -126,11 +109,10 @@ export default function ActivityMap({
           onClick={() => console.debug("test")}
         />
         {pathAnimation.position !== null && (
-          // !!! extract as component
           <Circle
             center={pathAnimation.position}
-            // !!! radius dependent on distance, or default map width?
-            radius={60}
+            // !!! make radius fixed fraction of visible map?
+            radius={30 * lineWeight}
             pathOptions={{ color: lineColour, weight: lineWeight }}
           />
         )}
@@ -139,8 +121,33 @@ export default function ActivityMap({
   );
 }
 
-function MoreMapOptions({ bounds, toggleModal, isMaximized }) {
+function MoreMapControls({ bounds, toggleModal, isMaximized, pathAnimation }) {
   const map = useMap();
+  const { isActive, isPaused, start, pause, resume, reset, stop } =
+    pathAnimation;
+
+  const playPauseText = isActive ? "Pause" : isPaused ? "Resume" : "Play Once";
+  const stopResetText = isActive ? "Stop" : isPaused ? "Reset" : "Play on Loop";
+  const playPauseIcon = "";
+  const stopResetIcon = "";
+  const playPauseAction = () => {
+    if (isActive) {
+      pause();
+    } else if (isPaused) {
+      resume();
+    } else {
+      start(false);
+    }
+  };
+  const stopResetAction = () => {
+    if (isActive) {
+      stop();
+    } else if (isPaused) {
+      reset();
+    } else {
+      start(true);
+    }
+  };
 
   // mimic the existing zoom controls, applying analogous elements & classes
   // react doesn't like the anchors, but the styling won't apply otherwise, hence disable eslint
@@ -161,6 +168,7 @@ function MoreMapOptions({ bounds, toggleModal, isMaximized }) {
               <img src={cornersIconUrl} alt="size" />
             </span>
           </a>
+
           {/* eslint-disable-next-line */}
           <a
             className="leaflet-control-zoom-out"
@@ -174,8 +182,44 @@ function MoreMapOptions({ bounds, toggleModal, isMaximized }) {
               <img src={crosshairIconUrl} alt="center" />
             </span>
           </a>
+
+          {/* eslint-disable-next-line */}
+          <a
+            className="leaflet-control-zoom-in"
+            title={playPauseText}
+            role="button"
+            aria-label={playPauseText}
+            aria-disabled="false"
+            onClick={playPauseAction}
+          >
+            <span area-hidden="true">
+              <img src={playPauseIcon} alt={playPauseText} />
+            </span>
+          </a>
+
+          {/* eslint-disable-next-line */}
+          <a
+            className="leaflet-control-zoom-out"
+            title={stopResetText}
+            role="button"
+            aria-label={stopResetText}
+            aria-disabled="false"
+            onClick={stopResetAction}
+          >
+            <span area-hidden="true">
+              <img src={stopResetIcon} alt={stopResetText} />
+            </span>
+          </a>
         </div>
       </div>
     </div>
   );
 }
+
+// reset            -> play once; play looped
+// active, no loop  -> pause;     stop
+// active, loop     -> pause;     stop;       de-loop
+// paused, no loop  -> resume;    reset
+// paused, loop     -> resume;    reset;      de-loop
+
+// omit de-looping (or don't allow stopping while on loop)
