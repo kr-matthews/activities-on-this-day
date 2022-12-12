@@ -3,7 +3,7 @@ import {
   TileLayer,
   Polyline,
   useMap,
-  Circle,
+  CircleMarker,
 } from "react-leaflet";
 import polyline from "@mapbox/polyline";
 
@@ -111,10 +111,9 @@ export default function ActivityMap({
           onClick={() => console.debug("test")}
         />
         {pathAnimation.position !== null && (
-          <Circle
+          <CircleMarker
             center={pathAnimation.position}
-            // !!! make radius fixed fraction of visible map?
-            radius={30 * lineWeight}
+            radius={12}
             pathOptions={{ color: lineColour, weight: lineWeight }}
           />
         )}
