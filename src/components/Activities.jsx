@@ -63,6 +63,8 @@ export default function Activities({
           options={options}
         />
       ))}
+
+      {!areAllEmpty && <p>{strings.sentences.animationDisclaimer}</p>}
     </>
   );
 }

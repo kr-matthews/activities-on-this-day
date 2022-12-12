@@ -26,6 +26,8 @@ const strings = {
     sampleWarning: "These are sample activities, not your real activities.",
     noActivities:
       "You don't have any activities on this day in history. Check out the sample page to see what if would look like if you did.",
+    animationDisclaimer:
+      "Note: Animation does not represent actual speed or any stops taken. It only indicates the direction of travel.",
   },
 
   fragments: {
