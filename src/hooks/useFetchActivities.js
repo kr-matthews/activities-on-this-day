@@ -3,7 +3,7 @@ import { useCallback, useMemo } from "react";
 import { useFetchData } from "./useFetchData";
 import { parseActivity } from "../utils/activityUtils";
 
-// ! FANCY - make date override-able (but not obvious that you can)
+// todo: MAYBE - make date override-able (but not obvious that you can)
 
 export function useFetchActivities(firstYear, accessToken) {
   // strava started in 2008 (could have activities before then in theory,

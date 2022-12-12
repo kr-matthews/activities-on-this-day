@@ -161,7 +161,6 @@ export default function useActivities(refreshToken) {
   }
 
   function setLastFetchedToYesterday() {
-    // ! TIDY - note: how to subtract 1 day - for date utils (there's probably a better way...)
     setLastFetchedActivities(
       new Date(new Date().getTime() - 86400000).toDateString()
     );

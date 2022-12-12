@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Activities from "../Activities";
@@ -15,13 +15,14 @@ const currentDay = new Date().getDate();
 export default function Sample() {
   const navigate = useNavigate();
 
-  const allActivities = sampleActivities.map((activities) =>
-    activities.map(parseActivity)
+  const allActivities = useMemo(
+    () => sampleActivities.map((activities) => activities.map(parseActivity)),
+    []
   );
   const len = allActivities.length;
   const [activities, setActivities] = useState(Array(len).fill(null));
   const [areLoading, setAreLoading] = useState(Array(len).fill(true));
-  const errors = Array(len).fill(null);
+  const errors = useMemo(() => Array(len).fill(null), [len]);
 
   // simulate loading activities, even though they're immediately accessible
   useEffect(() => {
@@ -54,18 +55,14 @@ export default function Sample() {
   );
 
   return (
-    <>
-      <Activities
-        year={currentYear}
-        month={currentMonth}
-        day={currentDay}
-        activities={activities}
-        areLoading={areLoading}
-        errors={errors}
-        preTitle={warning}
-      />
-
-      <div></div>
-    </>
+    <Activities
+      year={currentYear}
+      month={currentMonth}
+      day={currentDay}
+      activities={activities}
+      areLoading={areLoading}
+      errors={errors}
+      preTitle={warning}
+    />
   );
 }

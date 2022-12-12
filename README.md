@@ -10,7 +10,7 @@ The app is accessible at [https://activities-on-this-day.netlify.app/](https://a
 
 **Note that this is NOT an official Strava app, and is NOT endorsed by Strava.**
 
-// todo: TIDY - add screenshot(s) once UI is done
+// todo: TIDY - add screenshot(s) once samples are updated
 
 ## Features
 
@@ -18,8 +18,11 @@ The app is accessible at [https://activities-on-this-day.netlify.app/](https://a
 
 - Authenticate with Strava oauth.
 - Retain refresh token to stay logged in until access is explicitly revoked.
+- Find year of earliest activity (once ever) and only search that and later years (daily when opened).
 - If not already done today, fetch an access token and then fetch activities from Strava.
 - Display activities with maps, partitioned by year.
+- Maximize maps to near-full screen.
+- Play/pause simple path animation to visually show direction travelled.
 
 ### Potential Future
 
@@ -45,6 +48,8 @@ See [enhancements](https://github.com/kr-matthews/activities-on-this-day/issues?
 See the [issues](https://github.com/kr-matthews/activities-on-this-day/issues) on GitHub, in addition to the following:
 
 - No tests at all.
+- Date manipulated is ad hoc and inconsistent.
 - Styling is inconsistent and messy - half in-line, half css files.
 - No thought to accessibility.
 - Only in english.
+- Path animation doesn't reflect actual speed nor stoppages.
