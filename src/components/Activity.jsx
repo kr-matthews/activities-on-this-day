@@ -66,7 +66,7 @@ export default function Activity({
       case "Hike":
         return hikeIconUrl;
       default:
-        // !!! UI - 'other' type icon - a watch?
+        // todo: UI - 'other' type icon - a watch?
         return "";
     }
   };

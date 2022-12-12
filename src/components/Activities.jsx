@@ -88,7 +88,7 @@ function ActivitiesOnOneDay({
 
   // awkward hard-coded heights since can't transition between auto heights
   // doesn't work when zoomed out significantly
-  // todo: find a better solution to height transitions
+  // todo: UI - find a better solution to height transitions
   // note height is larger on mobile
   const totalHeight = 650;
   const titleAndErrorHeight = 250;
