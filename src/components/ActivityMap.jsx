@@ -12,7 +12,11 @@ import tileLayers from "../data/tileLayers";
 
 import crosshairIconUrl from "../assets/crosshair.svg";
 import cornersIconUrl from "../assets/corners.svg";
-// !!! add new icons (5 of them)
+import playIcon from "../assets/play.svg";
+import playOnceIcon from "../assets/play-once.svg";
+import playLoopIcon from "../assets/play-loop.svg";
+import pauseIcon from "../assets/pause.svg";
+import stopIcon from "../assets/stop.svg";
 
 import "./activityMap.css";
 
@@ -126,8 +130,16 @@ function MoreMapControls({ bounds, toggleModal, isMaximized, pathAnimation }) {
 
   const playPauseText = isActive ? "Pause" : isPaused ? "Resume" : "Play Once";
   const stopResetText = isActive ? "Stop" : isPaused ? "Reset" : "Play on Loop";
-  const playPauseIcon = "";
-  const stopResetIcon = "";
+  const playPauseIcon = isActive
+    ? pauseIcon
+    : isPaused
+    ? playIcon
+    : playOnceIcon;
+  const stopResetIcon = isActive
+    ? stopIcon
+    : isPaused
+    ? stopIcon
+    : playLoopIcon;
   const playPauseAction = () => {
     if (isActive) {
       pause();
