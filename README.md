@@ -12,10 +12,8 @@ The app is accessible at [https://activities-on-this-day.netlify.app/](https://a
 
 ## Screenshots
 
-<img src="src/assets/screenshot-1.png" width="350" />
-<img src="src/assets/screenshot-2.png" width="350" />
-<img src="src/assets/screenshot-3.png" width="350" />
-<img src="src/assets/screenshot-4.png" width="350" />
+<img src="src/assets/screenshot-1.png" width="350" /> <img src="src/assets/screenshot-2.png" width="350" />
+<img src="src/assets/screenshot-3.png" width="350" /> <img src="src/assets/screenshot-4.png" width="350" />
 
 ## Features
 
