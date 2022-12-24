@@ -24,7 +24,7 @@ const sanDiegoRun = {
   kudos_count: 3,
   comment_count: 0,
   athlete_count: 1,
-  photo_count: 0,
+  photo_count: 1,
   map: {
     id: "a1261461890",
     summary_polyline:
@@ -52,7 +52,7 @@ const sanDiegoRun = {
   external_id: "0", // omit
   from_accepted_tag: false,
   pr_count: 5,
-  total_photo_count: 0,
+  total_photo_count: 1,
   has_kudoed: false,
 };
 
@@ -114,6 +114,64 @@ const uclaSantaMonicaRun = {
   has_kudoed: false,
 };
 
+const vancouverLaps = {
+  resource_state: 2,
+  athlete: {
+    id: 0, // omit
+    resource_state: 1,
+  },
+  name: "Afternoon Laps",
+  distance: 6003.4,
+  moving_time: 1770,
+  elapsed_time: 1784,
+  total_elevation_gain: 0,
+  type: "Run",
+  sport_type: "Run",
+  workout_type: null,
+  id: 0, // omit
+  start_date: "2014-12-24T23:26:37Z",
+  start_date_local: "2014-12-24T15:26:37Z",
+  timezone: "(GMT-08:00) America/Vancouver",
+  utc_offset: -28800,
+  location_city: "Vancouver",
+  location_state: "British Columbia",
+  location_country: "Canada",
+  achievement_count: 0,
+  kudos_count: 1,
+  comment_count: 0,
+  athlete_count: 1,
+  photo_count: 0,
+  map: {
+    id: "a232581807",
+    summary_polyline:
+      "qttkHpbvnVpHl@jB{Mg@mKwIO_@vXdAv@~FBt@eWWgBcIb@YbX`Il@t@eZ{Hm@q@fCIzUjHz@vAgNIsK_JG[pX~Ht@r@kKKsMkIPe@dWbIxAf@}FPoRqICk@jY",
+    resource_state: 2,
+  },
+  trainer: false,
+  commute: false,
+  manual: false,
+  private: true,
+  visibility: "everyone",
+  flagged: false,
+  gear_id: null,
+  start_latlng: [49.262974, -123.162169],
+  end_latlng: [49.263019, -123.162222],
+  average_speed: 3.392,
+  max_speed: 4.9,
+  has_heartrate: false,
+  heartrate_opt_out: false,
+  display_hide_heartrate_option: false,
+  elev_high: 37.9,
+  elev_low: 28.1,
+  upload_id: 0, // omit
+  upload_id_str: "0", // omit
+  external_id: "0", // omit
+  from_accepted_tag: false,
+  pr_count: 0,
+  total_photo_count: 0,
+  has_kudoed: false,
+};
+
 const stravaApiDocumentationRide = {
   resource_state: 2,
   athlete: {
@@ -154,7 +212,7 @@ const stravaApiDocumentationRide = {
   trainer: true,
   commute: false,
   manual: false,
-  private: true,
+  private: false,
   flagged: false,
   gear_id: "b12345678912343",
   from_accepted_tag: false,
@@ -170,19 +228,22 @@ const stravaApiDocumentationRide = {
   max_heartrate: 183,
   max_watts: 403,
   pr_count: 0,
-  total_photo_count: 1,
+  total_photo_count: 0,
   has_kudoed: false,
   suffer_score: 162,
 };
 
 /**
- * mix of my own activities and data taken from strava developers API documentation examples, with minor modifications
- * note that the data may be internally inconsistent
+ * A mix of my own activities and data taken from the strava developers API
+ * documentation examples, with minor modifications. Note that the data may
+ * be internally inconsistent.
  */
 const sampleUnparsedActivityResponses = [
   [uclaSantaMonicaRun],
-  [],
   [sanDiegoRun, stravaApiDocumentationRide],
+  [],
+  [],
+  [vancouverLaps],
 ];
 
 export default sampleUnparsedActivityResponses;
