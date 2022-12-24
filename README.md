@@ -1,6 +1,6 @@
 # Activities On-This-Day
 
-![Screenshot](public/android-chrome-192x192.png)
+<img src="public/android-chrome-192x192.png" width="80" />
 
 This is a single-page application working with serverless functions to display your historical activities from Strava, specifically those which were recorded on this day in history.
 
@@ -10,7 +10,12 @@ The app is accessible at [https://activities-on-this-day.netlify.app/](https://a
 
 **Note that this is NOT an official Strava app, and is NOT endorsed by Strava.**
 
-// todo: TIDY - add screenshot(s) once samples are updated
+## Screenshots
+
+<img src="src/assets/screenshot-1.png" width="350" />
+<img src="src/assets/screenshot-2.png" width="350" />
+<img src="src/assets/screenshot-3.png" width="350" />
+<img src="src/assets/screenshot-4.png" width="350" />
 
 ## Features
 
@@ -22,7 +27,7 @@ The app is accessible at [https://activities-on-this-day.netlify.app/](https://a
 - If not already done today, fetch an access token and then fetch activities from Strava.
 - Display activities with maps, partitioned by year.
 - Maximize maps to near-full screen.
-- Play/pause simple path animation to visually show direction travelled.
+- Play/pause simple path animation to visually show direction traveled.
 
 ### Potential Future
 
