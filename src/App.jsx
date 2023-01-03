@@ -60,7 +60,7 @@ export default function App() {
 
       <HeavyFooter>
         <HomeLink />
-        <CodeLink gitHubLink={strings.links.gitHubRepo} />
+        <CodeLink gitHubRepoName={strings.links.gitHubRepo} />
         <img
           src={logoPoweredByStrava}
           style={{ width: 200 }}

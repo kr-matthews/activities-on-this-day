@@ -38,7 +38,7 @@ const strings = {
   },
 
   links: {
-    gitHubRepo: "https://github.com/kr-matthews/activities-on-this-day",
+    gitHubRepo: "activities-on-this-day",
     revokeAccess: "https://www.strava.com/settings/apps",
   },
 
