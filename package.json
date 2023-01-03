@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.0.0",
     "dotenv": "^16.0.3",
+    "footer-dependency": "github:kr-matthews/footer-dependency#v1.0.0",
     "http-proxy-middleware": "^2.0.6",
     "leaflet": "^1.9.2",
     "netlify-lambda": "^2.0.15",

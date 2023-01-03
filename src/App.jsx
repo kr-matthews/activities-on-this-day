@@ -1,10 +1,16 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import {
+  WithHeavyFooter,
+  Body,
+  HeavyFooter,
+  HomeLink,
+  CodeLink,
+} from "footer-dependency/dist/lib";
 
 import Authentication from "./components/pages/Authentication";
 import Redirect from "./components/pages/Redirect";
 import View from "./components/pages/View";
 import Sample from "./components/pages/Sample";
-import Links from "./components/Links";
 
 import { useSavedState } from "./hooks/useSavedState";
 import strings from "./data/strings";
@@ -15,8 +21,8 @@ export default function App() {
   const hasRefreshToken = !!refreshToken;
 
   return (
-    <>
-      <div className="non-footer">
+    <WithHeavyFooter>
+      <Body>
         <Routes>
           <Route
             path="authenticate"
@@ -50,15 +56,17 @@ export default function App() {
             options={{ replace: true }}
           />
         </Routes>
-      </div>
+      </Body>
 
-      <Links gitHubLink={strings.links.gitHubRepo}>
+      <HeavyFooter>
+        <HomeLink />
+        <CodeLink gitHubRepoName={strings.links.gitHubRepo} />
         <img
           src={logoPoweredByStrava}
           style={{ width: 200 }}
           alt="Powered by Strava"
         />
-      </Links>
-    </>
+      </HeavyFooter>
+    </WithHeavyFooter>
   );
 }
