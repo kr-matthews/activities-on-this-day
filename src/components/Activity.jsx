@@ -177,7 +177,18 @@ export default function Activity({
       />
 
       <div className="activity-data">
-        <div style={{ padding: 5, marginBottom: 12 }}>
+        <div
+          title={name}
+          style={{
+            margin: 5,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            cursor: "help",
+          }}
+        >
           <b>{name}</b>
         </div>
 
