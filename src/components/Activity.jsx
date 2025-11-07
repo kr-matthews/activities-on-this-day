@@ -192,7 +192,7 @@ export default function Activity({
           <b>{name}</b>
         </div>
 
-        <div className="icon-row" style={{ margin: "auto", marginBottom: 5 }}>
+        <div className="icon-row" style={{ margin: "auto", padding: 5 }}>
           {activityIcon}
           {isPrivate && privateIcon}
           {isCommute && commuteIcon}

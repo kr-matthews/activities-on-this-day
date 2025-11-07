@@ -90,7 +90,7 @@ function ActivitiesOnOneDay({
   // doesn't work when zoomed out significantly
   // todo: UI - find a better solution to height transitions
   // note height is larger on mobile
-  const totalHeight = 650;
+  const totalHeight = 700;
   const titleAndErrorHeight = 250;
   const titleAndLoadingHeight = 110;
   const zeroHeight = 0;
