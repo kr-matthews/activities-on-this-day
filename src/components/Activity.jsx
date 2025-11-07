@@ -43,6 +43,7 @@ export default function Activity({
     averageSpeed,
     totalElevationGain,
     photoCount,
+    deviceName,
   },
   lineColour = "#603cba",
   lineWeight = 3,
@@ -184,6 +185,24 @@ export default function Activity({
           {activityIcon}
           {isPrivate && privateIcon}
           {isCommute && commuteIcon}
+        </div>
+
+        <div
+          title={deviceName}
+          style={{
+            margin: "auto",
+            fontSize: "90%",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: 1,
+            WebkitBoxOrient: "vertical",
+            paddingLeft: "5px",
+            fontStyle: "italic",
+            cursor: "help",
+          }}
+        >
+          {deviceName}
         </div>
 
         <table style={{ maxWidth: 190, margin: "auto" }}>
