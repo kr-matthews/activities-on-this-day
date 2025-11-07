@@ -12,8 +12,15 @@ The app is accessible at [https://activities-on-this-day.netlify.app/](https://a
 
 ## Screenshots
 
-<img src="src/assets/screenshot-1.png" width="350" /> <img src="src/assets/screenshot-2.png" width="350" />
-<img src="src/assets/screenshot-3.png" width="350" /> <img src="src/assets/screenshot-4.png" width="350" />
+### Desktop
+
+<img src="src/assets/desktop-1.png" width="350" /> <img src="src/assets/desktop-2.png" width="350" />
+<img src="src/assets/desktop-3.png" width="350" />
+
+### Mobile
+
+<img src="src/assets/mobile-1.png" width="350" /> <img src="src/assets/mobile-2.png" width="350" />
+<img src="src/assets/mobile-3.png" width="350" />
 
 ## Features
 
@@ -52,7 +59,7 @@ See the [issues](https://github.com/kr-matthews/activities-on-this-day/issues) o
 
 - No tests at all.
 - Date manipulated is ad hoc and inconsistent.
-- Styling is inconsistent and messy - half in-line, half css files.
+- Styling is inconsistent and messy - half in-line, half css files. And it gets worse every time I update the UI.
 - No thought to accessibility.
 - Only in english.
 - Path animation doesn't reflect actual speed nor stoppages.

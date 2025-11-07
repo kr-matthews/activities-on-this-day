@@ -39,9 +39,18 @@ const hoursOf = (s) => {
 /**
  * Take raw meters and convert to human-readable form in km.
  * @param {Number} m Raw meters.
+ * @returns {String} Formatted distance like '3.40km' always with no decimals.
+ */
+export const formatMetersAsM = (m) => {
+  return `${Math.floor(m)}m`;
+};
+
+/**
+ * Take raw meters and convert to human-readable form in km.
+ * @param {Number} m Raw meters.
  * @returns {String} Formatted distance like '3.40km' always with 2 decimals.
  */
-export const formatMeters = (m) => {
+export const formatMetersAsKm = (m) => {
   return `${kmOf(m)}.${decimalsOf(m)}km`;
 };
 

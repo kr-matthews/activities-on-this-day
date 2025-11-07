@@ -54,6 +54,7 @@ const sanDiegoRun = {
   pr_count: 5,
   total_photo_count: 1,
   has_kudoed: false,
+  device_name: "Garmin Forerunner 255S Music",
 };
 
 const uclaSantaMonicaRun = {
@@ -112,6 +113,7 @@ const uclaSantaMonicaRun = {
   pr_count: 0,
   total_photo_count: 1,
   has_kudoed: false,
+  device_name: "Samsung Galaxy Ultra",
 };
 
 const vancouverLaps = {
@@ -124,7 +126,7 @@ const vancouverLaps = {
   distance: 6003.4,
   moving_time: 1770,
   elapsed_time: 1784,
-  total_elevation_gain: 0,
+  total_elevation_gain: 650,
   type: "Run",
   sport_type: "Run",
   workout_type: null,
@@ -170,6 +172,7 @@ const vancouverLaps = {
   pr_count: 0,
   total_photo_count: 0,
   has_kudoed: false,
+  device_name: "Strava App",
 };
 
 const stravaApiDocumentationRide = {
@@ -231,6 +234,7 @@ const stravaApiDocumentationRide = {
   total_photo_count: 0,
   has_kudoed: false,
   suffer_score: 162,
+  device_name: "Garmin fēnix 7 Pro (47mm)",
 };
 
 /**
