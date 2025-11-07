@@ -6,9 +6,10 @@ import MapModal from "./MapModal";
 import strings from "../data/strings";
 import {
   formatSeconds,
-  formatMeters,
+  formatMetersAsKm,
   formatMpsAsPace,
   formatMpsAsSpeed,
+  formatMetersAsM,
 } from "../utils/displayUtils";
 
 import rideIconUrl from "../assets/bike.svg";
@@ -22,6 +23,7 @@ import clockIconUrl from "../assets/clock.svg";
 import rulerIconUrl from "../assets/ruler.svg";
 import timerIconUrl from "../assets/timer.svg";
 import speedIconUrl from "../assets/speedometer.svg";
+import elevationIconUrl from "../assets/mountain.svg";
 import cameraIconUrl from "../assets/camera.svg";
 
 // NOTE: must follow Strava guidelines for linking back to original data
@@ -39,6 +41,7 @@ export default function Activity({
     isCommute,
     isPrivate,
     averageSpeed,
+    totalElevationGain,
     photoCount,
   },
   lineColour = "#603cba",
@@ -118,6 +121,14 @@ export default function Activity({
       alt={shouldDisplayPace ? "Pace" : "Speed"}
     />
   );
+  const elevationIcon = (
+    <img
+      className="icon"
+      title="Total Elevation Gain"
+      src={elevationIconUrl}
+      alt="Elevation Gain"
+    />
+  );
 
   const photosIcon = (
     <img
@@ -186,7 +197,7 @@ export default function Activity({
 
             <tr>
               <td>{distanceIcon}</td>
-              <td>{formatMeters(distance)}</td>
+              <td>{formatMetersAsKm(distance)}</td>
             </tr>
 
             <tr>
@@ -204,6 +215,11 @@ export default function Activity({
                   ? formatMpsAsPace(averageSpeed)
                   : formatMpsAsSpeed(averageSpeed)}
               </td>
+            </tr>
+
+            <tr>
+              <td>{elevationIcon}</td>
+              <td>{formatMetersAsM(totalElevationGain)}</td>
             </tr>
           </tbody>
         </table>
