@@ -12,6 +12,8 @@ const parseActivity = (activity) => ({
   isPrivate: activity.private,
   averageSpeed: activity.average_speed,
   photoCount: activity.total_photo_count,
+  totalElevationGain: activity.total_elevation_gain,
+  deviceName: activity.device_name,
 });
 
 export { parseActivity };
